@@ -20,3 +20,5 @@ yarn-error.log*
 *.sln
 *.sw?
 bootstrapVueAdminUI.iml
+
+index.html
