@@ -45,6 +45,6 @@
 
 <script>
     export default {
-        name: "header"
+        name: "header_template"
     }
 </script>

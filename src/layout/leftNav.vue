@@ -9,8 +9,12 @@
             >
                 Problems
             </router-link>
-<!--            <b-list-group-item href="/problems" active>Problems</b-list-group-item>-->
-            <b-list-group-item href="medications">Meds</b-list-group-item>
+            <router-link
+                    class="list-group-item list-group-item-action"
+                    :to="{ name: 'medications' }"
+            >
+                Meds
+            </router-link>
             <b-list-group-item href="adverseEv">AdvEvents</b-list-group-item>
             <b-list-group-item href="Procedures">Procedures</b-list-group-item>
         </b-list-group>

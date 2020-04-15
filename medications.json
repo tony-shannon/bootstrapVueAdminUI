@@ -1,0 +1,39 @@
+{
+  "Medications": [
+    {
+      "ID": 1,
+      "Dose-Mg": 500,
+      "Indication": "Pain Relief",
+      "Name": "Paracetamol",
+      "Route": "Po"
+    },
+    {
+      "ID": 2,
+      "Dose-Mg": 200,
+      "Indication": "Pain Relief",
+      "Name": "Ibuprofen",
+      "Route": "Po"
+    },
+    {
+      "ID": 3,
+      "Dose-Mg": 10,
+      "Indication": "Cardiac",
+      "Name": "Digoxin",
+      "Route": "Po"
+    },
+    {
+      "ID": 4,
+      "Dose-Mg": 500,
+      "Indication": "Asthma",
+      "Name": "Salbutamol",
+      "Route": "Inh"
+    },
+    {
+      "ID": 5,
+      "Dose-Mg": 500,
+      "Indication": "Antibiotic",
+      "Name": "Penicillin V ",
+      "Route": "Po"
+    }
+  ]
+}
