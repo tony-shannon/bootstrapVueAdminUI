@@ -32,7 +32,6 @@
         mounted: async function() {
             this.$nextTick(function() {
                 this.getMedications();
-                console.log(this.medications);
             })
         },
     }
