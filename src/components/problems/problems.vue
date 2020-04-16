@@ -34,7 +34,6 @@
                         :filter="filter"
                         :filterIncludedFields="filterOn"
                         @row-clicked="setActiveItem"
-                        @filtered="onFiltered"
                 ></b-table>
 
                 <div>
