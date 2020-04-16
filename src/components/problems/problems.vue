@@ -44,20 +44,20 @@
             </div>
         </b-col>
         <b-col cols="6" sm="6">Detail Content
-            <div>
-                <b-card-group>
-                    <b-card title="COPD" header-tag="header" footer-tag="footer">
-                        <template v-slot:header>
-                            <h6 class="mb-0">Problem - Detail</h6>
-                        </template>
-                        <b-card-text>Detail about the COPD problem</b-card-text>
-                        <b-button href="#" variant="primary">Edit</b-button>
-                        <template v-slot:footer>
-                            <em>Notes</em>
-                        </template>
-                    </b-card>
-                </b-card-group>
-            </div>
+            <b-card
+                    border-variant="secondary"
+                    header="Detail"
+                    header-bg-variant="primary"
+                    header-text-variant="white"
+                    align="left"
+            >
+                <b-row v-for="(value, key) in activeItem" :key="key">
+                    <b-col cols="12" sm="12">
+                        <h5>{{key}}</h5>
+                        <p>{{value}}</p>
+                    </b-col>
+                </b-row>
+            </b-card>
         </b-col>
     </b-row>
 </template>
