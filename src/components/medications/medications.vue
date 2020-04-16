@@ -1,11 +1,5 @@
 <template>
-    <div>
-<!--        <ul v-for="(item, index) in medications" :key="index">-->
-<!--            <li v-for="(itemDesc, indexDesc) in item" :key="indexDesc">-->
-<!--                {{ indexDesc }} : {{ itemDesc }}-->
-<!--            </li>-->
-<!--        </ul>-->
-        <b-row>
+    <b-row>
             <b-col cols="6" sm="6">Main Content
                 <b-col lg="6" class="my-1">
                     <b-form-group
@@ -68,7 +62,6 @@
 
             </b-col>
         </b-row>
-    </div>
 </template>
 
 <script>
