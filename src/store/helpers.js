@@ -15,3 +15,15 @@ export const medicationsActions = arrNames => ({
         ...arrNames,
     ]),
 });
+
+export const problemsState = arrNames => ({
+    ...mapState('problems', [
+        ...arrNames,
+    ]),
+});
+
+export const problemsActions = arrNames => ({
+    ...mapActions('problems', [
+        ...arrNames,
+    ]),
+});

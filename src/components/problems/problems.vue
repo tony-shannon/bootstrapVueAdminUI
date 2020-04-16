@@ -26,13 +26,14 @@
 
             <div>
                 <b-table
-                        :items="items"
+                        :items="problems"
                         :fields="fields"
                         :sort-by.sync="sortBy"
                         :sort-desc.sync="sortDesc"
                         responsive="sm"
                         :filter="filter"
                         :filterIncludedFields="filterOn"
+                        @row-clicked="setActiveItem"
                         @filtered="onFiltered"
                 ></b-table>
 
@@ -63,46 +64,43 @@
 </template>
 
 <script>
+    import {
+        problemsState,
+        problemsActions
+    } from '@/store/helpers';
+
     export default {
         name: "problems",
-        // data() {
-        //   return {
-        //    fields: ["first_name", "last_name", "age"],
-        //   items: [
-        //    { age: 40, first_name: "Dickerson", last_name: "Macdonald" },
-        //    { age: 21, first_name: "Larsen", last_name: "Shaw" },
-        //    { age: 89, first_name: "Geneva", last_name: "Wilson" }
-        //  ]
-        //};
-        //},
         data() {
             return {
-                sortBy: "age",
+                sortBy: "ID",
                 sortDesc: false,
                 fields: [
-                    {key: "last_name", sortable: true},
-                    {key: "first_name", sortable: true},
-                    {key: "age", sortable: true},
-                    {key: "isActive", sortable: false}
+                    {key: "ID", sortable: true},
+                    {key: "CodeD", sortable: true},
+                    {key: "Description", sortable: true},
+                    {key: "Name", sortable: false},
+                    {key: "Days", sortable: false}
                 ],
-                items: [
-                    {
-                        isActive: true,
-                        age: 40,
-                        first_name: "Asthma",
-                        last_name: "severe"
-                    },
-                    {isActive: false, age: 21, first_name: "Diabetes", last_name: "mild"},
-                    {isActive: false, age: 89, first_name: "COPD", last_name: "mild"},
-                    {
-                        isActive: true,
-                        age: 38,
-                        first_name: "Alopecia",
-                        last_name: "moderate"
-                    }
-                ],
+                // items: [
+                //     {
+                //         isActive: true,
+                //         age: 40,
+                //         first_name: "Asthma",
+                //         last_name: "severe"
+                //     },
+                //     {isActive: false, age: 21, first_name: "Diabetes", last_name: "mild"},
+                //     {isActive: false, age: 89, first_name: "COPD", last_name: "mild"},
+                //     {
+                //         isActive: true,
+                //         age: 38,
+                //         first_name: "Alopecia",
+                //         last_name: "moderate"
+                //     }
+                // ],
                 filter: null,
-                filterOn: []
+                filterOn: [],
+                activeItem: null
             };
         },
 
@@ -114,16 +112,11 @@
                     .map(f => {
                         return {text: f.label, value: f.key};
                     });
-            }
+            },
+            ...problemsState([
+                'problems',
+            ]),
         },
-
-        //data() {
-        //  return {
-        //    name: 'BootstrapVue',
-        //     show: true
-        //   }
-        //  },
-
         watch: {
             show(newVal) {
                 console.log("Alert is now " + (newVal ? "visible" : "hidden"));
@@ -136,8 +129,19 @@
             },
             dismissed() {
                 console.log("Alert dismissed");
+            },
+            ...problemsActions([
+                'getProblems',
+            ]),
+            setActiveItem (item) {
+                this.activeItem = item;
             }
-        }
+        },
+        mounted: async function() {
+            this.$nextTick(function() {
+                this.getProblems();
+            })
+        },
     }
 
 </script>

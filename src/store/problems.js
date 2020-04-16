@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const initialState = {
-    medications: []
+    problems: []
 };
 
 var URL2Go='http://localhost:3000' // use in localenv
@@ -12,16 +12,16 @@ export default {
     namespaced: true,
     state: initialState,
     mutations: {
-        setMedications(state, payload) {
-            state.medications = payload;
+        setProblems(state, payload) {
+            state.problems = payload;
         },
     },
     actions: {
-        async getMedications({commit}) {
+        async getProblems({commit}) {
             return new Promise((resolve, reject) => {
-                axios({url: URL2Go + '/Medications',  method: 'GET' })
+                axios({url: URL2Go + '/Problems',  method: 'GET' })
                     .then(resp => {
-                        commit('setMedications', resp.data)
+                        commit('setProblems', resp.data)
                         resolve(resp)
                     })
                     .catch(err => {

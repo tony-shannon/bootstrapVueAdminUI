@@ -4,11 +4,13 @@ import Vuex from 'vuex'
 
 //Modules
 import medications from './medications'
+import problems from './problems'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules: {
-        medications
+        medications,
+        problems
     }
 })
