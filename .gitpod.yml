@@ -10,3 +10,7 @@ ports:
 tasks:
   - init: npm install
     command: echo 'start script'
+  - name: JSONServer
+    command: json-server --watch medications.json
+  - name: VueApp
+    command: npm run serve
