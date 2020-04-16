@@ -58,7 +58,7 @@
                         header-text-variant="white"
                         align="left"
                 >
-                <b-row v-if="activeItem" v-for="(value, key) in activeItem" :key="key">
+                <b-row v-for="(value, key) in activeItem" :key="key">
                     <b-col cols="12" sm="12">
                         <h5>{{key}}</h5>
                         <p>{{value}}</p>
