@@ -1,12 +1,8 @@
-import axios from 'axios'
+import {HTTP} from './axios'
 
 const initialState = {
     medications: []
 };
-
-var URL2Go='http://localhost:3000' // use in localenv
-// get URL2Go from gp url 3000 in gitpod
-//var URL2Go= 'https://3000-ade12ef9-f9f8-46d9-adbf-9503cba33f23.ws-eu01.gitpod.io';
 
 export default {
     namespaced: true,
@@ -15,11 +11,17 @@ export default {
         setMedications(state, payload) {
             state.medications = payload;
         },
+        setMedication(state, payload) {
+            state.medications[payload.index] = payload.value;
+        },
+        blank(state, payload) {
+            console.log('blank', payload);
+        },
     },
     actions: {
         async getMedications({commit}) {
             return new Promise((resolve, reject) => {
-                axios({url: URL2Go + '/Medications',  method: 'GET' })
+                HTTP.get('Medications')
                     .then(resp => {
                         commit('setMedications', resp.data)
                         resolve(resp)
@@ -30,6 +32,32 @@ export default {
 
             });
         },
+        async updateMedication ({dispatch}, payload) {
+            return new Promise((resolve, reject) => {
+                HTTP.put('Medications/' + payload.ID, JSON.stringify(payload))
+                    .then(resp => {
+                        console.log('resp', resp);
+                        dispatch('updateList', resp)
+                        resolve(resp)
+                    })
+                    .catch(err => {
+                        reject(err)
+                    })
+
+            });
+        },
+        async deleteMedication ({commit}, payload) {
+            commit('blank', payload)
+        },
+        updateList ({commit, state, payload}) {
+            console.log('updateList payload', payload);
+            state.medications.forEach((item, i) =>{
+                if (item.ID == payload.ID) {
+                    commit('setMedication', {index: i, payload})
+                }
+            });
+
+        }
 
     },
 };

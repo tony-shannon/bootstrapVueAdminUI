@@ -1,13 +1,13 @@
 <template>
     <b-row>
-            <b-col cols="6" sm="6"> Main Content
-                 <b-card
+        <b-col cols="6" sm="6"> Main Content
+            <b-card
                     border-variant="secondary"
                     header="Main"
                     header-bg-variant="primary"
                     header-text-variant="white"
                     align="left"
-                    >
+            >
                 <b-col lg="6" class="my-1">
                     <b-form-group
                             label="Filter"
@@ -49,26 +49,44 @@
                         <b>{{ sortDesc ? 'Descending' : 'Ascending' }}</b>
                     </div>
                 </div>
-                 </b-card>
-            </b-col>
-            <b-col cols="6" sm="6"> Detail Content
-                <b-card
-                        border-variant="secondary"
-                        header="Detail"
-                        header-bg-variant="primary"
-                        header-text-variant="white"
-                        align="left"
-                >
+            </b-card>
+        </b-col>
+        <b-col cols="6" sm="6">
+            <editMedication v-if="status == 'edit' && activeItem"
+                            :itemProp="activeItem"/>
+            <b-card
+                    v-if="status == 'view'"
+                    border-variant="secondary"
+                    header="Detail"
+                    header-bg-variant="primary"
+                    header-text-variant="white"
+                    align="left"
+            >
                 <b-row v-for="(value, key) in activeItem" :key="key">
                     <b-col cols="12" sm="12">
                         <h5>{{key}}</h5>
                         <p>{{value}}</p>
                     </b-col>
                 </b-row>
-                </b-card>
+                <b-card-footer
+                        footer-bg-variant="white"
+                        footer-border-variant="white">
 
-            </b-col>
-        </b-row>
+                    <b-button variant="primary"
+                              class="float-right ml-3"
+                              @click="editMedication">
+                        Edit
+                    </b-button>
+                    <b-button variant="outline-danger"
+                              class="float-right"
+                              @click="deleteMedication">
+                        Delete
+                    </b-button>
+                </b-card-footer>
+            </b-card>
+
+        </b-col>
+    </b-row>
 </template>
 
 <script>
@@ -76,6 +94,7 @@
         medicationsState,
         medicationsActions
     } from '@/store/helpers';
+    import editMedication from './edit.vue';
 
     export default {
         name: "medications",
@@ -91,8 +110,12 @@
                 ],
                 filter: null,
                 filterOn: [],
-                activeItem: {}
+                activeItem: {},
+                status: 'view'
             };
+        },
+        components: {
+            editMedication
         },
         computed: {
             ...medicationsState([
@@ -102,13 +125,18 @@
         methods: {
             ...medicationsActions([
                 'getMedications',
+                'deleteMedication'
             ]),
-            setActiveItem (item) {
+            setActiveItem(item) {
+                this.status = 'view';
                 this.activeItem = item;
+            },
+            editMedication() {
+                this.status = 'edit';
             }
         },
-        mounted: async function() {
-            this.$nextTick(function() {
+        mounted: async function () {
+            this.$nextTick(function () {
                 this.getMedications();
             })
         },
