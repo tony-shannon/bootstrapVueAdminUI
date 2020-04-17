@@ -6,8 +6,6 @@ import App from './App'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import store from './store';
-import Axios from 'axios';
-Vue.prototype.$http = Axios;
 
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)

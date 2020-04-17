@@ -1,66 +1,84 @@
 <template>
     <b-row>
-            <b-col cols="6" sm="6">Main Content
-                <b-col lg="6" class="my-1">
-                    <b-form-group
-                            label="Filter"
-                            label-cols-sm="3"
-                            label-align-sm="right"
-                            label-size="sm"
-                            label-for="filterInput"
-                            class="mb-0"
-                    >
-                        <b-input-group size="sm">
-                            <b-form-input
-                                    v-model="filter"
-                                    type="search"
-                                    id="filterInput"
-                                    placeholder="Type to Search"
-                            ></b-form-input>
-                            <b-input-group-append>
-                                <b-button :disabled="!filter" @click="filter = null">Clear</b-button>
-                            </b-input-group-append>
-                        </b-input-group>
-                    </b-form-group>
-                </b-col>
+        <b-col cols="6" sm="6">Main Content
+            <b-col lg="6" class="my-1">
+                <b-form-group
+                        label="Filter"
+                        label-cols-sm="3"
+                        label-align-sm="right"
+                        label-size="sm"
+                        label-for="filterInput"
+                        class="mb-0"
+                >
+                    <b-input-group size="sm">
+                        <b-form-input
+                                v-model="filter"
+                                type="search"
+                                id="filterInput"
+                                placeholder="Type to Search"
+                        ></b-form-input>
+                        <b-input-group-append>
+                            <b-button :disabled="!filter" @click="filter = null">Clear</b-button>
+                        </b-input-group-append>
+                    </b-input-group>
+                </b-form-group>
+            </b-col>
+
+            <div>
+                <b-table
+                        :items="medications"
+                        :fields="fields"
+                        :sort-by.sync="sortBy"
+                        :sort-desc.sync="sortDesc"
+                        responsive="sm"
+                        :filter="filter"
+                        :filterIncludedFields="filterOn"
+                        @row-clicked="setActiveItem"
+                ></b-table>
 
                 <div>
-                    <b-table
-                            :items="medications"
-                            :fields="fields"
-                            :sort-by.sync="sortBy"
-                            :sort-desc.sync="sortDesc"
-                            responsive="sm"
-                            :filter="filter"
-                            :filterIncludedFields="filterOn"
-                            @row-clicked="setActiveItem"
-                    ></b-table>
-
-                    <div>
-                        Sorting By:
-                        <b>{{ sortBy }}</b>, Sort Direction:
-                        <b>{{ sortDesc ? 'Descending' : 'Ascending' }}</b>
-                    </div>
+                    Sorting By:
+                    <b>{{ sortBy }}</b>, Sort Direction:
+                    <b>{{ sortDesc ? 'Descending' : 'Ascending' }}</b>
                 </div>
-            </b-col>
-            <b-col cols="6" sm="6">
-                <b-card
-                        border-variant="secondary"
-                        header="Detail"
-                        header-bg-variant="primary"
-                        header-text-variant="white"
-                        align="left"
-                >
+            </div>
+        </b-col>
+        <b-col cols="6" sm="6">
+            <editMedication v-if="status == 'edit' && activeItem"
+                            :itemProp="activeItem" />
+            <b-card
+                    v-if="status == 'view'"
+                    border-variant="secondary"
+                    header="Detail"
+                    header-bg-variant="primary"
+                    header-text-variant="white"
+                    align="left"
+            >
                 <b-row v-for="(value, key) in activeItem" :key="key">
                     <b-col cols="12" sm="12">
                         <h5>{{key}}</h5>
                         <p>{{value}}</p>
                     </b-col>
                 </b-row>
-                </b-card>
+                <b-card-footer
+                        footer-bg-variant="white"
+                        footer-border-variant="white">
 
-            </b-col>
-        </b-row>
+                    <b-button variant="primary"
+                              class="float-right ml-3"
+                              @click="editMedication">
+                        Edit
+                    </b-button>
+                    <b-button variant="outline-danger"
+                              class="float-right"
+                              @click="deleteMedication">
+                        Delete
+                    </b-button>
+                </b-card-footer>
+            </b-card>
+
+        </b-col>
+    </b-row>
 </template>
 
 <script>
@@ -68,6 +86,7 @@
         medicationsState,
         medicationsActions
     } from '@/store/helpers';
+    import editMedication from './edit.vue';
 
     export default {
         name: "medications",
@@ -83,8 +102,12 @@
                 ],
                 filter: null,
                 filterOn: [],
-                activeItem: {}
+                activeItem: {},
+                status: 'view'
             };
+        },
+        components: {
+            editMedication
         },
         computed: {
             ...medicationsState([
@@ -94,13 +117,18 @@
         methods: {
             ...medicationsActions([
                 'getMedications',
+                'deleteMedication'
             ]),
-            setActiveItem (item) {
+            setActiveItem(item) {
+                this.status = 'view';
                 this.activeItem = item;
+            },
+            editMedication() {
+                this.status = 'edit';
             }
         },
-        mounted: async function() {
-            this.$nextTick(function() {
+        mounted: async function () {
+            this.$nextTick(function () {
                 this.getMedications();
             })
         },
