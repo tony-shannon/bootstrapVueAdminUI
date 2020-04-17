@@ -1,6 +1,13 @@
 <template>
     <b-row>
-            <b-col cols="6" sm="6">Main Content
+            <b-col cols="6" sm="6"> Main Content
+                 <b-card
+                    border-variant="secondary"
+                    header="Main"
+                    header-bg-variant="primary"
+                    header-text-variant="white"
+                    align="left"
+                    >
                 <b-col lg="6" class="my-1">
                     <b-form-group
                             label="Filter"
@@ -42,8 +49,9 @@
                         <b>{{ sortDesc ? 'Descending' : 'Ascending' }}</b>
                     </div>
                 </div>
+                 </b-card>
             </b-col>
-            <b-col cols="6" sm="6">
+            <b-col cols="6" sm="6"> Detail Content
                 <b-card
                         border-variant="secondary"
                         header="Detail"

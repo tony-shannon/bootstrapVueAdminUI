@@ -1,47 +1,55 @@
 <template>
     <b-row>
-        <b-col cols="6" sm="6">Main Content
-            <b-col lg="6" class="my-1">
-                <b-form-group
-                        label="Filter"
-                        label-cols-sm="3"
-                        label-align-sm="right"
-                        label-size="sm"
-                        label-for="filterInput"
-                        class="mb-0"
-                >
-                    <b-input-group size="sm">
-                        <b-form-input
-                                v-model="filter"
-                                type="search"
-                                id="filterInput"
-                                placeholder="Type to Search"
-                        ></b-form-input>
-                        <b-input-group-append>
-                            <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
-                        </b-input-group-append>
-                    </b-input-group>
-                </b-form-group>
-            </b-col>
-
-            <div>
-                <b-table
-                        :items="problems"
-                        :fields="fields"
-                        :sort-by.sync="sortBy"
-                        :sort-desc.sync="sortDesc"
-                        responsive="sm"
-                        :filter="filter"
-                        :filterIncludedFields="filterOn"
-                        @row-clicked="setActiveItem"
-                ></b-table>
+        <b-col cols="6" sm="6"> Main Content
+            <b-card
+                    border-variant="secondary"
+                    header="Main"
+                    header-bg-variant="primary"
+                    header-text-variant="white"
+                    align="left"
+            >
+                <b-col lg="6" class="my-1">
+                    <b-form-group
+                            label="Filter"
+                            label-cols-sm="3"
+                            label-align-sm="right"
+                            label-size="sm"
+                            label-for="filterInput"
+                            class="mb-0"
+                    >
+                        <b-input-group size="sm">
+                            <b-form-input
+                                    v-model="filter"
+                                    type="search"
+                                    id="filterInput"
+                                    placeholder="Type to Search"
+                            ></b-form-input>
+                            <b-input-group-append>
+                                <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+                            </b-input-group-append>
+                        </b-input-group>
+                    </b-form-group>
+                </b-col>
 
                 <div>
-                    Sorting By:
-                    <b>{{ sortBy }}</b>, Sort Direction:
-                    <b>{{ sortDesc ? 'Descending' : 'Ascending' }}</b>
+                    <b-table
+                            :items="problems"
+                            :fields="fields"
+                            :sort-by.sync="sortBy"
+                            :sort-desc.sync="sortDesc"
+                            responsive="sm"
+                            :filter="filter"
+                            :filterIncludedFields="filterOn"
+                            @row-clicked="setActiveItem"
+                    ></b-table>
+
+                    <div>
+                        Sorting By:
+                        <b>{{ sortBy }}</b>, Sort Direction:
+                        <b>{{ sortDesc ? 'Descending' : 'Ascending' }}</b>
+                    </div>
                 </div>
-            </div>
+            </b-card> 
         </b-col>
         <b-col cols="6" sm="6">Detail Content
             <b-card
@@ -77,10 +85,12 @@
                 fields: [
                     {key: "ID", sortable: true},
                     {key: "CodeD", sortable: true},
-                    {key: "Description", sortable: true},
+                   
                     {key: "Name", sortable: false},
                     {key: "Days", sortable: false}
                 ],
+                // {key: "Description", sortable: true},
+
                 // items: [
                 //     {
                 //         isActive: true,
