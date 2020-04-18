@@ -43,6 +43,12 @@
                             @row-clicked="setActiveItem"
                     ></b-table>
 
+                    <b-button variant="primary"
+                              class="float-right ml-3"
+                              @click="createMedication">
+                        Create
+                    </b-button>
+
                     <div>
                         Sorting By:
                         <b>{{ sortBy }}</b>, Sort Direction:
@@ -53,7 +59,17 @@
         </b-col>
         <b-col cols="6" sm="6">
             <editMedication v-if="status == 'edit' && activeItem"
-                            :itemProp="activeItem"/>
+                            :itemProp="activeItem"
+                            @editComplete="editComplete(item)"
+                            @cancel="cancel"
+            />
+
+            <createMedication
+                    v-if="status == 'create'"
+                    @createComplete="createComplete"
+                    @cancel="cancel"
+            />
+
             <b-card
                     v-if="status == 'view'"
                     border-variant="secondary"
@@ -79,7 +95,7 @@
                     </b-button>
                     <b-button variant="outline-danger"
                               class="float-right"
-                              @click="deleteMedication">
+                              @click="deleteMed">
                         Delete
                     </b-button>
                 </b-card-footer>
@@ -95,6 +111,7 @@
         medicationsActions
     } from '@/store/helpers';
     import editMedication from './edit.vue';
+    import createMedication from './create.vue';
 
     export default {
         name: "medications",
@@ -115,7 +132,8 @@
             };
         },
         components: {
-            editMedication
+            editMedication,
+            createMedication
         },
         computed: {
             ...medicationsState([
@@ -133,6 +151,27 @@
             },
             editMedication() {
                 this.status = 'edit';
+            },
+            createComplete () {
+                this.status = 'view';
+                this.activeItem = this.medications[this.medications.length - 1] ;
+            },
+            editComplete (item) {
+                this.status = 'view';
+                this.activeItem = item;
+            },
+            cancel () {
+                this.status = 'view';
+            },
+            deleteMed () {
+                this.deleteMedication(this.activeItem)
+                    .then(() => {
+                        this.status = 'view';
+                        this.activeItem = {};
+                    })
+            },
+            createMedication () {
+                this.status = 'create';
             }
         },
         mounted: async function () {

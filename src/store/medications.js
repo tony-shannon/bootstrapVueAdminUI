@@ -14,9 +14,12 @@ export default {
         setMedication(state, payload) {
             state.medications[payload.index] = payload.value;
         },
-        blank(state, payload) {
-            console.log('blank', payload);
+        removeMedication(state, payload) {
+            state.medications.splice(payload.index, 1);
         },
+        addNewMedication (state, payload) {
+            state.medications.push(payload);
+        }
     },
     actions: {
         async getMedications({commit}) {
@@ -46,8 +49,33 @@ export default {
 
             });
         },
-        async deleteMedication ({commit}, payload) {
-            commit('blank', payload)
+        async createMedication ({commmit}, payload) {
+            return new Promise((resolve, reject) => {
+                HTTP.post('Medications/', JSON.stringify(payload))
+                    .then(resp => {
+                        console.log('resp', resp);
+                        commmit('addNewMedication', resp)
+                        resolve(resp)
+                    })
+                    .catch(err => {
+                        reject(err)
+                    })
+
+            });
+        },
+        async deleteMedication ({dispatch}, payload) {
+            return new Promise((resolve, reject) => {
+                HTTP.delete('Medications/' + payload.ID)
+                    .then(resp => {
+                        console.log('resp', resp);
+                        dispatch('removeMedication', payload.ID)
+                        resolve(resp)
+                    })
+                    .catch(err => {
+                        reject(err)
+                    })
+
+            });
         },
         updateList ({commit, state, payload}) {
             console.log('updateList payload', payload);
@@ -57,6 +85,13 @@ export default {
                 }
             });
 
+        },
+        removeMedication ({commit, state, payload}) {
+            state.medications.forEach((item, i) =>{
+                if (item.ID == payload) {
+                    commit('removeMedication', {index: i, payload})
+                }
+            });
         }
 
     },
