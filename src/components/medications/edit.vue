@@ -60,9 +60,9 @@
             ...medicationsActions([
                 'updateMedication'
             ]),
-            update () {
-                this.updateMedication(this.item)
-                .then(this.$emit('editComplete', this.item))
+            async update () {
+                await this.updateMedication(this.item);
+                this.$emit('editComplete', this.item);
             },
             cancel() {
                 this.$emit('cancel');

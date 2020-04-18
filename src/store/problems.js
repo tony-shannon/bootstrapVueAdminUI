@@ -10,6 +10,9 @@ export default {
         setProblems(state, payload) {
             state.problems = payload;
         },
+        setProblem(state, payload) {
+            state.problems.splice(payload.index, 1, payload.value)
+        },
     },
     actions: {
         async getProblems({commit}) {
@@ -29,8 +32,8 @@ export default {
             return new Promise((resolve, reject) => {
                 HTTP.put('Problems/' + payload.id, JSON.stringify(payload))
                     .then(resp => {
-                        dispatch('getProblems')
-                        resolve(resp)
+                        dispatch('updateList',resp.data)
+                            .then(resolve(resp))
                     })
                     .catch(err => {
                         reject(err)
@@ -43,7 +46,10 @@ export default {
                 HTTP.post('Problems/', JSON.stringify(payload))
                     .then(resp => {
                         dispatch('getProblems')
-                        resolve(resp)
+                            .then(() => {
+                                resolve(resp)
+                            })
+
                     })
                     .catch(err => {
                         reject(err)
@@ -64,6 +70,16 @@ export default {
 
             });
         },
+        async updateList({commit, state}, payload) {
+            return new Promise((resolve) => {
+                state.problems.forEach((item, i) => {
+                    if (item.id == payload.id) {
+                        commit('setProblem', {index: i, value: payload});
+                        resolve()
+                    }
+                });
+            })
+        }
 
     },
 };

@@ -37,6 +37,11 @@
                             :fields="fields"
                             :sort-by.sync="sortBy"
                             :sort-desc.sync="sortDesc"
+                            selectable
+                            id="problemsTable"
+                            ref="problemsTable"
+                            select-mode="single"
+                            primary-key="id"
                             responsive="sm"
                             :filter="filter"
                             :filterIncludedFields="filterOn"
@@ -58,7 +63,7 @@
             </b-card> 
         </b-col>
         <b-col cols="6" sm="6">
-            <editProblem v-if="status == 'edit' && activeItem"
+            <editProblem v-if="status == 'edit'"
                             :itemProp="activeItem"
                             @editComplete="editComplete"
                             @cancel="cancel"
@@ -71,7 +76,7 @@
             />
 
             <b-card
-                    v-if="status == 'view'"
+                    v-if="status == 'view' && activeItem"
                     border-variant="secondary"
                     header="Detail"
                     header-bg-variant="primary"
@@ -89,14 +94,18 @@
                         footer-bg-variant="white"
                         footer-border-variant="white">
 
-                    <b-button variant="primary"
-                              class="float-right ml-3"
-                              @click="editProblem">
+                    <b-button
+                            v-if="activeItem"
+                            variant="primary"
+                            class="float-right ml-3"
+                            @click="editProblem">
                         Edit
                     </b-button>
-                    <b-button variant="outline-danger"
-                              class="float-right"
-                              @click="deleteProb">
+                    <b-button
+                            v-if="activeItem"
+                            variant="outline-danger"
+                            class="float-right"
+                            @click="deleteProb">
                         Delete
                     </b-button>
                 </b-card-footer>
@@ -187,6 +196,7 @@
                 'deleteProblem'
             ]),
             setActiveItem (item) {
+                this.status = 'view';
                 this.activeItem = item;
             },
             editProblem() {
@@ -195,23 +205,31 @@
             createComplete () {
                 this.status = 'view';
                 this.activeItem = this.problems[this.problems.length - 1] ;
+                this.selectRow(this.activeItem.id);
             },
             editComplete (item) {
                 this.status = 'view';
                 this.activeItem = item;
+                this.selectRow(this.activeItem.id);
+            },
+            selectRow(id) {
+                let row = document.getElementById('problemsTable__row_' + id);
+                let index = Array.from(document.querySelectorAll('#problemsTable tr')).indexOf(row) - 1;
+                this.$refs.problemsTable.selectRow(index);
             },
             cancel () {
                 this.status = 'view';
             },
-            deleteProb () {
-                this.deleteProblem(this.activeItem)
-                    .then(() => {
-                        this.status = 'view';
-                        this.activeItem = {};
-                    })
+            async deleteProb () {
+                await this.deleteProblem(this.activeItem)
+                this.status = 'view';
+                this.activeItem = null;
+                this.$refs.problemsTable.clearSelected();
             },
             createProblem () {
                 this.status = 'create';
+                this.activeItem = null;
+                this.$refs.problemsTable.clearSelected();
             }
         },
         mounted: async function() {

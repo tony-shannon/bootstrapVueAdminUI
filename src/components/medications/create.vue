@@ -52,9 +52,9 @@
             ...medicationsActions([
                 'createMedication'
             ]),
-            create () {
-                this.createMedication(this.item)
-                .then( this.$emit('createComplete') );
+            async create () {
+                await this.createMedication(this.item);
+                this.$emit('createComplete')
             },
             cancelCreate() {
                 this.$emit('cancel');

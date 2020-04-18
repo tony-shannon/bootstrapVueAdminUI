@@ -11,6 +11,9 @@ export default {
         setMedications(state, payload) {
             state.medications = payload;
         },
+        setMedication(state, payload) {
+            state.medications.splice(payload.index, 1, payload.value)
+        },
     },
     actions: {
         async getMedications({commit}) {
@@ -44,7 +47,10 @@ export default {
                 HTTP.post('Medications/', JSON.stringify(payload))
                     .then(resp => {
                         dispatch('getMedications')
-                        resolve(resp)
+                            .then(() => {
+                                resolve(resp)
+                            })
+
                     })
                     .catch(err => {
                         reject(err)
@@ -65,5 +71,15 @@ export default {
 
             });
         },
+        async updateList({commit, state}, payload) {
+            return new Promise((resolve) => {
+                state.problems.forEach((item, i) => {
+                    if (item.id == payload.id) {
+                        commit('setMedication', {index: i, value: payload});
+                        resolve()
+                    }
+                });
+            })
+        }
     },
 };

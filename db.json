@@ -18,22 +18,36 @@
       "id": 3,
       "Dose-Mg": 10,
       "Indication": "Cardiac",
-      "Name": "Digoxin",
+      "Name": "Digoxinsdf",
       "Route": "Po"
     },
     {
-      "id": 4,
-      "Dose-Mg": 500,
-      "Indication": "Asthma",
-      "Name": "Salbutamol",
-      "Route": "Inh"
+      "id": 6,
+      "Dose-Mg": "asdf",
+      "Indication": "sadf",
+      "Name": "asdf",
+      "Route": "asdfsa"
     },
     {
-      "id": 5,
-      "Dose-Mg": 500,
-      "Indication": "Antibiotic",
-      "Name": "Penicillin V ",
-      "Route": "Po"
+      "id": 7,
+      "Dose-Mg": "sdf",
+      "Indication": "fas",
+      "Name": "dfasdfs",
+      "Route": "dfas"
+    },
+    {
+      "id": 8,
+      "Dose-Mg": "sdf",
+      "Indication": "sdf",
+      "Name": "sdf",
+      "Route": "sdf"
+    },
+    {
+      "id": 9,
+      "Dose-Mg": "dfsd1",
+      "Indication": "sdfs1",
+      "Name": "1",
+      "Route": "1"
     }
   ],
   "Problems": [
@@ -42,35 +56,70 @@
       "CodeD": "X500",
       "Description": "Pain in Knee",
       "Name": "Arthritis",
-      "Days": 7
+      "Days": "8"
     },
     {
       "id": 2,
       "CodeD": "200X22",
       "Description": "Earache mild",
       "Name": "Otitis",
-      "Days": 3
+      "Days": "6"
     },
     {
       "id": 3,
       "CodeD": "10D11",
       "Description": "Cardiac congestion",
       "Name": "CCF",
-      "Days": 4
+      "Days": "5"
     },
     {
       "id": 4,
       "CodeD": "S500",
       "Description": "wheezy",
       "Name": "Asthma",
-      "Days": 10
+      "Days": "12"
     },
     {
       "id": 5,
       "CodeD": "UL500",
       "Description": "Red Eye",
       "Name": "Eye Infection",
-      "Days": "42"
+      "Days": "62"
+    },
+    {
+      "id": 8,
+      "CodeD": "asdf",
+      "Description": "asd",
+      "Name": "fasd",
+      "Days": "fasdf"
+    },
+    {
+      "id": 9,
+      "CodeD": "asdfas",
+      "Description": "das",
+      "Name": "asd",
+      "Days": "fasdfa22"
+    },
+    {
+      "id": 10,
+      "CodeD": "asdfsa",
+      "Description": "sadf",
+      "Name": "sadfd",
+      "Days": "asdf"
+    },
+    {
+      "id": 11,
+      "CodeD": "sadf",
+      "Description": "asdf",
+      "Name": "asd",
+      "Days": "dfsadf"
+    },
+    {
+      "id": 12,
+      "CodeD": "fasdf",
+      "Description": "fasd",
+      "Name": "fasd",
+      "Days": "asd"
     }
   ]
 }

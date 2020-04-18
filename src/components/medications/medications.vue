@@ -38,6 +38,11 @@
                             :sort-by.sync="sortBy"
                             :sort-desc.sync="sortDesc"
                             responsive="sm"
+                            id="medicationsTable"
+                            ref="medicationsTable"
+                            select-mode="single"
+                            primary-key="id"
+                            selectable
                             :filter="filter"
                             :filterIncludedFields="filterOn"
                             @row-clicked="setActiveItem"
@@ -57,7 +62,7 @@
                 </div>
             </b-card>
         </b-col>
-        <b-col cols="6" sm="6">
+        <b-col cols="6" sm="6" >
             <editMedication v-if="status == 'edit' && activeItem"
                             :itemProp="activeItem"
                             @editComplete="editComplete"
@@ -71,7 +76,7 @@
             />
 
             <b-card
-                    v-if="status == 'view'"
+                    v-if="status == 'view' && activeItem"
                     border-variant="secondary"
                     header="Detail"
                     header-bg-variant="primary"
@@ -88,14 +93,18 @@
                         footer-bg-variant="white"
                         footer-border-variant="white">
 
-                    <b-button variant="primary"
-                              class="float-right ml-3"
-                              @click="editMedication">
+                    <b-button
+                            v-if="activeItem"
+                            variant="primary"
+                            class="float-right ml-3"
+                            @click="editMedication">
                         Edit
                     </b-button>
-                    <b-button variant="outline-danger"
-                              class="float-right"
-                              @click="deleteMed">
+                    <b-button
+                            v-if="activeItem"
+                            variant="outline-danger"
+                            class="float-right"
+                            @click="deleteMed">
                         Delete
                     </b-button>
                 </b-card-footer>
@@ -127,7 +136,7 @@
                 ],
                 filter: null,
                 filterOn: [],
-                activeItem: {},
+                activeItem: null,
                 status: 'view'
             };
         },
@@ -152,26 +161,35 @@
             editMedication() {
                 this.status = 'edit';
             },
-            createComplete () {
+            createComplete() {
                 this.status = 'view';
-                this.activeItem = this.medications[this.medications.length - 1] ;
+                this.activeItem = this.medications[this.medications.length - 1];
+                this.selectRow(this.activeItem.id);
             },
-            editComplete (item) {
+            selectRow(id) {
+                let row = document.getElementById('medicationsTable__row_' + id);
+                let index = Array.from(document.querySelectorAll('#medicationsTable tr')).indexOf(row) - 1;
+                this.$refs.medicationsTable.selectRow(index);
+            },
+            editComplete(item) {
                 this.status = 'view';
                 this.activeItem = item;
+                this.selectRow(this.activeItem.id);
             },
-            cancel () {
+            cancel() {
                 this.status = 'view';
             },
-            deleteMed () {
+            deleteMed() {
                 this.deleteMedication(this.activeItem)
                     .then(() => {
                         this.status = 'view';
-                        this.activeItem = {};
+                        this.activeItem = null;
                     })
             },
-            createMedication () {
+            createMedication() {
                 this.status = 'create';
+                this.activeItem = null;
+                this.$refs.problemsTable.clearSelected();
             }
         },
         mounted: async function () {

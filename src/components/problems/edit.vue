@@ -60,9 +60,9 @@
             ...problemsActions([
                 'updateProblem'
             ]),
-            update () {
-                this.updateProblem(this.item)
-                .then(this.$emit('editComplete', this.item))
+            async update () {
+                await this.updateProblem(this.item);
+                this.$emit('editComplete', this.item);
             },
             cancel() {
                 this.$emit('cancel');

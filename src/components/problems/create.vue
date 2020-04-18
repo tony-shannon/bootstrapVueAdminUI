@@ -52,9 +52,9 @@
             ...problemsActions([
                 'createProblem'
             ]),
-            create () {
-                this.createProblem(this.item)
-                .then( this.$emit('createComplete') );
+            async create () {
+                await this.createProblem(this.item)
+                this.$emit('createComplete');
             },
             cancelCreate() {
                 this.$emit('cancel');
