@@ -180,16 +180,25 @@
                 this.status = 'view';
             },
             deleteMed() {
-                this.deleteMedication(this.activeItem)
-                    .then(() => {
-                        this.status = 'view';
-                        this.activeItem = null;
+                this.$bvModal.msgBoxConfirm('Are you sure you want delete item?')
+                    .then(value => {
+                        if (value) {
+                            this.deleteMedication(this.activeItem)
+                                .then(() => {
+                                    this.status = 'view';
+                                    this.activeItem = null;
+                                    this.$refs.medicationsTable.clearSelected();
+                                })
+                        }
+                    })
+                    .catch(err => {
+                        console.log('err', err);
                     })
             },
             createMedication() {
                 this.status = 'create';
                 this.activeItem = null;
-                this.$refs.problemsTable.clearSelected();
+                this.$refs.medicationsTable.clearSelected();
             }
         },
         mounted: async function () {

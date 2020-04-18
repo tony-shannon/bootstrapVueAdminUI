@@ -33,8 +33,8 @@ export default {
             return new Promise((resolve, reject) => {
                 HTTP.put('Medications/' + payload.id, JSON.stringify(payload))
                     .then(resp => {
-                        dispatch('getMedications')
-                        resolve(resp)
+                        dispatch('updateList',resp.data)
+                            .then(resolve(resp))
                     })
                     .catch(err => {
                         reject(err)
@@ -73,7 +73,7 @@ export default {
         },
         async updateList({commit, state}, payload) {
             return new Promise((resolve) => {
-                state.problems.forEach((item, i) => {
+                state.medications.forEach((item, i) => {
                     if (item.id == payload.id) {
                         commit('setMedication', {index: i, value: payload});
                         resolve()

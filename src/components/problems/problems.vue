@@ -220,11 +220,22 @@
             cancel () {
                 this.status = 'view';
             },
-            async deleteProb () {
-                await this.deleteProblem(this.activeItem)
-                this.status = 'view';
-                this.activeItem = null;
-                this.$refs.problemsTable.clearSelected();
+            deleteProb () {
+                this.$bvModal.msgBoxConfirm('Are you sure you want delete item?')
+                    .then(value => {
+                        if (value) {
+                            this.deleteProblem(this.activeItem)
+                                .then(() => {
+                                    this.status = 'view';
+                                    this.activeItem = null;
+                                    this.$refs.problemsTable.clearSelected();
+                                })
+                        }
+                    })
+                    .catch(err => {
+                        console.log('err', err);
+                    })
+
             },
             createProblem () {
                 this.status = 'create';

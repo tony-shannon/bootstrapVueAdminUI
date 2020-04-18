@@ -9,10 +9,10 @@
     },
     {
       "id": 2,
-      "Dose-Mg": 200,
-      "Indication": "Pain Relief",
+      "Dose-Mg": "2001",
+      "Indication": "Pain Relief11",
       "Name": "Ibuprofen",
-      "Route": "Po"
+      "Route": "Po2"
     },
     {
       "id": 3,
@@ -26,14 +26,7 @@
       "Dose-Mg": "asdf",
       "Indication": "sadf",
       "Name": "asdf",
-      "Route": "asdfsa"
-    },
-    {
-      "id": 7,
-      "Dose-Mg": "sdf",
-      "Indication": "fas",
-      "Name": "dfasdfs",
-      "Route": "dfas"
+      "Route": "asdfsa1"
     },
     {
       "id": 8,
@@ -41,13 +34,6 @@
       "Indication": "sdf",
       "Name": "sdf",
       "Route": "sdf"
-    },
-    {
-      "id": 9,
-      "Dose-Mg": "dfsd1",
-      "Indication": "sdfs1",
-      "Name": "1",
-      "Route": "1"
     }
   ],
   "Problems": [
@@ -77,7 +63,7 @@
       "CodeD": "S500",
       "Description": "wheezy",
       "Name": "Asthma",
-      "Days": "12"
+      "Days": "123"
     },
     {
       "id": 5,
@@ -91,7 +77,7 @@
       "CodeD": "asdf",
       "Description": "asd",
       "Name": "fasd",
-      "Days": "fasdf"
+      "Days": "fasdf1"
     },
     {
       "id": 9,
@@ -113,13 +99,6 @@
       "Description": "asdf",
       "Name": "asd",
       "Days": "dfsadf"
-    },
-    {
-      "id": 12,
-      "CodeD": "fasdf",
-      "Description": "fasd",
-      "Name": "fasd",
-      "Days": "asd"
     }
   ]
 }
