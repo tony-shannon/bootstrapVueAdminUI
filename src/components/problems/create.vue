@@ -18,12 +18,12 @@
 
             <b-button variant="primary"
                       class="float-right ml-3"
-                      @click="update">
+                      @click="create">
                 Complete
             </b-button>
             <b-button variant="outline-danger"
                       class="float-right"
-                      @click="cancel">
+                      @click="cancelCreate">
                 Cancel
             </b-button>
         </b-card-footer>
@@ -32,39 +32,31 @@
 
 <script>
     import {
-        medicationsActions
+        problemsActions
     } from '@/store/helpers';
 
     export default {
-        name: "edit",
+        name: "create",
         data() {
             return {
-                item: { ...this.itemProp }
+                item: {
+                    "id": '',
+                    "CodeD": '',
+                    "Description": '',
+                    "Name": '',
+                    "Days": ''
+                }
             };
         },
-        props: {
-            itemProp: {
-                type: Object,
-                default: function () {
-                    return {
-                        "id": "",
-                        "CodeD": "",
-                        "Description": "",
-                        "Name": "",
-                        "Days": ""
-                    }
-                }
-            }
-        },
         methods: {
-            ...medicationsActions([
-                'updateMedication'
+            ...problemsActions([
+                'createProblem'
             ]),
-            update () {
-                this.updateMedication(this.item)
-                .then(this.$emit('editComplete', this.item))
+            create () {
+                this.createProblem(this.item)
+                .then( this.$emit('createComplete') );
             },
-            cancel() {
+            cancelCreate() {
                 this.$emit('cancel');
             }
         },

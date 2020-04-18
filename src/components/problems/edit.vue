@@ -32,7 +32,7 @@
 
 <script>
     import {
-        medicationsActions
+        problemsActions
     } from '@/store/helpers';
 
     export default {
@@ -47,21 +47,21 @@
                 type: Object,
                 default: function () {
                     return {
-                        "id": "",
-                        "CodeD": "",
-                        "Description": "",
-                        "Name": "",
-                        "Days": ""
+                        "id": '',
+                        "CodeD": '',
+                        "Description": '',
+                        "Name": '',
+                        "Days": ''
                     }
                 }
             }
         },
         methods: {
-            ...medicationsActions([
-                'updateMedication'
+            ...problemsActions([
+                'updateProblem'
             ]),
             update () {
-                this.updateMedication(this.item)
+                this.updateProblem(this.item)
                 .then(this.$emit('editComplete', this.item))
             },
             cancel() {

@@ -43,6 +43,12 @@
                             @row-clicked="setActiveItem"
                     ></b-table>
 
+                    <b-button variant="primary"
+                              class="float-right ml-3"
+                              @click="createProblem">
+                        Create
+                    </b-button>
+
                     <div>
                         Sorting By:
                         <b>{{ sortBy }}</b>, Sort Direction:
@@ -51,8 +57,21 @@
                 </div>
             </b-card> 
         </b-col>
-        <b-col cols="6" sm="6">Detail Content
+        <b-col cols="6" sm="6">
+            <editProblem v-if="status == 'edit' && activeItem"
+                            :itemProp="activeItem"
+                            @editComplete="editComplete"
+                            @cancel="cancel"
+            />
+
+            <createProblem
+                    v-if="status == 'create'"
+                    @createComplete="createComplete"
+                    @cancel="cancel"
+            />
+
             <b-card
+                    v-if="status == 'view'"
                     border-variant="secondary"
                     header="Detail"
                     header-bg-variant="primary"
@@ -65,6 +84,22 @@
                         <p>{{value}}</p>
                     </b-col>
                 </b-row>
+
+                <b-card-footer
+                        footer-bg-variant="white"
+                        footer-border-variant="white">
+
+                    <b-button variant="primary"
+                              class="float-right ml-3"
+                              @click="editProblem">
+                        Edit
+                    </b-button>
+                    <b-button variant="outline-danger"
+                              class="float-right"
+                              @click="deleteProb">
+                        Delete
+                    </b-button>
+                </b-card-footer>
             </b-card>
         </b-col>
     </b-row>
@@ -75,6 +110,9 @@
         problemsState,
         problemsActions
     } from '@/store/helpers';
+
+    import editProblem from './edit.vue';
+    import createProblem from './create.vue';
 
     export default {
         name: "problems",
@@ -109,7 +147,8 @@
                 // ],
                 filter: null,
                 filterOn: [],
-                activeItem: null
+                activeItem: null,
+                status: 'view'
             };
         },
 
@@ -126,6 +165,10 @@
                 'problems',
             ]),
         },
+        components: {
+            editProblem,
+            createProblem
+        },
         watch: {
             show(newVal) {
                 console.log("Alert is now " + (newVal ? "visible" : "hidden"));
@@ -141,9 +184,34 @@
             },
             ...problemsActions([
                 'getProblems',
+                'deleteProblem'
             ]),
             setActiveItem (item) {
                 this.activeItem = item;
+            },
+            editProblem() {
+                this.status = 'edit';
+            },
+            createComplete () {
+                this.status = 'view';
+                this.activeItem = this.problems[this.problems.length - 1] ;
+            },
+            editComplete (item) {
+                this.status = 'view';
+                this.activeItem = item;
+            },
+            cancel () {
+                this.status = 'view';
+            },
+            deleteProb () {
+                this.deleteProblem(this.activeItem)
+                    .then(() => {
+                        this.status = 'view';
+                        this.activeItem = {};
+                    })
+            },
+            createProblem () {
+                this.status = 'create';
             }
         },
         mounted: async function() {

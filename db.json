@@ -46,14 +46,14 @@
     },
     {
       "id": 2,
-      "CodeD": "200X",
+      "CodeD": "200X22",
       "Description": "Earache mild",
       "Name": "Otitis",
       "Days": 3
     },
     {
       "id": 3,
-      "CodeD": "10D",
+      "CodeD": "10D11",
       "Description": "Cardiac congestion",
       "Name": "CCF",
       "Days": 4
@@ -70,7 +70,7 @@
       "CodeD": "UL500",
       "Description": "Red Eye",
       "Name": "Eye Infection",
-      "Days": 4
+      "Days": "42"
     }
   ]
 }

@@ -11,15 +11,6 @@ export default {
         setMedications(state, payload) {
             state.medications = payload;
         },
-        setMedication(state, payload) {
-            state.medications[payload.index] = payload.value;
-        },
-        removeMedication(state, payload) {
-            state.medications.splice(payload.index, 1);
-        },
-        addNewMedication (state, payload) {
-            state.medications.push(payload);
-        }
     },
     actions: {
         async getMedications({commit}) {
@@ -39,8 +30,7 @@ export default {
             return new Promise((resolve, reject) => {
                 HTTP.put('Medications/' + payload.id, JSON.stringify(payload))
                     .then(resp => {
-                        console.log('resp', resp);
-                        dispatch('updateList', resp)
+                        dispatch('getMedications')
                         resolve(resp)
                     })
                     .catch(err => {
@@ -49,12 +39,11 @@ export default {
 
             });
         },
-        async createMedication ({commmit}, payload) {
+        async createMedication ({dispatch}, payload) {
             return new Promise((resolve, reject) => {
                 HTTP.post('Medications/', JSON.stringify(payload))
                     .then(resp => {
-                        console.log('resp', resp);
-                        commmit('addNewMedication', resp)
+                        dispatch('getMedications')
                         resolve(resp)
                     })
                     .catch(err => {
@@ -67,8 +56,7 @@ export default {
             return new Promise((resolve, reject) => {
                 HTTP.delete('Medications/' + payload.id)
                     .then(resp => {
-                        console.log('resp', resp);
-                        dispatch('removeMedication', payload.id)
+                        dispatch('getMedications')
                         resolve(resp)
                     })
                     .catch(err => {
@@ -77,22 +65,5 @@ export default {
 
             });
         },
-        updateList ({commit, state, payload}) {
-            console.log('updateList payload', payload);
-            state.medications.forEach((item, i) =>{
-                if (item.id == payload.id) {
-                    commit('setMedication', {index: i, payload})
-                }
-            });
-
-        },
-        removeMedication ({commit, state, payload}) {
-            state.medications.forEach((item, i) =>{
-                if (item.id == payload) {
-                    commit('removeMedication', {index: i, payload})
-                }
-            });
-        }
-
     },
 };

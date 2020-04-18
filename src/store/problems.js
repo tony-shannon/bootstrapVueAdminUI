@@ -25,6 +25,45 @@ export default {
 
             });
         },
+        async updateProblem ({dispatch}, payload) {
+            return new Promise((resolve, reject) => {
+                HTTP.put('Problems/' + payload.id, JSON.stringify(payload))
+                    .then(resp => {
+                        dispatch('getProblems')
+                        resolve(resp)
+                    })
+                    .catch(err => {
+                        reject(err)
+                    })
+
+            });
+        },
+        async createProblem ({dispatch}, payload) {
+            return new Promise((resolve, reject) => {
+                HTTP.post('Problems/', JSON.stringify(payload))
+                    .then(resp => {
+                        dispatch('getProblems')
+                        resolve(resp)
+                    })
+                    .catch(err => {
+                        reject(err)
+                    })
+
+            });
+        },
+        async deleteProblem ({dispatch}, payload) {
+            return new Promise((resolve, reject) => {
+                HTTP.delete('Problems/' + payload.id)
+                    .then(resp => {
+                        dispatch('getProblems')
+                        resolve(resp)
+                    })
+                    .catch(err => {
+                        reject(err)
+                    })
+
+            });
+        },
 
     },
 };

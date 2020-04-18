@@ -60,7 +60,7 @@
         <b-col cols="6" sm="6">
             <editMedication v-if="status == 'edit' && activeItem"
                             :itemProp="activeItem"
-                            @editComplete="editComplete(item)"
+                            @editComplete="editComplete"
                             @cancel="cancel"
             />
 
