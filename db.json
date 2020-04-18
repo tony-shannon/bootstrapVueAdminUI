@@ -1,35 +1,35 @@
 {
   "Medications": [
     {
-      "ID": 1,
+      "id": 1,
       "Dose-Mg": 500,
       "Indication": "Pain Relief",
       "Name": "Paracetamol",
       "Route": "Po"
     },
     {
-      "ID": 2,
+      "id": 2,
       "Dose-Mg": 200,
       "Indication": "Pain Relief",
       "Name": "Ibuprofen",
       "Route": "Po"
     },
     {
-      "ID": 3,
+      "id": 3,
       "Dose-Mg": 10,
       "Indication": "Cardiac",
       "Name": "Digoxin",
       "Route": "Po"
     },
     {
-      "ID": 4,
+      "id": 4,
       "Dose-Mg": 500,
       "Indication": "Asthma",
       "Name": "Salbutamol",
       "Route": "Inh"
     },
     {
-      "ID": 5,
+      "id": 5,
       "Dose-Mg": 500,
       "Indication": "Antibiotic",
       "Name": "Penicillin V ",
@@ -38,35 +38,35 @@
   ],
   "Problems": [
     {
-      "ID": 1,
+      "id": 1,
       "CodeD": "X500",
       "Description": "Pain in Knee",
       "Name": "Arthritis",
       "Days": 7
     },
     {
-      "ID": 2,
+      "id": 2,
       "CodeD": "200X",
       "Description": "Earache mild",
       "Name": "Otitis",
       "Days": 3
     },
     {
-      "ID": 3,
+      "id": 3,
       "CodeD": "10D",
       "Description": "Cardiac congestion",
       "Name": "CCF",
       "Days": 4
     },
     {
-      "ID": 4,
+      "id": 4,
       "CodeD": "S500",
       "Description": "wheezy",
       "Name": "Asthma",
       "Days": 10
     },
     {
-      "ID": 5,
+      "id": 5,
       "CodeD": "UL500",
       "Description": "Red Eye",
       "Name": "Eye Infection",

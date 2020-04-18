@@ -37,7 +37,7 @@ export default {
         },
         async updateMedication ({dispatch}, payload) {
             return new Promise((resolve, reject) => {
-                HTTP.put('Medications/' + payload.ID, JSON.stringify(payload))
+                HTTP.put('Medications/' + payload.id, JSON.stringify(payload))
                     .then(resp => {
                         console.log('resp', resp);
                         dispatch('updateList', resp)
@@ -65,10 +65,10 @@ export default {
         },
         async deleteMedication ({dispatch}, payload) {
             return new Promise((resolve, reject) => {
-                HTTP.delete('Medications/' + payload.ID)
+                HTTP.delete('Medications/' + payload.id)
                     .then(resp => {
                         console.log('resp', resp);
-                        dispatch('removeMedication', payload.ID)
+                        dispatch('removeMedication', payload.id)
                         resolve(resp)
                     })
                     .catch(err => {
@@ -80,7 +80,7 @@ export default {
         updateList ({commit, state, payload}) {
             console.log('updateList payload', payload);
             state.medications.forEach((item, i) =>{
-                if (item.ID == payload.ID) {
+                if (item.id == payload.id) {
                     commit('setMedication', {index: i, payload})
                 }
             });
@@ -88,7 +88,7 @@ export default {
         },
         removeMedication ({commit, state, payload}) {
             state.medications.forEach((item, i) =>{
-                if (item.ID == payload) {
+                if (item.id == payload) {
                     commit('removeMedication', {index: i, payload})
                 }
             });

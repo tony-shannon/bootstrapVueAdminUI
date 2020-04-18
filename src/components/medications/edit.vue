@@ -9,7 +9,7 @@
         <b-row v-for="(value, key) in item" :key="key">
             <b-col cols="6" sm="6">
                 <h5>{{key}}</h5>
-                <b-form-input :disabled="key == 'ID'" v-model="item[key]" ></b-form-input>
+                <b-form-input :disabled="key == 'id'" v-model="item[key]" ></b-form-input>
             </b-col>
         </b-row>
         <b-card-footer
@@ -47,7 +47,7 @@
                 type: Object,
                 default: function () {
                     return {
-                        "ID": "",
+                        "id": "",
                         "CodeD": "",
                         "Description": "",
                         "Name": "",

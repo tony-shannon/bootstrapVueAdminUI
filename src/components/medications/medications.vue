@@ -117,10 +117,10 @@
         name: "medications",
         data() {
             return {
-                sortBy: "ID",
+                sortBy: "id",
                 sortDesc: false,
                 fields: [
-                    {key: "ID", sortable: true},
+                    {key: "id", sortable: true},
                     {key: "Dose-Mg", sortable: true},
                     {key: "Name", sortable: true},
                     {key: "Route", sortable: false}

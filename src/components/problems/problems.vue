@@ -80,10 +80,10 @@
         name: "problems",
         data() {
             return {
-                sortBy: "ID",
+                sortBy: "id",
                 sortDesc: false,
                 fields: [
-                    {key: "ID", sortable: true},
+                    {key: "id", sortable: true},
                     {key: "CodeD", sortable: true},
                    
                     {key: "Name", sortable: false},
