@@ -18,22 +18,22 @@
       "id": 3,
       "Dose-Mg": 10,
       "Indication": "Cardiac",
-      "Name": "Digoxinsdf",
+      "Name": "DigoxinA",
       "Route": "Po"
     },
     {
       "id": 6,
-      "Dose-Mg": "asdf",
-      "Indication": "sadf",
-      "Name": "asdf",
-      "Route": "asdfsa1"
+      "Dose-Mg": "150",
+      "Indication": "Infection",
+      "Name": "Pen V",
+      "Route": "Po"
     },
     {
-      "id": 8,
-      "Dose-Mg": "sdf",
-      "Indication": "sdf",
-      "Name": "sdf",
-      "Route": "sdf"
+      "id": 7,
+      "Dose-Mg": "200",
+      "Indication": "Dry Skin",
+      "Name": "Betnovate",
+      "Route": "Topical"
     }
   ],
   "Problems": [
@@ -69,36 +69,65 @@
       "id": 5,
       "CodeD": "UL500",
       "Description": "Red Eye",
-      "Name": "Eye Infection",
+      "Name": "Eye Infection - mild",
       "Days": "62"
     },
     {
+      "id": 7,
+      "CodeD": "F564",
+      "Description": "Dry Skin",
+      "Name": "Alopecia Areata",
+      "Days": "14"
+    }
+  ],
+  "Adverse_Events": [
+    {
+      "id": 1,
+      "CodeD": "XD500",
+      "Description": "Swelling in Knee",
+      "Type": "Trauma",
+      "Name": "Haematoma",
+      "Days": "6"
+    },
+    {
+      "id": 2,
+      "CodeD": "20L0X22",
+      "Description": "Earache after ear procedure",
+      "Type": "Infection",
+      "Name": "Otitis Externa",
+      "Days": "6"
+    },
+    {
+      "id": 4,
+      "CodeD": "S5ER00",
+      "Description": "wheezy after taking her meds",
+      "Type": "Allergy",
+      "Name": "Bronchospasm",
+      "Days": "123"
+    },
+    {
+      "id": 5,
+      "CodeD": "UL56500",
+      "Description": "Red Eye",
+      "Type": "Infection",
+      "Name": "Swimming Infection",
+      "Days": "62"
+    },
+    {
+      "id": 7,
+      "CodeD": "F55664",
+      "Description": "Skin Rash",
+      "Type": "Drug Toxic",
+      "Name": "Analphylaxis",
+      "Days": "10"
+    },
+    {
       "id": 8,
-      "CodeD": "asdf",
-      "Description": "asd",
-      "Name": "fasd",
-      "Days": "fasdf1"
-    },
-    {
-      "id": 9,
-      "CodeD": "asdfas",
-      "Description": "das",
-      "Name": "asd",
-      "Days": "fasdfa22"
-    },
-    {
-      "id": 10,
-      "CodeD": "asdfsa",
-      "Description": "sadf",
-      "Name": "sadfd",
-      "Days": "asdf"
-    },
-    {
-      "id": 11,
-      "CodeD": "sadf",
-      "Description": "asdf",
-      "Name": "asd",
-      "Days": "dfsadf"
+      "CodeD": "34hHR",
+      "Description": "Skin Rash from Latex",
+      "Type": "Allergy ",
+      "Name": "Dermatitis",
+      "Days": "11"
     }
   ]
 }

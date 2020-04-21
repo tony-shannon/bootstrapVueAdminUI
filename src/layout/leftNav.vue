@@ -15,7 +15,13 @@
             >
                 Meds
             </router-link>
-            <b-list-group-item href="adverseEv">AdvEvents</b-list-group-item>
+            <router-link
+                    class="list-group-item list-group-item-action"
+                    :to="{ name: 'adverse_events' }"
+            >
+                AdvEvents
+            </router-link>
+            <b-list-group-item href="adverseEvB">AdvEventB</b-list-group-item>
             <b-list-group-item href="Procedures">Procedures</b-list-group-item>
         </b-list-group>
     </div>

@@ -27,3 +27,16 @@ export const problemsActions = arrNames => ({
         ...arrNames,
     ]),
 });
+
+
+export const adverse_eventsState = arrNames => ({
+    ...mapState('adverse_events', [
+        ...arrNames,
+    ]),
+});
+
+export const adverse_eventsActions = arrNames => ({
+    ...mapActions('adverse_events', [
+        ...arrNames,
+    ]),
+});
