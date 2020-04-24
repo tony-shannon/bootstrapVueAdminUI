@@ -34,6 +34,7 @@
     import {
         adverse_eventsActions
     } from '@/store/helpers';
+    import {CONFIG} from "../../store/config";
 
     export default {
         name: "create",
@@ -51,10 +52,14 @@
         },
         methods: {
             ...adverse_eventsActions([
-                'createAdverse_Event'
+                'makeRequest'
             ]),
             async create () {
-                await this.createAdverse_Event(this.item);
+                await this.makeRequest({
+                    type: CONFIG.serverType,
+                    action: 'create',
+                    data: this.item
+                });
                 this.$emit('createComplete')
             },
             cancelCreate() {

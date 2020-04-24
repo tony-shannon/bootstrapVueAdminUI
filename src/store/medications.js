@@ -125,7 +125,6 @@ export default {
 
             });
         },
-
         async deleteMedicationGraph({dispatch}, payload) {
             try {
                 await HTTP({
@@ -151,7 +150,6 @@ export default {
                 console.error(error);
             }
         },
-
         async updateMedicationGraph({dispatch}, payload) {
             try {
                 await HTTP({
@@ -188,7 +186,6 @@ export default {
                 console.error(error);
             }
         },
-
         async createMedicationGraph({commit, getters}, payload) {
             try {
                 let id = getters.getNewId;
@@ -223,7 +220,6 @@ export default {
                 console.error(error);
             }
         },
-
         async getMedicationsGraph({commit}) {
             try {
                 let result = await HTTP({
@@ -247,8 +243,6 @@ export default {
                 console.error(error);
             }
         },
-
-
         async updateList({commit, state}, payload) {
             return new Promise((resolve) => {
                 state.medications.forEach((item, i) => {

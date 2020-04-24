@@ -34,6 +34,7 @@
     import {
         adverse_eventsActions
     } from '@/store/helpers';
+    import {CONFIG} from "../../store/config";
 
     export default {
         name: "edit",
@@ -59,10 +60,14 @@
         },
         methods: {
             ...adverse_eventsActions([
-                'updateAdverse_Event'
+                'makeRequest'
             ]),
             async update () {
-                await this.updateAdverse_Event(this.item);
+                await this.makeRequest({
+                    type: CONFIG.serverType,
+                    action: 'edit',
+                    data: this.item
+                });
                 this.$emit('editComplete', this.item);
             },
             cancel() {

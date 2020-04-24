@@ -122,6 +122,7 @@
 
     import editProblem from './edit.vue';
     import createProblem from './create.vue';
+    import {CONFIG} from '../../store/config';
 
     export default {
         name: "problems",
@@ -130,31 +131,17 @@
                 sortBy: "id",
                 sortDesc: false,
                 fields: [
-                    {key: "id", sortable: true},
+                    {
+                        key: 'id',
+                        sortable: true,
+                        label: "id"
+
+                    },
                     {key: "CodeD", sortable: true},
                    
                     {key: "Name", sortable: false},
                     {key: "Days", sortable: false}
-                ],
-                // {key: "Description", sortable: true},
-
-                // items: [
-                //     {
-                //         isActive: true,
-                //         age: 40,
-                //         first_name: "Asthma",
-                //         last_name: "severe"
-                //     },
-                //     {isActive: false, age: 21, first_name: "Diabetes", last_name: "mild"},
-                //     {isActive: false, age: 89, first_name: "COPD", last_name: "mild"},
-                //     {
-                //         isActive: true,
-                //         age: 38,
-                //         first_name: "Alopecia",
-                //         last_name: "moderate"
-                //     }
-                // ],
-                filter: null,
+                ],filter: null,
                 filterOn: [],
                 activeItem: null,
                 status: 'view'
@@ -185,15 +172,13 @@
         },
         methods: {
             toggle() {
-                console.log("Toggle button clicked");
                 this.show = !this.show;
             },
             dismissed() {
                 console.log("Alert dismissed");
             },
             ...problemsActions([
-                'getProblems',
-                'deleteProblem'
+                'makeRequest',
             ]),
             setActiveItem (item) {
                 this.status = 'view';
@@ -224,7 +209,11 @@
                 this.$bvModal.msgBoxConfirm('Are you sure you want delete item?')
                     .then(value => {
                         if (value) {
-                            this.deleteProblem(this.activeItem)
+                            this.makeRequest({
+                                type: CONFIG.serverType,
+                                action: 'delete',
+                                data: this.activeItem
+                            })
                                 .then(() => {
                                     this.status = 'view';
                                     this.activeItem = null;
@@ -245,7 +234,10 @@
         },
         mounted: async function() {
             this.$nextTick(function() {
-                this.getProblems();
+                this.makeRequest({
+                    type: CONFIG.serverType,
+                    action: 'get'
+                });
             })
         },
     }

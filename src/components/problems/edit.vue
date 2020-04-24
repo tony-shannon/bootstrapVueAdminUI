@@ -34,6 +34,7 @@
     import {
         problemsActions
     } from '@/store/helpers';
+    import {CONFIG} from "../../store/config";
 
     export default {
         name: "edit",
@@ -58,10 +59,14 @@
         },
         methods: {
             ...problemsActions([
-                'updateProblem'
+                'makeRequest'
             ]),
             async update () {
-                await this.updateProblem(this.item);
+                await this.makeRequest({
+                    type: CONFIG.serverType,
+                    action: 'edit',
+                    data: this.item
+                });
                 this.$emit('editComplete', this.item);
             },
             cancel() {

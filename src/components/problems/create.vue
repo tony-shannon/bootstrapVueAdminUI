@@ -34,6 +34,7 @@
     import {
         problemsActions
     } from '@/store/helpers';
+    import {CONFIG} from "../../store/config";
 
     export default {
         name: "create",
@@ -50,11 +51,15 @@
         },
         methods: {
             ...problemsActions([
-                'createProblem'
+                'makeRequest'
             ]),
-            async create () {
-                await this.createProblem(this.item)
-                this.$emit('createComplete');
+            async create() {
+                await this.makeRequest({
+                    type: CONFIG.serverType,
+                    action: 'create',
+                    data: this.item
+                });
+                this.$emit('createComplete')
             },
             cancelCreate() {
                 this.$emit('cancel');

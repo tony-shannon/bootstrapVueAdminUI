@@ -121,7 +121,7 @@
     } from '@/store/helpers';
     import editMedication from './edit.vue';
     import createMedication from './create.vue';
-    import {CONFIG} from '../../store/config'
+    import {CONFIG} from '../../store/config';
 
     export default {
         name: "medications",
@@ -133,21 +133,9 @@
                 filterOn: [],
                 activeItem: null,
                 status: 'view',
-            };
-        },
-        components: {
-            editMedication,
-            createMedication
-        },
-        computed: {
-            ...medicationsState([
-                'medications',
-            ]),
-            fields () {
-                let idKey = CONFIG.serverType == 'rest' ? "id" : "idN";
-                return [
+                fields: [
                     {
-                        key: idKey,
+                        key: 'id',
                         sortable: true,
                         label: "id"
 
@@ -160,7 +148,16 @@
                     {key: "Name", sortable: true},
                     {key: "Route", sortable: false}
                 ]
-            }
+            };
+        },
+        components: {
+            editMedication,
+            createMedication
+        },
+        computed: {
+            ...medicationsState([
+                'medications',
+            ]),
         },
         methods: {
             ...medicationsActions([

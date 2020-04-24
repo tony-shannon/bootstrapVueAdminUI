@@ -121,6 +121,7 @@
     } from '@/store/helpers';
     import editAdverse_Event from './edit.vue';
     import createAdverse_Event from './create.vue';
+    import {CONFIG} from '../../store/config';
 
     export default {
         name: "adverse_events",
@@ -129,7 +130,12 @@
                 sortBy: "id",
                 sortDesc: false,
                 fields: [
-                    {key: "id", sortable: true},
+                    {
+                        key: 'id',
+                        sortable: true,
+                        label: "id"
+
+                    },
                     {key: "Type", sortable: true},
                     {key: "Name", sortable: true},
                     {key: "CodeD", sortable: false}
@@ -151,8 +157,7 @@
         },
         methods: {
             ...adverse_eventsActions([
-                'getAdverse_Events',
-                'deleteAdverse_Event'
+                'makeRequest'
             ]),
 
             setActiveItem(item) {
@@ -184,7 +189,11 @@
                 this.$bvModal.msgBoxConfirm('Are you sure you want delete item?')
                     .then(value => {
                         if (value) {
-                            this.deleteAdverse_Event(this.activeItem)
+                            this.makeRequest({
+                                type: CONFIG.serverType,
+                                action: 'delete',
+                                data: this.activeItem
+                            })
                                 .then(() => {
                                     this.status = 'view';
                                     this.activeItem = null;
@@ -204,7 +213,10 @@
         },
         mounted: async function () {
             this.$nextTick(function () {
-                this.getAdverse_Events();
+                this.makeRequest({
+                    type: CONFIG.serverType,
+                    action: 'get'
+                });
             })
         },
     }
