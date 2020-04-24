@@ -144,7 +144,6 @@
                 'medications',
             ]),
             fields () {
-                let DoseKey = this.serverType == 'rest' ? "Dose-Mg" : "DoseMg";
                 let idKey = this.serverType == 'rest' ? "id" : "idN";
                 return [
                     {
@@ -154,7 +153,7 @@
 
                     },
                     {
-                        key: DoseKey,
+                        key: 'DoseMg',
                         sortable: true,
                         label: "Dose-Mg"
                     },

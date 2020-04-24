@@ -136,7 +136,7 @@ export default {
                                   updateMedication(
                                     data: {
                                     idN: `+ payload.id +`,
-                                    DoseMg: `+ parseInt(payload['Dose-Mg']) +`,
+                                    DoseMg: `+ parseInt(payload.DoseMg) +`,
                                     Indication: "` + payload.Indication +`",
                                     Name: "`+ payload.Name +`",
                                     Route: "`+ payload.Route +`"
@@ -175,7 +175,7 @@ export default {
                                             data: {
                                                 id: "`+ id +`",
                                                 idN: `+ id +`,
-                                                DoseMg: `+ parseInt(payload['Dose-Mg']) +`,
+                                                DoseMg: `+ parseInt(payload.DoseMg) +`,
                                                 Indication: "`+ payload.Indication +`",
                                                 Name: "`+ payload.Name +`",
                                                 Route: "`+ payload.Route +`"

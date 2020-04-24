@@ -59,10 +59,10 @@
         },
         methods: {
             ...medicationsActions([
-                'updateMedication'
+                'makeRequest'
             ]),
             async update () {
-                await this.updateMedication({
+                await this.makeRequest({
                     type: CONFIG.serverType,
                     action: 'edit',
                     data: this.item

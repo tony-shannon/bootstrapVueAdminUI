@@ -42,7 +42,7 @@
             return {
                 item: {
                     "id": '',
-                    "Dose-Mg": '',
+                    "DoseMg": '',
                     "Indication": '',
                     "Name": '',
                     "Route": ''
