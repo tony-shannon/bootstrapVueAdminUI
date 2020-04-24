@@ -162,7 +162,7 @@ export default {
                                                 Type: "`+ payload.Type +`",
                                                 CodeD: "`+ payload.CodeD +`",
                                                 Description: "`+ payload.Description +`",
-                                                Name: "`+ payload.Route +`"
+                                                Name: "`+ payload.Name +`"
                                                 Days: "`+ payload.Days +`"
                                             }
                                   where:
@@ -202,7 +202,7 @@ export default {
                                                 Type: "`+ payload.Type +`",
                                                 CodeD: "`+ payload.CodeD +`",
                                                 Description: "`+ payload.Description +`",
-                                                Name: "`+ payload.Route +`"
+                                                Name: "`+ payload.Name +`"
                                                 Days: "`+ payload.Days +`"
                                             }
                                         )
