@@ -121,6 +121,7 @@
     } from '@/store/helpers';
     import editMedication from './edit.vue';
     import createMedication from './create.vue';
+    import {CONFIG} from '../../store/config'
 
     export default {
         name: "medications",
@@ -128,16 +129,10 @@
             return {
                 sortBy: "id",
                 sortDesc: false,
-                fields: [
-                    {key: "id", sortable: true},
-                    {key: "Dose-Mg", sortable: true},
-                    {key: "Name", sortable: true},
-                    {key: "Route", sortable: false}
-                ],
                 filter: null,
                 filterOn: [],
                 activeItem: null,
-                status: 'view'
+                status: 'view',
             };
         },
         components: {
@@ -148,11 +143,29 @@
             ...medicationsState([
                 'medications',
             ]),
+            fields () {
+                let DoseKey = this.serverType == 'rest' ? "Dose-Mg" : "DoseMg";
+                let idKey = this.serverType == 'rest' ? "id" : "idN";
+                return [
+                    {
+                        key: idKey,
+                        sortable: true,
+                        label: "id"
+
+                    },
+                    {
+                        key: DoseKey,
+                        sortable: true,
+                        label: "Dose-Mg"
+                    },
+                    {key: "Name", sortable: true},
+                    {key: "Route", sortable: false}
+                ]
+            }
         },
         methods: {
             ...medicationsActions([
-                'getMedications',
-                'deleteMedication'
+                'makeRequest'
             ]),
             setActiveItem(item) {
                 this.status = 'view';
@@ -203,7 +216,10 @@
         },
         mounted: async function () {
             this.$nextTick(function () {
-                this.getMedications();
+                this.makeRequest({
+                    type: CONFIG.serverType,
+                    action: 'get'
+                });
             })
         },
     }

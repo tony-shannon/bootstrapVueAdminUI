@@ -9,7 +9,7 @@
         <b-row v-for="(value, key) in item" :key="key">
             <b-col cols="6" sm="6">
                 <h5>{{key}}</h5>
-                <b-form-input :disabled="key == 'id'" v-model="item[key]" ></b-form-input>
+                <b-form-input :disabled="key == 'id'" v-model="item[key]"></b-form-input>
             </b-col>
         </b-row>
         <b-card-footer
@@ -34,6 +34,7 @@
     import {
         medicationsActions
     } from '@/store/helpers';
+    import {CONFIG} from "../../store/config";
 
     export default {
         name: "create",
@@ -45,15 +46,19 @@
                     "Indication": '',
                     "Name": '',
                     "Route": ''
-                }
+                },
             };
         },
         methods: {
             ...medicationsActions([
-                'createMedication'
+                'makeRequest'
             ]),
-            async create () {
-                await this.createMedication(this.item);
+            async create() {
+                await this.makeRequest({
+                    type: CONFIG.serverType,
+                    action: 'create',
+                    data: this.item
+                });
                 this.$emit('createComplete')
             },
             cancelCreate() {

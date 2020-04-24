@@ -34,6 +34,7 @@
     import {
         medicationsActions
     } from '@/store/helpers';
+    import {CONFIG} from "../../store/config";
 
     export default {
         name: "edit",
@@ -61,7 +62,11 @@
                 'updateMedication'
             ]),
             async update () {
-                await this.updateMedication(this.item);
+                await this.updateMedication({
+                    type: CONFIG.serverType,
+                    action: 'edit',
+                    data: this.item
+                });
                 this.$emit('editComplete', this.item);
             },
             cancel() {
