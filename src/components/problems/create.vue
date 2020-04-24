@@ -59,7 +59,6 @@
                     "Name": '',
                     "Days": ''
                 },
-                selectedName: null,
                 names: [],
                 query: ''
             };
@@ -78,6 +77,7 @@
                     type: CONFIG.serverType,
                     action: 'getTerms'
                 });
+                this.item.Name = this.query;
             }
         },
         filters: {
