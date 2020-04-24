@@ -1,7 +1,8 @@
 import {HTTP} from './axios'
 import {CONFIG} from "./config";
 const initialState = {
-    problems: []
+    problems: [],
+    terms: []
 };
 
 export default {
@@ -11,12 +12,18 @@ export default {
         setProblems(state, payload) {
             state.problems = payload;
         },
+        setTerms(state, payload) {
+            state.terms = payload;
+        },
         setProblem(state, payload) {
             state.problems.splice(payload.index, 1, payload.value)
         },
         addProblem (state, payload) {
             state.problems.push(payload)
-        }
+        },
+        clearTerms(state) {
+            state.terms = [];
+        },
     },
     getters: {
         getNewId (state) {
@@ -63,6 +70,9 @@ export default {
                         break;
                     case 'delete':
                         await dispatch('deleteProblemGraph', payload.data);
+                        break;
+                    case 'getTerms':
+                        await dispatch('getTerms');
                         break;
                     default:
                         alert( "This action doesn't exist" );
@@ -251,7 +261,27 @@ export default {
                     }
                 });
             })
-        }
+        },
+        async getTerms({commit}) {
+            try {
+                let result = await HTTP({
+                    method: "POST",
+                    url: CONFIG.graphUrl,
+                    data: {
+                        query: `{
+                                 terms {
+                                         idN
+                                         Term
+                                     }
+                                }`
+                    }
+                });
+                commit('clearTerms');
+                commit('setTerms', result.data.data.terms);
+            } catch (error) {
+                console.error(error);
+            }
+        },
 
     },
 };

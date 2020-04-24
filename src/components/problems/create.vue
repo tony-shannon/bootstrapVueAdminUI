@@ -7,9 +7,19 @@
             align="left"
     >
         <b-row v-for="(value, key) in item" :key="key">
-            <b-col cols="6" sm="6">
+            <b-col cols="6" sm="6" v-if="key != 'Name'">
                 <h5>{{key}}</h5>
                 <b-form-input :disabled="key == 'id'" v-model="item[key]" ></b-form-input>
+            </b-col>
+            <b-col cols="6" sm="6" v-if="key == 'Name'">
+                <h5>{{key}}</h5>
+                <vue-bootstrap-typeahead
+                        class="mb-4"
+                        v-model="query"
+                        :data="terms"
+                        :serializer="item => item.Term"
+                        @hit="item.Name = $event.Term"
+                />
             </b-col>
         </b-row>
         <b-card-footer
@@ -32,9 +42,11 @@
 
 <script>
     import {
+        problemsState,
         problemsActions
     } from '@/store/helpers';
     import {CONFIG} from "../../store/config";
+    import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 
     export default {
         name: "create",
@@ -46,8 +58,32 @@
                     "Description": '',
                     "Name": '',
                     "Days": ''
-                }
+                },
+                selectedName: null,
+                names: [],
+                query: ''
             };
+        },
+        components: {
+            VueBootstrapTypeahead
+        },
+        computed: {
+            ...problemsState([
+                'terms',
+            ]),
+        },
+        watch: {
+            async query() {
+                await this.makeRequest({
+                    type: CONFIG.serverType,
+                    action: 'getTerms'
+                });
+            }
+        },
+        filters: {
+            stringify(value) {
+                return JSON.stringify(value, null, 2)
+            }
         },
         methods: {
             ...problemsActions([
