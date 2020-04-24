@@ -2,35 +2,35 @@
   "Medications": [
     {
       "id": 1,
-      "Dose-Mg": 500,
+      "DoseMg": 500,
       "Indication": "Pain Relief",
       "Name": "Paracetamol",
       "Route": "Po"
     },
     {
       "id": 2,
-      "Dose-Mg": "2001",
+      "DoseMg": 200,
       "Indication": "Pain Relief11",
       "Name": "Ibuprofen",
       "Route": "Po2"
     },
     {
       "id": 3,
-      "Dose-Mg": 10,
+      "DoseMg": 10,
       "Indication": "Cardiac",
       "Name": "DigoxinA",
       "Route": "Po"
     },
     {
       "id": 6,
-      "Dose-Mg": "150",
+      "DoseMg": 150,
       "Indication": "Infection",
       "Name": "Pen V",
       "Route": "Po"
     },
     {
       "id": 7,
-      "Dose-Mg": "200",
+      "DoseMg": 200,
       "Indication": "Dry Skin",
       "Name": "Betnovate",
       "Route": "Topical"
