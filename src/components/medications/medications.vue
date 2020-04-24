@@ -144,7 +144,7 @@
                 'medications',
             ]),
             fields () {
-                let idKey = this.serverType == 'rest' ? "id" : "idN";
+                let idKey = CONFIG.serverType == 'rest' ? "id" : "idN";
                 return [
                     {
                         key: idKey,
@@ -195,7 +195,11 @@
                 this.$bvModal.msgBoxConfirm('Are you sure you want delete item?')
                     .then(value => {
                         if (value) {
-                            this.deleteMedication(this.activeItem)
+                            this.makeRequest({
+                                type: CONFIG.serverType,
+                                action: 'delete',
+                                data: this.activeItem
+                            })
                                 .then(() => {
                                     this.status = 'view';
                                     this.activeItem = null;

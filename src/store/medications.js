@@ -126,6 +126,32 @@ export default {
             });
         },
 
+        async deleteMedicationGraph({dispatch}, payload) {
+            try {
+                await HTTP({
+                    method: "POST",
+                    url: CONFIG.graphUrl,
+                    data: {
+                        query: `mutation{
+                                  deleteMedication(
+                                    where: {
+                                        id: "`+ payload.id +`"
+                                  
+                                    }
+                                  )
+                                  {
+                                  id
+                                  idN
+                                   }
+                                }`
+                    }
+                });
+                await dispatch('getMedicationsGraph');
+            } catch (error) {
+                console.error(error);
+            }
+        },
+
         async updateMedicationGraph({dispatch}, payload) {
             try {
                 await HTTP({
