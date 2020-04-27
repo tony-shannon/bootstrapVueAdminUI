@@ -1,5 +1,9 @@
+import gql from 'graphql-tag'
+
 import {HTTP} from './axios'
-import {CONFIG} from "./config";
+import {GRAPHQL} from './graphql'
+import {CONFIG} from "./config"
+
 const initialState = {
     adverse_events: []
 };
@@ -126,22 +130,21 @@ export default {
         },
         async deleteAdverse_EventGraph({dispatch}, payload) {
             try {
-                await HTTP({
-                    method: "POST",
-                    url: CONFIG.graphUrl,
-                    data: {
-                        query: `mutation{
+                let query = gql`mutation ($id: String!){
                                   deleteAdverse_Event(
                                     where: {
-                                        id: "`+ payload.id +`"
-                                  
+                                        id: $id
                                     }
                                   )
                                   {
-                                  id
-                                  idN
-                                   }
-                                }`
+                                    id
+                                    idN
+                                  }
+                                }`;
+                await GRAPHQL.mutate({
+                    mutation: query,
+                    variables: {
+                        id: payload.id,
                     }
                 });
                 await dispatch('getAdverse_EventsGraph');
