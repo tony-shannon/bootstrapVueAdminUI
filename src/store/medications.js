@@ -1,5 +1,6 @@
 import {HTTP} from './axios'
-import {CONFIG} from './config'
+import {GRAPHQL} from "./graphql";
+import gql from "graphql-tag";
 
 const initialState = {
     medications: []
@@ -127,23 +128,21 @@ export default {
         },
         async deleteMedicationGraph({dispatch}, payload) {
             try {
-                await HTTP({
-                    method: "POST",
-                    url: CONFIG.graphUrl,
-                    data: {
-                        query: `mutation{
+                let query = gql`mutation DeleteMeditation($id: ID!){
                                   deleteMedication(
                                     where: {
-                                        id: "`+ payload.id +`"
-                                  
+                                        id:$id
                                     }
                                   )
                                   {
-                                  id
-                                  idN
+                                    id
+                                    idN
                                    }
-                                }`
-                    }
+                                }`;
+
+                await GRAPHQL.mutate({
+                    mutation: query,
+                    variables: payload,
                 });
                 await dispatch('getMedicationsGraph');
             } catch (error) {
@@ -152,22 +151,27 @@ export default {
         },
         async updateMedicationGraph({dispatch}, payload) {
             try {
-                await HTTP({
-                    method: "POST",
-                    url: CONFIG.graphUrl,
-                    data: {
-                        query: `mutation{
+                payload.DoseMg = parseInt(payload.DoseMg);
+                let query = gql`mutation updateMeditation(
+                                  $id: ID!,
+                                  $idN: Int!,
+                                  $DoseMg: Int!,
+                                  $Indication: String!,
+                                  $Name: String!,
+                                  $Route: String!
+                                
+                                ){
                                   updateMedication(
                                     data: {
-                                    idN: `+ payload.id +`,
-                                    DoseMg: `+ parseInt(payload.DoseMg) +`,
-                                    Indication: "` + payload.Indication +`",
-                                    Name: "`+ payload.Name +`",
-                                    Route: "`+ payload.Route +`"
+                                    idN: $idN,
+                                    DoseMg: $DoseMg,
+                                    Indication: $Indication,
+                                    Name: $Name,
+                                    Route: $Route
                                   }
                                   where:
                                   {
-                                     id: "`+ payload.id +`"    
+                                     id: $id    
                                   }
                                   )
                                   {
@@ -178,30 +182,42 @@ export default {
                                     Name
                                     Route
                                   }
-                                }`
-                    }
+                                }`;
+                await GRAPHQL.mutate({
+                    mutation: query,
+                    variables: payload,
                 });
                 await dispatch('getMedicationsGraph');
+
             } catch (error) {
                 console.error(error);
             }
         },
         async createMedicationGraph({commit, getters}, payload) {
             try {
+
+                payload.DoseMg = parseInt(payload.DoseMg);
+
                 let id = getters.getNewId;
-                let result = await HTTP({
-                    method: "POST",
-                    url: CONFIG.graphUrl,
-                    data: {
-                        query: `mutation{
+                payload.id = id;
+                payload.idN = id;
+
+                let query = gql`mutation CreateMeditation(
+                                      $id: ID!,
+                                      $idN: Int!,
+                                      $DoseMg: Int!,
+                                      $Indication: String!,
+                                      $Name: String!,
+                                      $Route: String!
+                                    ){
                                         createMedication(
                                             data: {
-                                                id: "`+ id +`",
-                                                idN: `+ id +`,
-                                                DoseMg: `+ parseInt(payload.DoseMg) +`,
-                                                Indication: "`+ payload.Indication +`",
-                                                Name: "`+ payload.Name +`",
-                                                Route: "`+ payload.Route +`"
+                                                id: $id,
+                                                idN: $idN,
+                                                DoseMg: $DoseMg,
+                                                Indication: $Indication,
+                                                Name: $Name,
+                                                Route: $Route
                                             }
                                         )
                                         {
@@ -212,21 +228,22 @@ export default {
                                             Name
                                             Route
                                         }
-                                        }`
-                    }
+                                        }`;
+                GRAPHQL.mutate({
+                    mutation: query,
+                    variables: payload,
+                }).then((response)=>{
+                    commit('addMedication', response.data.createMedication);
                 });
-                commit('addMedication', result.data.data.createMedication);
+
             } catch (error) {
                 console.error(error);
             }
         },
         async getMedicationsGraph({commit}) {
             try {
-                let result = await HTTP({
-                    method: "POST",
-                    url: CONFIG.graphUrl,
-                    data: {
-                        query: `{
+
+                let query = gql`{
                                   medications {
                                     id
                                     idN
@@ -235,10 +252,12 @@ export default {
                                     Name
                                     Route
                                   }
-                                }`
-                    }
+                                }`;
+                GRAPHQL.query({
+                    query: query,
+                }).then((response)=>{
+                    commit('setMedications', response.data.medications);
                 });
-                commit('setMedications', result.data.data.medications);
             } catch (error) {
                 console.error(error);
             }

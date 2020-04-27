@@ -1,5 +1,7 @@
 import {HTTP} from './axios'
-import {CONFIG} from "./config";
+import {GRAPHQL} from "./graphql";
+import gql from "graphql-tag";
+
 const initialState = {
     problems: [],
     terms: []
@@ -136,23 +138,22 @@ export default {
         },
         async deleteProblemGraph({dispatch}, payload) {
             try {
-                await HTTP({
-                    method: "POST",
-                    url: CONFIG.graphUrl,
-                    data: {
-                        query: `mutation{
+
+                var query = gql`mutation DeleteProblem($id: ID!){
                                   deleteProblem(
                                     where: {
-                                        id: "`+ payload.id +`"
-                                  
+                                        id:$id
                                     }
                                   )
                                   {
-                                  id
-                                  idN
+                                    id
+                                    idN
                                    }
-                                }`
-                    }
+                                }`;
+
+                await GRAPHQL.mutate({
+                    mutation: query,
+                    variables: payload,
                 });
                 await dispatch('getProblemsGraph');
             } catch (error) {
@@ -161,22 +162,26 @@ export default {
         },
         async updateProblemGraph({dispatch}, payload) {
             try {
-                await HTTP({
-                    method: "POST",
-                    url: CONFIG.graphUrl,
-                    data: {
-                        query: `mutation{
+                let query = gql`mutation UpdateProblem(    
+                                    $id: ID!,
+                                    $idN: Int, 
+                                    $CodeD: String,
+                                    $Description: String,
+                                    $Name: String, 
+                                    $Days: String
+                                  )
+                                  {
                                   updateProblem(
                                     data: {
-                                    idN: `+ payload.id +`,
-                                    CodeD: "`+ payload.CodeD +`",
-                                    Description: "` + payload.Description +`",
-                                    Name: "`+ payload.Name +`",
-                                    Days: "`+ payload.Days +`"
+                                    idN: $idN,
+                                    CodeD: $CodeD,
+                                    Description: $Description,
+                                    Name: $Name,
+                                    Days: $Days,
                                   }
                                   where:
                                   {
-                                     id: "`+ payload.id +`"    
+                                     id: $id    
                                   }
                                   )
                                   {
@@ -187,8 +192,11 @@ export default {
                                     Name
                                     Days
                                   }
-                                }`
-                    }
+                                }`;
+
+                await GRAPHQL.mutate({
+                   mutation: query,
+                   variables: payload,
                 });
                 await dispatch('getProblemsGraph');
             } catch (error) {
@@ -197,20 +205,25 @@ export default {
         },
         async createProblemGraph({commit, getters}, payload) {
             try {
-                let id = getters.getNewId;
-                let result = await HTTP({
-                    method: "POST",
-                    url: CONFIG.graphUrl,
-                    data: {
-                        query: `mutation{
+
+                payload.id = getters.getNewId;
+                payload.idN = payload.id;
+                let query = gql`mutation CreateProblem(
+                                        $id: ID!,
+                                        $idN: Int!,
+                                        $CodeD: String!,
+                                        $Description: String!,
+                                        $Name: String!, 
+                                        $Days: String!
+                                    ){
                                         createProblem(
                                             data: {
-                                                id: "`+ id +`",
-                                                idN: `+ id +`,
-                                                CodeD: "`+ payload.CodeD +`",
-                                                Description: "`+ payload.Description +`",
-                                                Name: "`+ payload.Name +`",
-                                                Days: "`+ payload.Days +`"
+                                                id: $id,
+                                                idN: $idN,
+                                                CodeD: $CodeD,
+                                                Description: $Description,
+                                                Name: $Name,
+                                                Days: $Days
                                             }
                                         )
                                         {
@@ -221,22 +234,22 @@ export default {
                                             Name
                                             Days
                                         }
-                                        }`
-                    }
+                                        }`;
+                await GRAPHQL.mutate({
+                    mutation: query,
+                    variables: payload,
+                }).then((response)=>{
+                    commit('addProblem', response.data.createProblem);
                 });
-                commit('addProblem', result.data.data.createProblem);
             } catch (error) {
                 console.error(error);
             }
         },
         async getProblemsGraph({commit}) {
             try {
-                let result = await HTTP({
-                    method: "POST",
-                    url: CONFIG.graphUrl,
-                    data: {
-                        query: `{
-                                    problems {
+
+                let query = gql`{
+                                  problems {
                                         id,
                                         idN,
                                         CodeD,
@@ -244,10 +257,12 @@ export default {
                                         Description,
                                         Days
                                       }
-                                }`
-                    }
+                                }`;
+                await GRAPHQL.query({
+                    query: query
+                }).then((response)=>{
+                    commit('setProblems', response.data.problems);
                 });
-                commit('setProblems', result.data.data.problems);
             } catch (error) {
                 console.error(error);
             }
@@ -264,20 +279,22 @@ export default {
         },
         async getTerms({commit}) {
             try {
-                let result = await HTTP({
-                    method: "POST",
-                    url: CONFIG.graphUrl,
-                    data: {
-                        query: `{
+
+                let query = gql`{
                                  terms {
                                          idN
                                          Term
                                      }
-                                }`
-                    }
+                                }`;
+
+                await GRAPHQL.query({
+                    query: query,
+                }).then((response)=>{
+                    commit('clearTerms');
+                    commit('setTerms', response.data.terms);
                 });
-                commit('clearTerms');
-                commit('setTerms', result.data.data.terms);
+
+
             } catch (error) {
                 console.error(error);
             }

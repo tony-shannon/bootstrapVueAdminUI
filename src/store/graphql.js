@@ -6,7 +6,9 @@ import {InMemoryCache} from "apollo-cache-inmemory";
 
 const client = new ApolloClient({
     link: createHttpLink({uri: CONFIG.graphUrl}),
-    cache: new InMemoryCache()
+    cache: new InMemoryCache({
+      addTypename: false
+    })
 });
 
 export const GRAPHQL = client;
