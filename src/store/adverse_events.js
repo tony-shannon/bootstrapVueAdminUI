@@ -1,8 +1,7 @@
-import gql from 'graphql-tag'
+import gql from 'graphql-tag';
 
-import {HTTP} from './axios'
-import {GRAPHQL} from './graphql'
-import {CONFIG} from "./config"
+import {HTTP} from './axios';
+import {GRAPHQL} from './graphql';
 
 const initialState = {
     adverse_events: []
@@ -130,10 +129,11 @@ export default {
         },
         async deleteAdverse_EventGraph({dispatch}, payload) {
             try {
-                let query = gql`mutation ($id: String!){
+                let query = gql`
+                            mutation deleteAdverseEvt($idAdv: ID!){
                                   deleteAdverse_Event(
                                     where: {
-                                        id: $id
+                                        id: $idAdv
                                     }
                                   )
                                   {
@@ -144,7 +144,7 @@ export default {
                 await GRAPHQL.mutate({
                     mutation: query,
                     variables: {
-                        id: payload.id,
+                        idAdv: payload.id,
                     }
                 });
                 await dispatch('getAdverse_EventsGraph');
@@ -154,23 +154,28 @@ export default {
         },
         async updateAdverse_EventGraph({dispatch}, payload) {
             try {
-                await HTTP({
-                    method: "POST",
-                    url: CONFIG.graphUrl,
-                    data: {
-                        query: `mutation{
+                console.log(payload);
+                let query = gql`mutation updAdverseEvent(
+                                    $id: ID!,
+                                    $idN: Int, 
+                                    $Type: String,
+                                    $CodeD: String,
+                                    $Description: String,
+                                    $Name: String, 
+                                    $Days: String
+                                  ){
                                   updateAdverse_Event(
                                     data: {
-                                                idN: `+ payload.id +`,
-                                                Type: "`+ payload.Type +`",
-                                                CodeD: "`+ payload.CodeD +`",
-                                                Description: "`+ payload.Description +`",
-                                                Name: "`+ payload.Name +`"
-                                                Days: "`+ payload.Days +`"
+                                                idN: $idN,
+                                                Type: $Type,
+                                                CodeD: $CodeD,
+                                                Description: $Description,
+                                                Name: $Name,
+                                                Days: $Days,
                                             }
                                   where:
                                   {
-                                     id: "`+ payload.id +`"    
+                                     id: $id
                                   }
                                   )
                                   {
@@ -182,9 +187,12 @@ export default {
                                     Name
                                     Days
                                    }
-                                }`
-                    }
+                       }`;
+                await GRAPHQL.mutate({
+                    mutation: query,
+                    variables: payload,
                 });
+
                 await dispatch('getAdverse_EventsGraph');
             } catch (error) {
                 console.error(error);
@@ -192,21 +200,26 @@ export default {
         },
         async createAdverse_EventGraph({commit, getters}, payload) {
             try {
-                let id = getters.getNewId;
-                let result = await HTTP({
-                    method: "POST",
-                    url: CONFIG.graphUrl,
-                    data: {
-                        query: `mutation{
+                payload.id = getters.getNewId;
+                payload.idN = payload.id;
+                let query = gql`mutation (
+                                    $id: ID!,
+                                    $idN: Int!,
+                                    $Type: String!,
+                                    $CodeD: String!,
+                                    $Description: String!,
+                                    $Name: String!, 
+                                    $Days: String!
+                                  ){
                                         createAdverse_Event(
                                             data: {
-                                                id: "`+ id +`",
-                                                idN: `+ id +`,
-                                                Type: "`+ payload.Type +`",
-                                                CodeD: "`+ payload.CodeD +`",
-                                                Description: "`+ payload.Description +`",
-                                                Name: "`+ payload.Name +`"
-                                                Days: "`+ payload.Days +`"
+                                                id: $id,
+                                                idN: $idN,
+                                                Type: $Type,
+                                                CodeD: $CodeD,
+                                                Description: $Description,
+                                                Name: $Name,
+                                                Days: $Days
                                             }
                                         )
                                         {
@@ -218,21 +231,22 @@ export default {
                                             Name
                                             Days
                                         }
-                                        }`
-                    }
+                                        }`;
+                await GRAPHQL.mutate({
+                    mutation: query,
+                    variables: payload,
+                }).then((response)=>{
+                    commit('addAdverse_Event', response.data.createAdverse_Event);
                 });
-                commit('addAdverse_Event', result.data.data.createAdverse_Event);
+
             } catch (error) {
                 console.error(error);
             }
         },
         async getAdverse_EventsGraph({commit}) {
             try {
-                let result = await HTTP({
-                    method: "POST",
-                    url: CONFIG.graphUrl,
-                    data: {
-                        query: `{
+
+                let query = gql`{
                                   adverse_Events {
                                     id
                                     idN
@@ -242,10 +256,15 @@ export default {
                                     Name
                                     Days
                                   }
-                                }`
-                    }
+                                }`;
+
+
+                await GRAPHQL.query({
+                    query: query
+                }).then((response)=>{
+                    commit('setAdverse_Events', response.data.adverse_Events);
+
                 });
-                commit('setAdverse_Events', result.data.data.adverse_Events);
             } catch (error) {
                 console.error(error);
             }
