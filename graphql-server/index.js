@@ -24,6 +24,7 @@ const typeDefs = gql`
   }
   
   type Adverse_Event {
+  
     id: ID!
     idN: Int!
     CodeD: String!
@@ -33,11 +34,21 @@ const typeDefs = gql`
     Days: String
    
   }
-
+  type Problem {
+  
+     id: ID!
+     idN: Int!
+     CodeD: String!
+     Name: String!
+     Description: String!
+     Days: String
+  
+  }
   
   type Query {
     medications: [Medication]
     adverse_Events: [Adverse_Event]
+    problems: [Problem]
   }
   
   type Mutation {
@@ -48,6 +59,10 @@ const typeDefs = gql`
     createAdverse_Event(data: Data): Adverse_Event
     deleteAdverse_Event(where: Data): Adverse_Event
     updateAdverse_Event(where: Data, data: Data): Adverse_Event
+    
+    createProblem(data: Data): Problem
+    deleteProblem(where: Data): Problem
+    updateProblem(where: Data, data: Data): Problem
   }
 `;
 
@@ -57,13 +72,18 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
       medications: async (_) => {
-          const result = await client.many('SELECT * FROM "Medication"');
-          return result;
+          const result = await client.manyOrNone('SELECT * FROM "Medication"');
+          return result.length? result : [];
       },
       adverse_Events: async (_) => {
-          const result = await client.many('SELECT * FROM "Adverse_Event"');
+          const result = await client.manyOrNone('SELECT * FROM "Adverse_Event"');
           return result.length ? result : [];
-      }
+      },
+
+      problems: async (_) => {
+          const result = await client.manyOrNone('SELECT * FROM "Problem"');
+          return result.length ? result : [];
+      },
   },
   Mutation: {
      createMedication(data, payload) {
@@ -94,10 +114,29 @@ const resolvers = {
           const result = await client.one(prepareStatement);
           return result;
       },
+      
       updateAdverse_Event:  async (_, {where,data})=> {
 
           const condition = pgp.as.format(' WHERE id = ${id}', where);
           var prepareStatement = pgp.helpers.update(data,null,"Adverse_Event") + condition + " RETURNING *";
+          const result = await client.one(prepareStatement);
+          return result;
+      },
+
+      createProblem(data, payload) {
+          var prepareStatement = pgp.helpers.insert(payload.data,null,"Problem") + " RETURNING *";
+          return client.one(prepareStatement).then((res) => res);
+
+      },
+      deleteProblem: async (_, {where}) => {
+          var prepareStatement = pgp.as.format('DELETE FROM "Problem" WHERE id=${id} RETURNING *',where);
+          const result = await client.one(prepareStatement);
+          return result;
+      },
+      updateProblem:  async (_, {where,data})=> {
+
+          const condition = pgp.as.format(' WHERE id = ${id}', where);
+          var prepareStatement = pgp.helpers.update(data,null,"Problem") + condition + " RETURNING *";
           const result = await client.one(prepareStatement);
           return result;
       },
