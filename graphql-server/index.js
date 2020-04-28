@@ -1,7 +1,13 @@
+
 const { ApolloServer, gql } = require('apollo-server');
-const { GraphQLScalarType, Kind } = require('graphql');
 const GraphQLJSON = require('graphql-type-json');
-const {MedicationMutation, MedicationQuery} = require('./dataSchema/Medication');
+const pgp = require("pg-promise")();
+
+
+require('dotenv').config();
+
+let client =  pgp(process.env.PG_SQLINIT);
+//client.connect();
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
 // your data.
@@ -24,7 +30,7 @@ const typeDefs = gql`
   type Mutation {
     createMedication(data: Data): Medication
     deleteMedication(where: Data): Medication
-    updateMedication(data: Data): Medication
+    updateMedication(where: Data, data: Data): Medication
   }
 `;
 
@@ -33,10 +39,26 @@ const typeDefs = gql`
 // schema. This resolver retrieves books from the "books" array above.
 const resolvers = {
   Query: {
-    ...MedicationQuery
+    medications : () => {
+      return client.many('SELECT * FROM "Medication"').then((res)=> res);
+    },
   },
   Mutation: {
-    ...MedicationMutation
+     createMedication(data, payload) {
+      var prepareStatement = pgp.helpers.insert(payload.data,null,"Medication") + " RETURNING *";
+      return client.one(prepareStatement).then((res) => res);
+
+    },
+    deleteMedication(data, payload) {
+         var prepareStatement = pgp.as.format('DELETE FROM "Medication" WHERE id=${id} RETURNING *',payload.where);
+         return client.one(prepareStatement).then((res)=> res);
+    },
+    updateMedication(data, payload) {
+
+        const condition = pgp.as.format(' WHERE id = ${id}', payload.where.id);
+        var prepareStatement = pgp.helpers.update(payload.data,null,"Medication") + condition + " RETURNING *";
+        return client.one(prepareStatement).then((res) => res);
+     }
   },
   Data: GraphQLJSON,
 };

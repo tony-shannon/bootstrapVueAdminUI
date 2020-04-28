@@ -233,6 +233,7 @@ export default {
                     mutation: query,
                     variables: payload,
                 }).then((response)=>{
+                    console.log(response);
                     commit('addMedication', response.data.createMedication);
                 });
 
@@ -256,6 +257,7 @@ export default {
                 GRAPHQL.query({
                     query: query,
                 }).then((response)=>{
+                    console.log(response);
                     commit('setMedications', response.data.medications);
                 });
             } catch (error) {
