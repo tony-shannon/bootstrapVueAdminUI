@@ -12,7 +12,10 @@ ports:
 tasks:
   - init: npm install
     command: echo 'start script'
+  - init: cd graphql-server && npm install  
   - name: JSONServer
     command: json-server --watch db.json
   - name: VueApp
     command: npm run serve
+  - name: Apollo
+    command: cd graphql-server && node index.js

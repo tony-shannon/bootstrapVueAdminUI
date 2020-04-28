@@ -11,4 +11,6 @@ USER gitpod
 #
 RUN npm install -g @vue/cli
 RUN npm install -g json-server
+
+RUN npm install - g  apollo-server graphql
 # More information: https://www.gitpod.io/docs/config-docker/
