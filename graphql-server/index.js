@@ -1,6 +1,6 @@
 
 const { ApolloServer, gql } = require('apollo-server');
-const GraphQLJSON = require('graphql-type-json');
+const {GraphQLJSONObject} = require('graphql-type-json');
 const pgp = require("pg-promise")();
 
 
@@ -23,14 +23,31 @@ const typeDefs = gql`
    Route: String!
   }
   
+  type Adverse_Event {
+    id: ID!
+    idN: Int!
+    CodeD: String!
+    Description: String!
+    Type: String!
+    Name: String!
+    Days: String
+   
+  }
+
+  
   type Query {
     medications: [Medication]
+    adverse_Events: [Adverse_Event]
   }
   
   type Mutation {
     createMedication(data: Data): Medication
     deleteMedication(where: Data): Medication
     updateMedication(where: Data, data: Data): Medication
+    
+    createAdverse_Event(data: Data): Adverse_Event
+    deleteAdverse_Event(where: Data): Adverse_Event
+    updateAdverse_Event(where: Data, data: Data): Adverse_Event
   }
 `;
 
@@ -39,9 +56,14 @@ const typeDefs = gql`
 // schema. This resolver retrieves books from the "books" array above.
 const resolvers = {
   Query: {
-    medications : () => {
-      return client.many('SELECT * FROM "Medication"').then((res)=> res);
-    },
+      medications: async (_) => {
+          const result = await client.many('SELECT * FROM "Medication"');
+          return result;
+      },
+      adverse_Events: async (_) => {
+          const result = await client.many('SELECT * FROM "Adverse_Event"');
+          return result.length ? result : [];
+      }
   },
   Mutation: {
      createMedication(data, payload) {
@@ -49,18 +71,38 @@ const resolvers = {
       return client.one(prepareStatement).then((res) => res);
 
     },
-    deleteMedication(data, payload) {
-         var prepareStatement = pgp.as.format('DELETE FROM "Medication" WHERE id=${id} RETURNING *',payload.where);
-         return client.one(prepareStatement).then((res)=> res);
+    deleteMedication: async (_, {where}) => {
+         var prepareStatement = pgp.as.format('DELETE FROM "Medication" WHERE id=${id} RETURNING *',where);
+         const result = await client.one(prepareStatement);
+         return result;
     },
-    updateMedication(data, payload) {
+    updateMedication:  async (_, {where,data})=> {
 
-        const condition = pgp.as.format(' WHERE id = ${id}', payload.where.id);
-        var prepareStatement = pgp.helpers.update(payload.data,null,"Medication") + condition + " RETURNING *";
-        return client.one(prepareStatement).then((res) => res);
-     }
+        const condition = pgp.as.format(' WHERE id = ${id}', where);
+        var prepareStatement = pgp.helpers.update(data,null,"Medication") + condition + " RETURNING *";
+        const result = await client.one(prepareStatement);
+        return result;
+     },
+
+      createAdverse_Event(data, payload) {
+          var prepareStatement = pgp.helpers.insert(payload.data,null,"Adverse_Event") + " RETURNING *";
+          return client.one(prepareStatement).then((res) => res);
+
+      },
+      deleteAdverse_Event: async (_, {where}) => {
+          var prepareStatement = pgp.as.format('DELETE FROM "Adverse_Event" WHERE id=${id} RETURNING *',where);
+          const result = await client.one(prepareStatement);
+          return result;
+      },
+      updateAdverse_Event:  async (_, {where,data})=> {
+
+          const condition = pgp.as.format(' WHERE id = ${id}', where);
+          var prepareStatement = pgp.helpers.update(data,null,"Adverse_Event") + condition + " RETURNING *";
+          const result = await client.one(prepareStatement);
+          return result;
+      },
   },
-  Data: GraphQLJSON,
+  Data: GraphQLJSONObject,
 };
 
 // The ApolloServer constructor requires two parameters: your schema
