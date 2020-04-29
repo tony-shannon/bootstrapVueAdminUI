@@ -5,8 +5,6 @@ const pgp = require("pg-promise")();
 
 
 require('dotenv').config();
-
-let client =  pgp(process.env.PG_SQLINIT);
 //client.connect();
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
@@ -67,86 +65,194 @@ const typeDefs = gql`
 `;
 
 
+const unisersalResolver = {
+    index: async (_, {tableName}, {dataSources}) => {
+
+        let client = dataSources.db.client;
+        const result = await client.manyOrNone('SELECT * FROM "' + tableName + '"');
+        return result.length ? result : [];
+    },
+    update: async (_, {where, data, tableName}, {dataSources}) => {
+
+        let lib = dataSources.db.lib;
+        let helpers = dataSources.db.helpers;
+        let client = dataSources.db.client;
+
+        const condition = lib.as.format(' WHERE id = ${id}', where);
+        var prepareStatement = helpers.update(data, null, tableName) + condition + " RETURNING *";
+        const result = await client.one(prepareStatement);
+        return result;
+    },
+    create: async (_, {data, tableName}, {dataSources}) => {
+
+        let helpers = dataSources.db.helpers;
+        let client = dataSources.db.client;
+
+        var prepareStatement = helpers.insert(data,null,tableName) + " RETURNING *";
+        return client.one(prepareStatement).then((res) => res);
+
+    },
+    delete: async (_, {where, tableName},{dataSources}) => {
+
+        let lib = dataSources.db.lib;
+        let client = dataSources.db.client;
+
+        var prepareStatement = lib.as.format('DELETE FROM "'+tableName+'" WHERE id=${id} RETURNING *',where);
+        const result = await client.one(prepareStatement);
+        return result;
+    },
+};
+
 // Resolvers define the technique for fetching the types defined in the
 // schema. This resolver retrieves books from the "books" array above.
 const resolvers = {
   Query: {
-      medications: async (_) => {
-          const result = await client.manyOrNone('SELECT * FROM "Medication"');
-          return result.length? result : [];
-      },
-      adverse_Events: async (_) => {
-          const result = await client.manyOrNone('SELECT * FROM "Adverse_Event"');
-          return result.length ? result : [];
-      },
+      medications: async (_, params, {dataSources}) =>
+          await unisersalResolver.index(_,
+              {
+                  tableName: 'Medication'
+              }, {
+                  dataSources: dataSources
+              }
+          ),
+      adverse_Events: async (_, params, {dataSources}) =>
+          await unisersalResolver.index(_,
+              {
+                  tableName: 'Adverse_Event'
+              }, {
+                  dataSources: dataSources
+              }
+          ),
 
-      problems: async (_) => {
-          const result = await client.manyOrNone('SELECT * FROM "Problem"');
-          return result.length ? result : [];
-      },
+      problems: async (_, params, {dataSources}) =>
+          await unisersalResolver.index(_,
+              {
+                  tableName: 'Problem'
+              }, {
+                  dataSources: dataSources
+              }
+          ),
   },
   Mutation: {
-     createMedication(data, payload) {
-      var prepareStatement = pgp.helpers.insert(payload.data,null,"Medication") + " RETURNING *";
-      return client.one(prepareStatement).then((res) => res);
 
-    },
-    deleteMedication: async (_, {where}) => {
-         var prepareStatement = pgp.as.format('DELETE FROM "Medication" WHERE id=${id} RETURNING *',where);
-         const result = await client.one(prepareStatement);
-         return result;
-    },
-    updateMedication:  async (_, {where,data})=> {
+      createMedication: async (_, {data}, {dataSources}) => await unisersalResolver.create(_,
+          {
+              data: data,
+              tableName: 'Medication'
+          },
+          {
+              dataSources: dataSources
+          }
+      ),
 
-        const condition = pgp.as.format(' WHERE id = ${id}', where);
-        var prepareStatement = pgp.helpers.update(data,null,"Medication") + condition + " RETURNING *";
-        const result = await client.one(prepareStatement);
-        return result;
-     },
+    deleteMedication: async (_, {where},{dataSources}) =>
+        await unisersalResolver.delete(_,
+            {
+                where: where,
+                tableName: 'Medication'
+            },
+            {
+                dataSources: dataSources
+            }
+        ),
+    updateMedication:  async (_, {where,data},{dataSources}) =>
+        await  unisersalResolver.update(_,
+            {
+                where: where,
+                data: data,
+                tableName: 'Medication'
+            },
+            {
+                dataSources: dataSources
+            }),
 
-      createAdverse_Event(data, payload) {
-          var prepareStatement = pgp.helpers.insert(payload.data,null,"Adverse_Event") + " RETURNING *";
-          return client.one(prepareStatement).then((res) => res);
+      createAdverse_Event: async (_, {data}, {dataSources}) =>
+          await unisersalResolver.create(_,
+          {
+              data: data,
+              tableName: 'Medication'
+          },
+          {
+              dataSources: dataSources
+          }
+      ),
 
-      },
-      deleteAdverse_Event: async (_, {where}) => {
-          var prepareStatement = pgp.as.format('DELETE FROM "Adverse_Event" WHERE id=${id} RETURNING *',where);
-          const result = await client.one(prepareStatement);
-          return result;
-      },
-      
-      updateAdverse_Event:  async (_, {where,data})=> {
+      deleteAdverse_Event: async (_, {where},{dataSources}) =>
+          await unisersalResolver.delete(_,
+              {
+                  where: where,
+                  tableName: 'Adverse_Event'
+              },
+              {
+                  dataSources: dataSources
+              }
+          ),
 
-          const condition = pgp.as.format(' WHERE id = ${id}', where);
-          var prepareStatement = pgp.helpers.update(data,null,"Adverse_Event") + condition + " RETURNING *";
-          const result = await client.one(prepareStatement);
-          return result;
-      },
+      updateAdverse_Event: async (_, {where, data}, {dataSources}) =>
+          await unisersalResolver.update(_,
+              {
+                  where: where,
+                  data: data,
+                  tableName: 'Adverse_Event'
+              },
+              {
+                  dataSources: dataSources
+              }),
 
-      createProblem(data, payload) {
-          var prepareStatement = pgp.helpers.insert(payload.data,null,"Problem") + " RETURNING *";
-          return client.one(prepareStatement).then((res) => res);
 
-      },
-      deleteProblem: async (_, {where}) => {
-          var prepareStatement = pgp.as.format('DELETE FROM "Problem" WHERE id=${id} RETURNING *',where);
-          const result = await client.one(prepareStatement);
-          return result;
-      },
-      updateProblem:  async (_, {where,data})=> {
+      createProblem: async (_, {data}, {dataSources}) =>
+          await unisersalResolver.create(_,
+              {
+                  data: data,
+                  tableName: 'Problem'
+              },
+              {
+                  dataSources: dataSources
+              }
+          ),
 
-          const condition = pgp.as.format(' WHERE id = ${id}', where);
-          var prepareStatement = pgp.helpers.update(data,null,"Problem") + condition + " RETURNING *";
-          const result = await client.one(prepareStatement);
-          return result;
-      },
+      deleteProblem: async (_, {where}, {dataSources}) =>
+          await unisersalResolver.delete(_,
+              {
+                  where: where,
+                  tableName: 'Problem'
+              },
+              {
+                  dataSources: dataSources
+              }
+          ),
+
+      updateProblem: async (_, {where, data}, {dataSources}) =>
+          await unisersalResolver.update(_,
+              {
+                  where: where,
+                  data: data,
+                  tableName: 'Problem'
+              },
+              {
+                  dataSources: dataSources
+              }),
+
   },
   Data: GraphQLJSONObject,
 };
 
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
-const server = new ApolloServer({ typeDefs, resolvers });
+const dbClient =  pgp(process.env.PG_SQLINIT);
+const server = new ApolloServer(
+    {
+        typeDefs,
+        resolvers,
+        dataSources: () => ({
+            db : {
+                lib: pgp,
+                helpers: pgp.helpers,
+                client: dbClient,
+            },
+        })
+    }
+    );
 
 // The `listen` method launches a web server.
 server.listen().then(({ url }) => {
