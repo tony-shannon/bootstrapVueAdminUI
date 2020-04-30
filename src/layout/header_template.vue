@@ -12,10 +12,8 @@
                             <b-nav-item href="#">Link</b-nav-item>
                             <b-nav-item href="#" disabled>Disabled</b-nav-item>
                         </b-navbar-nav>
-                     
-<div class="bg-secondary text-light" align="center">
-      John Brown ¦ 49 years ¦ Male ¦ Shop St, Galway
-    </div>
+
+<div class="bg-secondary text-light" align="center" v-html="patientTitle"/>
                         <!-- Right aligned nav items -->
                         <b-navbar-nav class="ml-auto">
                             <b-nav-form>
@@ -47,7 +45,27 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
+
     export default {
-        name: "header_template"
+        name: "header_template",
+        computed:{
+            ...mapGetters({
+                patient: 'patient/patient',
+            }),
+            patientTitle: function(){
+                let result = "";
+                let patient = this.patient;
+                if(this.patient){
+                   result+=patient.FirstName + " " + patient.LastName + " | ";
+                   result+=patient.Age + " years | ";
+                   result+=patient.Sex + " | ";
+                   result+=patient.Address + "";
+                }else{
+                   result =" John Brown ¦ 49 years ¦ Male ¦ Shop St, Galway";
+                }
+                return result;
+            }
+        }
     }
 </script>
