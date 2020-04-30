@@ -33,7 +33,7 @@ export default {
         getMedications: function(state, getters,rootState){
             let patientId = rootState.patient.patientId;
             if(patientId){
-                return filter(state.medications,{patientId: patientId});
+                return filter(state.medications,{patientId: parseInt(patientId)});
             }else{
                 return state.medications;
             }
@@ -202,7 +202,7 @@ export default {
                 console.error(error);
             }
         },
-        async createMedicationGraph({commit, getters}, payload) {
+        async createMedicationGraph({commit, getters, rootState}, payload) {
             try {
 
                 payload.DoseMg = parseInt(payload.DoseMg);
@@ -210,6 +210,7 @@ export default {
                 let id = getters.getNewId;
                 payload.id = id;
                 payload.idN = id;
+                payload.patientId = rootState.patient.patientId ?  rootState.patient.patientId : 0 ;
 
                 let query = gql`mutation CreateMeditation(
                                       $id: ID!,
@@ -217,7 +218,8 @@ export default {
                                       $DoseMg: Int!,
                                       $Indication: String!,
                                       $Name: String!,
-                                      $Route: String!
+                                      $Route: String!,
+                                      $patientId: Int
                                     ){
                                         createMedication(
                                             data: {
@@ -226,7 +228,8 @@ export default {
                                                 DoseMg: $DoseMg,
                                                 Indication: $Indication,
                                                 Name: $Name,
-                                                Route: $Route
+                                                Route: $Route,
+                                                patientId: $patientId, 
                                             }
                                         )
                                         {
@@ -235,7 +238,8 @@ export default {
                                             DoseMg
                                             Indication
                                             Name
-                                            Route
+                                            Route,
+                                            patientId
                                         }
                                         }`;
                 GRAPHQL.mutate({
@@ -261,6 +265,7 @@ export default {
                                     Indication
                                     Name
                                     Route
+                                    patientId
                                   }
                                 }`;
                 GRAPHQL.query({

@@ -10,6 +10,7 @@ const typeDefs = gql`
    Indication: String!
    Name: String!
    Route: String!
+   patientId: Int
   }
   
   type Adverse_Event {
@@ -21,7 +22,8 @@ const typeDefs = gql`
     Type: String!
     Name: String!
     Days: String
-   
+    patientId: Int
+
   }
   
   
@@ -33,7 +35,7 @@ const typeDefs = gql`
      Name: String!
      Description: String!
      Days: String
-  
+     patientId: Int
   }
   
   type Patient {

@@ -9,7 +9,7 @@
                         placeholder="Type to Search"
                 ></b-form-input>
                 <b-input-group-append>
-                    <b-button :disabled="!filter" @click="filter = null">Clear</b-button>
+                    <b-button :disabled="!search" @click="search = null">Clear</b-button>
                 </b-input-group-append>
             </b-input-group>
         </b-col>
@@ -26,7 +26,7 @@
                     select-mode="single"
                     primary-key="id"
                     responsive="sm"
-                    :filter="filter"
+                    :filter="search"
                     :filterIncludedFields="filterOn"
                     @row-clicked="setActiveItem"
             ></b-table>
@@ -101,7 +101,7 @@
 
             setActiveItem(item){
                 this.setActivePatient(item);
-                this.setPatientId(item);
+                this.setPatientId(parseInt(item.id));
             }
         },
         watch:{

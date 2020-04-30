@@ -207,10 +207,12 @@ export default {
                 console.error(error);
             }
         },
-        async createAdverse_EventGraph({commit, getters}, payload) {
+        async createAdverse_EventGraph({commit, getters,rootState}, payload) {
             try {
                 payload.id = getters.getNewId;
                 payload.idN = payload.id;
+                payload.patientId = rootState.patient.patientId ?  rootState.patient.patientId : 0 ;
+
                 let query = gql`mutation (
                                     $id: ID!,
                                     $idN: Int!,
@@ -218,7 +220,8 @@ export default {
                                     $CodeD: String!,
                                     $Description: String!,
                                     $Name: String!, 
-                                    $Days: String!
+                                    $Days: String!,
+                                    $patientId: Int,
                                   ){
                                         createAdverse_Event(
                                             data: {
@@ -228,7 +231,8 @@ export default {
                                                 CodeD: $CodeD,
                                                 Description: $Description,
                                                 Name: $Name,
-                                                Days: $Days
+                                                Days: $Days,
+                                                patientId: $patientId,
                                             }
                                         )
                                         {
@@ -239,6 +243,7 @@ export default {
                                             Description
                                             Name
                                             Days
+                                            patientId
                                         }
                                         }`;
                 await GRAPHQL.mutate({
@@ -264,6 +269,7 @@ export default {
                                     Type
                                     Name
                                     Days
+                                    patientId
                                   }
                                 }`;
 

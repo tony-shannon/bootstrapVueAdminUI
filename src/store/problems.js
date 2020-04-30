@@ -213,11 +213,13 @@ export default {
                 console.error(error);
             }
         },
-        async createProblemGraph({commit, getters}, payload) {
+        async createProblemGraph({commit, getters,rootState}, payload) {
             try {
 
                 payload.id = getters.getNewId;
                 payload.idN = payload.id;
+                payload.patientId = rootState.patient.patientId ?  rootState.patient.patientId : 0 ;
+
                 let query = gql`mutation CreateProblem(
                                         $id: ID!,
                                         $idN: Int!,
@@ -225,6 +227,7 @@ export default {
                                         $Description: String!,
                                         $Name: String!, 
                                         $Days: String!
+                                        $patientId: Int
                                     ){
                                         createProblem(
                                             data: {
@@ -233,7 +236,8 @@ export default {
                                                 CodeD: $CodeD,
                                                 Description: $Description,
                                                 Name: $Name,
-                                                Days: $Days
+                                                Days: $Days,
+                                                patientId: $patientId,
                                             }
                                         )
                                         {
@@ -243,6 +247,7 @@ export default {
                                             Description
                                             Name
                                             Days
+                                            patientId
                                         }
                                         }`;
                 await GRAPHQL.mutate({
@@ -265,7 +270,8 @@ export default {
                                         CodeD,
                                         Name,
                                         Description,
-                                        Days
+                                        Days,
+                                        patientId
                                       }
                                 }`;
                 await GRAPHQL.query({
