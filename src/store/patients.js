@@ -151,15 +151,16 @@ export default {
         },
         async updatePatientGraph({dispatch}, payload) {
             try {
-                payload.DoseMg = parseInt(payload.DoseMg);
-                let query = gql`mutation updateMeditation(
-                                    id: ID!,
-                                    idN: Int!,
-                                    FirstName: String!,
-                                    LastName: String!,
-                                    Sex: String!,
-                                    Age: Int!,
-                                    Address: String!
+                payload.Age = parseInt(payload.Age);
+
+                let query = gql`mutation UpdatePatnt(
+                                    $id: ID!,
+                                    $idN: Int!,
+                                    $FirstName: String!,
+                                    $LastName: String!,
+                                    $Sex: String!,
+                                    $Age: Int!,
+                                    $Address: String!
                                 
                                 ){
                                   updatePatient(
@@ -199,20 +200,18 @@ export default {
         async createPatientGraph({commit, getters}, payload) {
             try {
 
-                payload.DoseMg = parseInt(payload.DoseMg);
-
                 let id = getters.getNewId;
                 payload.id = id;
                 payload.idN = id;
-
-                let query = gql`mutation CreateMeditation(
-                                        id: ID!,
-                                        idN: Int!,
-                                        FirstName: String!,
-                                        LastName: String!,
-                                        Sex: String!,
-                                        Age: Int!,
-                                        Address: String!
+                payload.Age = parseInt(payload.Age);
+                let query = gql`mutation CreatePatient(
+                                        $id: ID!,
+                                        $idN: Int!,
+                                        $FirstName: String!,
+                                        $LastName: String!,
+                                        $Sex: String!,
+                                        $Age: Int!,
+                                        $Address: String!
                                     ){
                                         createPatient(
                                             data: {

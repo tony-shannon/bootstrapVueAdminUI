@@ -65,6 +65,15 @@ const resolvers = {
                     dataSources: dataSources
                 }
             ),
+        patients: async (_, params, {dataSources}) =>
+            await universalResolver.index(_,
+                {
+                    tableName: 'Patient'
+                }, {
+                    dataSources: dataSources
+                }
+            ),
+
     },
     Mutation: {
 

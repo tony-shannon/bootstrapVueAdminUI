@@ -32,7 +32,7 @@
 
 <script>
     import {
-        problemsActions
+        patientsActions
     } from '@/store/helpers';
     import {CONFIG} from "../../store/config";
 
@@ -49,16 +49,17 @@
                 default: function () {
                     return {
                         "id": '',
-                        "CodeD": '',
-                        "Description": '',
-                        "Name": '',
-                        "Days": ''
+                        "FirstName": '',
+                        "LastName": '',
+                        "Sex": '',
+                        "Age": '',
+                        "Address": ''
                     }
                 }
             }
         },
         methods: {
-            ...problemsActions([
+            ...patientsActions([
                 'makeRequest'
             ]),
             async update () {

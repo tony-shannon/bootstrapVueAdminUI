@@ -137,10 +137,10 @@
                         label: "id"
 
                     },
-                    {key: "CodeD", sortable: true},
-
-                    {key: "Name", sortable: false},
-                    {key: "Days", sortable: false}
+                    {key: "FirstName", sortable: true},
+                    {key: "LastName", sortable: true},
+                    {key: "Sex", sortable: false},
+                    {key: "Age", sortable: false}
                 ],filter: null,
                 filterOn: [],
                 activeItem: null,

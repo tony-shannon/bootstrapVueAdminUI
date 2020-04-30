@@ -42,8 +42,8 @@
 
 <script>
     import {
-        problemsState,
-        problemsActions
+        patientsState,
+        patientsActions
     } from '@/store/helpers';
     import {CONFIG} from "../../store/config";
     import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
@@ -54,10 +54,11 @@
             return {
                 item: {
                     "id": '',
-                    "CodeD": '',
-                    "Description": '',
-                    "Name": '',
-                    "Days": ''
+                    "FirstName": '',
+                    "LastName": '',
+                    "Sex": '',
+                    "Age": '',
+                    "Address": ''
                 },
                 names: [],
                 query: ''
@@ -67,7 +68,7 @@
             VueBootstrapTypeahead
         },
         computed: {
-            ...problemsState([
+            ...patientsState([
                 'terms',
             ]),
         },
@@ -86,7 +87,7 @@
             }
         },
         methods: {
-            ...problemsActions([
+            ...patientsActions([
                 'makeRequest'
             ]),
             async create() {
