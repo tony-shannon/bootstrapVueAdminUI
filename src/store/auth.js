@@ -47,8 +47,8 @@ export default{
             });
             return login + password;
         },
-        logout: ({state, commit})=>{
-            commit('token',state.token);
+        logout: ({ commit})=>{
+            commit('token',null);
         }
     },
 }
