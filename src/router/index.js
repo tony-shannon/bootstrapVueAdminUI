@@ -6,6 +6,8 @@ const Patients = () => import(/* webpackChunkName: "main" */ '../components/pati
 const Medications = () => import(/* webpackChunkName: "main" */ '../components/medications/medications.vue');
 const Adverse_Events = ()  => import(/* webpackChunkName: "main" */ '../components/adverse_events/adverse_events.vue');
 const Patient_Search = () => import(/* webpackChunkName: "main" */ '../components/patient/search.vue');
+const Login = () => import(/* webpackChunkName: "main" */ '../components/login.vue');
+
 export default new router ({
   mode: 'history',
   linkActiveClass: "active",
@@ -40,6 +42,11 @@ export default new router ({
       path: '/search',
       name: 'search',
       component: Patient_Search
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
     },
   ],
 

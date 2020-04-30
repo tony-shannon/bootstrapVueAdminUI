@@ -1,6 +1,8 @@
 
-const { ApolloServer} = require('apollo-server');
+const { ApolloServer, AuthenticationError} = require('apollo-server');
 const pgp = require("pg-promise")();
+const {sign, verify} = require('jsonwebtoken');
+
 const {resolvers} = require('./resolvers');
 const {typeDefs} = require('./typedefs');
 
@@ -17,9 +19,29 @@ const server = new ApolloServer(
                 helpers: pgp.helpers,
                 client: dbClient,
             },
-        })
-    }
-    );
+            jwt: {
+                sign: sign,
+                verify: verify,
+            }
+        }),
+        context: ({ req }) => {
+
+            const token = req.headers.authorization || '';
+            let user = null;
+            if(token.length){
+                verify(token, 'secret',(err, decoded)=>{
+                    if(err){
+                        throw new AuthenticationError('you must be logged in');
+                    }else{
+                        user = decoded;
+                    }
+                })
+            }
+
+            return { user };
+        },
+
+    });
 
 // The `listen` method launches a web server.
 server.listen().then(({ url }) => {

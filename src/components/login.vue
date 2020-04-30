@@ -1,0 +1,56 @@
+<template>
+    <div class="login-page">
+        <div>
+        <b-row>
+            <b-col xs="3" sm="3" lg="3">
+                <label for="password">Login:</label>
+            </b-col>
+
+            <b-col xs="6" sm="6" lg="4">
+                <b-form-input v-model="login"></b-form-input>
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col xs="3" sm="3" lg="3"><label for="password">Password:</label></b-col>
+            <b-col xs="6" sm="6" lg="4">
+                <b-form-input id="password" type="password" v-model="password"></b-form-input>
+            </b-col>
+        </b-row>
+        <b-button @click="clickLogin">Login</b-button>
+        </div>
+    </div>
+</template>
+
+<script>
+    import {mapActions} from 'vuex';
+    export default {
+        name: "login",
+        data(){
+            return {
+               login: "",
+               password: "",
+            }
+        },
+        methods:{
+           ...mapActions('auth',{
+               loginUser: "login",
+           }),
+
+           clickLogin(){
+
+              this.loginUser(this.login, this.password);
+              this.$router.push('home');
+           }
+        }
+    }
+</script>
+
+<style scoped>
+    .login-page{
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>

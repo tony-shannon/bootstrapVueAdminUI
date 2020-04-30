@@ -9,7 +9,7 @@ import adverse_events from './adverse_events'
 import patients from './patients'
 import patient from './patient'
 import search from './search'
-
+import auth from './auth'
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -20,5 +20,6 @@ export default new Vuex.Store({
         patients,
         patient,
         search,
+        auth
     }
 })

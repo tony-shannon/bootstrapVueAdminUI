@@ -12,6 +12,12 @@ Vue.use(BootstrapVueIcons)
 Vue.use(VueRouter)
 import router from './router/index.js';
 
+router.beforeEach((to, from, next) => {
+
+    if (to.name !== 'login' && !store.state.auth.token) next({ name: 'login' })
+    else next()
+});
+
 new Vue({
     router,
     store,

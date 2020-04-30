@@ -1,5 +1,4 @@
 const {GraphQLJSONObject} = require('graphql-type-json');
-
 const universalResolver = {
 
     index: async (_, {tableName}, {dataSources}) => {
@@ -210,6 +209,14 @@ const resolvers = {
                     dataSources: dataSources
                 }),
 
+        obtainToken: (_, {data},{dataSources})=> {
+            return {
+                token: dataSources.jwt.sign({
+                    exp: Math.floor(Date.now() / 1000) + (60 * 60),
+                    data: data,
+                },'secret'),
+            }
+        },
     },
     Data: GraphQLJSONObject,
 };

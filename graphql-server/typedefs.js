@@ -47,7 +47,12 @@ const typeDefs = gql`
     Age: Int!
     Address: String!
   }
-
+  
+ 
+  type Token {
+  
+      token: String!
+  }
   
   type Query {
     medications: [Medication]
@@ -55,6 +60,7 @@ const typeDefs = gql`
     problems: [Problem]
     patients: [Patient]
   }
+ 
   
   type Mutation {
     createMedication(data: Data): Medication
@@ -73,7 +79,8 @@ const typeDefs = gql`
     deletePatient(where: Data): Patient
     updatePatient(where: Data, data: Data): Patient
     
-    
+   
+    obtainToken(data: Data) : Token
   }
 `;
 

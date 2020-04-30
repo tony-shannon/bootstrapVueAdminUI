@@ -39,7 +39,7 @@
                                     <em>User</em>
                                 </template>
                                 <b-dropdown-item href="#">Profile</b-dropdown-item>
-                                <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+                                <b-dropdown-item @click="clickLogout" href="#">Sign Out</b-dropdown-item>
                             </b-nav-item-dropdown>
                         </b-navbar-nav>
                     </b-collapse>
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-    import {mapGetters, mapMutations} from 'vuex'
+    import {mapGetters, mapMutations, mapActions} from 'vuex'
 
     export default {
         name: "header_template",
@@ -94,6 +94,10 @@
                 setInput: 'setInput',
             }),
 
+            ...mapActions('auth',{
+                logoutUser:"logout"
+            }),
+
             ...mapMutations('patient',{
                 setActivePatient: 'setPatient',
                 setPatientId: 'setPatientId',
@@ -101,6 +105,11 @@
             closePatientCard(){
                 this.setActivePatient(null);
                 this.setPatientId(null);
+            },
+            clickLogout(){
+
+                this.logoutUser();
+                this.$router.push({ name: 'login' });
             }
         },
         watch:{
