@@ -113,7 +113,7 @@ const resolvers = {
             await universalResolver.create(_,
                 {
                     data: data,
-                    tableName: 'Medication'
+                    tableName: 'Adverse_Event'
                 },
                 {
                     dataSources: dataSources
