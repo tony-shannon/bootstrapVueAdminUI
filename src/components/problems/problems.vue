@@ -144,8 +144,6 @@
                     {key: "Days", sortable: false}
                 ],filter: null,
                 filterOn: [],
-                activeItem: null,
-                status: 'view'
             };
         },
 
@@ -161,6 +159,23 @@
             ...mapGetters({
                 problems: 'problems/getProblems'
             }),
+
+            activeItem: {
+                get () {
+                    return this.$store.state.problems.activeItem;
+                },
+                set (value) {
+                    this.$store.commit('problems/setActiveItem', value)
+                }
+            },
+            status: {
+                get () {
+                    return this.$store.state.problems.status;
+                },
+                set (value) {
+                    this.$store.commit('problems/setStatus', value)
+                }
+            },
         },
         components: {
             editProblem,

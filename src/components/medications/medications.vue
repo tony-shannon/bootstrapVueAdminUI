@@ -132,8 +132,6 @@
                 sortDesc: false,
                 filter: null,
                 filterOn: [],
-                activeItem: null,
-                status: 'view',
                 fields: [
                     {
                         key: 'id',
@@ -159,6 +157,22 @@
             ...mapGetters({
                medications: 'medications/getMedications'
             }),
+            activeItem: {
+                get () {
+                    return this.$store.state.medications.activeItem;
+                },
+                set (value) {
+                    this.$store.commit('medications/setActiveItem', value)
+                }
+            },
+            status: {
+                get () {
+                    return this.$store.state.medications.status;
+                },
+                set (value) {
+                    this.$store.commit('medications/setStatus', value)
+                }
+            },
         },
         methods: {
             ...medicationsActions([

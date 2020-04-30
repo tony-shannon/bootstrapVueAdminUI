@@ -5,7 +5,9 @@ import {filter} from "lodash"
 
 const initialState = {
     problems: [],
-    terms: []
+    terms: [],
+    status: 'view',
+    activeItem: null,
 };
 
 export default {
@@ -27,6 +29,8 @@ export default {
         clearTerms(state) {
             state.terms = [];
         },
+        setStatus: (state, status) => state.status = status,
+        setActiveItem: (state, activeItem) => state.activeItem = activeItem,
     },
     getters: {
         getNewId (state) {
@@ -170,7 +174,7 @@ export default {
                 console.error(error);
             }
         },
-        async updateProblemGraph({dispatch}, payload) {
+        async updateProblemGraph({dispatch,commit}, payload) {
             try {
                 let query = gql`mutation UpdateProblem(    
                                     $id: ID!,
@@ -207,6 +211,9 @@ export default {
                 await GRAPHQL.mutate({
                    mutation: query,
                    variables: payload,
+                }).then((res)=>{
+                    commit('setActiveItem',res.data.updateProblem);
+                    commit('setStatus','view')
                 });
                 await dispatch('getProblemsGraph');
             } catch (error) {
@@ -255,6 +262,9 @@ export default {
                     variables: payload,
                 }).then((response)=>{
                     commit('addProblem', response.data.createProblem);
+                    commit('setActiveItem',response.data.createProblem);
+                    commit('setStatus','view')
+
                 });
             } catch (error) {
                 console.error(error);

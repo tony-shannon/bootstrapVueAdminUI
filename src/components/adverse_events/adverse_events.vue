@@ -142,8 +142,6 @@
                 ],
                 filter: null,
                 filterOn: [],
-                activeItem: null,
-                status: 'view'
             };
         },
         components: {
@@ -154,6 +152,22 @@
             ...mapGetters({
                 adverse_events: 'adverse_events/getAdverseEvents'
             }),
+            activeItem: {
+                get () {
+                    return this.$store.state.adverse_events.activeItem;
+                },
+                set (value) {
+                    this.$store.commit('adverse_events/setActiveItem', value)
+                }
+            },
+            status: {
+                get () {
+                    return this.$store.state.adverse_events.status;
+                },
+                set (value) {
+                    this.$store.commit('adverse_events/setStatus', value)
+                }
+            },
         },
         methods: {
             ...adverse_eventsActions([

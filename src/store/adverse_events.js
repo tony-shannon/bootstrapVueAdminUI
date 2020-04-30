@@ -5,7 +5,9 @@ import {GRAPHQL} from './graphql';
 import {filter} from "lodash";
 
 const initialState = {
-    adverse_events: []
+    adverse_events: [],
+    status: 'view',
+    activeItem: null,
 };
 
 export default {
@@ -20,7 +22,10 @@ export default {
         },
         addAdverse_Event (state, payload) {
             state.adverse_events.push(payload)
-        }
+        },
+        setStatus: (state, status) => state.status = status,
+        setActiveItem: (state, activeItem) => state.activeItem = activeItem,
+
     },
     getters: {
         getNewId (state) {

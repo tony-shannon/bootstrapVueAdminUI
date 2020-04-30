@@ -3,7 +3,9 @@ import {GRAPHQL} from "./graphql";
 import gql from "graphql-tag";
 import {filter} from "lodash"
 const initialState = {
-    medications: []
+    medications: [],
+    status: 'view',
+    activeItem: null,
 };
 
 export default {
@@ -16,9 +18,12 @@ export default {
         setMedication(state, payload) {
             state.medications.splice(payload.index, 1, payload.value)
         },
-        addMedication (state, payload) {
+        addMedication(state, payload) {
             state.medications.push(payload)
-        }
+        },
+
+        setStatus: (state, status) => state.status = status,
+        setActiveItem: (state, activeItem) => state.activeItem = activeItem,
     },
     getters: {
         getNewId (state) {
@@ -248,6 +253,9 @@ export default {
                 }).then((response)=>{
                     console.log(response);
                     commit('addMedication', response.data.createMedication);
+                    commit('setActiveItem',response.data.createMedication);
+                    commit('setStatus','view')
+
                 });
 
             } catch (error) {
