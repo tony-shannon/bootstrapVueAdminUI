@@ -157,8 +157,11 @@ export default {
                 await GRAPHQL.mutate({
                     mutation: query,
                     variables: payload,
+                }).then((res)=>{
+                    console.log(res);
+                    dispatch('getMedicationsGraph');
                 });
-                await dispatch('getMedicationsGraph');
+
             } catch (error) {
                 console.error(error);
             }
@@ -200,8 +203,11 @@ export default {
                 await GRAPHQL.mutate({
                     mutation: query,
                     variables: payload,
+                }).then(()=>{
+                     console.log('updateMedicationGraph');
+                     dispatch('getMedicationsGraph');
+
                 });
-                await dispatch('getMedicationsGraph');
 
             } catch (error) {
                 console.error(error);

@@ -54,11 +54,20 @@ const typeDefs = gql`
       token: String!
   }
   
+  type Term {
+    id: ID! 
+    idN: Int
+    Term: String
+    Subset: String
+    Code: String
+}
+
   type Query {
     medications: [Medication]
     adverse_Events: [Adverse_Event]
     problems: [Problem]
     patients: [Patient]
+    terms: [Term]
   }
  
   

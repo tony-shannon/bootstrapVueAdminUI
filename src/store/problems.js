@@ -213,9 +213,9 @@ export default {
                    variables: payload,
                 }).then((res)=>{
                     commit('setActiveItem',res.data.updateProblem);
-                    commit('setStatus','view')
+                    commit('setStatus','view');
+                    dispatch('getProblemsGraph');
                 });
-                await dispatch('getProblemsGraph');
             } catch (error) {
                 console.error(error);
             }

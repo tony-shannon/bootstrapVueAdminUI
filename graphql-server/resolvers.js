@@ -15,7 +15,7 @@ const universalResolver = {
 
         const condition = lib.as.format(' WHERE id = ${id}', where);
         var prepareStatement = helpers.update(data, null, tableName) + condition + " RETURNING *";
-        const result =  client.one(prepareStatement).then((res)=>res);
+        const result = await  client.one(prepareStatement).then((res)=>res);
         return result;
     },
     create: async (_, {data, tableName}, {dataSources}) => {
@@ -24,7 +24,7 @@ const universalResolver = {
         let client = dataSources.db.client;
 
         var prepareStatement = helpers.insert(data,null,tableName) + " RETURNING *";
-        const result = client.one(prepareStatement).then((res) => res);
+        const result = await client.one(prepareStatement).then((res) => res);
         return result;
     },
     delete: async (_, {where, tableName},{dataSources}) => {
@@ -32,7 +32,7 @@ const universalResolver = {
         let lib = dataSources.db.lib;
 
         var prepareStatement = lib.as.format('DELETE FROM "'+tableName+'" WHERE id=${id} RETURNING *',where);
-        const result =  dataSources.db.client.oneOrNone(prepareStatement).then((res)=>res);
+        const result = await dataSources.db.client.oneOrNone(prepareStatement).then((res)=>res);
         return result;
     },
 };
@@ -72,7 +72,14 @@ const resolvers = {
                     dataSources: dataSources
                 }
             ),
-
+        terms: async (_, params, {dataSources}) =>
+            await universalResolver.index(_,
+                {
+                    tableName: 'Term'
+                }, {
+                    dataSources: dataSources
+                }
+            ),
     },
     Mutation: {
 
