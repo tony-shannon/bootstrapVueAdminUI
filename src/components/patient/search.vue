@@ -1,5 +1,19 @@
 <template>
-    <div class="row">
+    <div class="row search" >
+        <b-col cols="12" sm="12" class="search__field">
+            <b-input-group size="sm">
+                <b-form-input
+                        v-model="search"
+                        type="search"
+                        id="filterInput"
+                        placeholder="Type to Search"
+                ></b-form-input>
+                <b-input-group-append>
+                    <b-button :disabled="!filter" @click="filter = null">Clear</b-button>
+                </b-input-group-append>
+            </b-input-group>
+        </b-col>
+        <hr/>
         <div class="col-lg-12">
             <b-table
                     :items="patients"
@@ -22,7 +36,7 @@
 </template>
 
 <script>
-    import {mapGetters, mapMutations} from 'vuex'
+    import {mapMutations} from 'vuex'
     import {CONFIG} from '../../store/config';
 
     import {
@@ -51,7 +65,8 @@
                     {key: "Age", sortable: false},
                     {key: "Address", sortable: false}
 
-                ], filter: null,
+                ],
+                filter: 'sdd',
                 filterOn: [],
                 activeItem: null,
                 status: 'view'
@@ -59,9 +74,14 @@
         },
 
         computed: {
-            ...mapGetters({
-                search: 'search/input',
-            }),
+            search: {
+                get () {
+                    return this.$store.state.search.input;
+                },
+                set (value) {
+                    this.$store.commit('search/setInput', value)
+                }
+            },
             ...patientsState([
                 'patients',
             ]),
@@ -84,7 +104,15 @@
                 this.setPatientId(item);
             }
         },
+        watch:{
+           filter(newVal){
+               this.setInput(newVal);
+           },
+
+        },
         mounted: async function() {
+            //this.filter = this.search;
+
             this.$nextTick(function() {
                 this.makeRequest({
                     type: CONFIG.serverType,
@@ -97,6 +125,12 @@
     }
 </script>
 
-<style scoped>
+<style scoped >
+    .search{
 
+    }
+    .search__field{
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
 </style>

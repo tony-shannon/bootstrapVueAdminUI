@@ -13,12 +13,13 @@
                             <b-nav-item href="#" disabled>Disabled</b-nav-item>
                         </b-navbar-nav>
 
-<div class="bg-secondary text-light" align="center" v-html="patientTitle"/>
+                    <div class="bg-secondary text-light" align="center" v-html="patientTitle"/>
                         <!-- Right aligned nav items -->
                         <b-navbar-nav class="ml-auto">
                             <b-nav-form>
-                                <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-                                <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
+                                <b-form-input size="sm" class="mr-sm-2" placeholder="Search" v-model="search"></b-form-input>
+
+                                <b-button size="sm" class="my-2 my-sm-0"   @click="$router.push('search')" type="submit">Search</b-button>
                             </b-nav-form>
 
                             <b-nav-item-dropdown text="Lang" right>
@@ -45,14 +46,31 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
+    import {mapGetters, mapMutations} from 'vuex'
 
     export default {
         name: "header_template",
+        data(){
+            return {
+                filter: 'xxx',
+            }
+        },
+        mounted(){
+        //  this.filter = this.search;
+        },
         computed:{
             ...mapGetters({
                 patient: 'patient/patient',
+
             }),
+            search: {
+                get () {
+                    return this.$store.state.search.input;
+                },
+                set (value) {
+                    this.$store.commit('search/setInput', value)
+                }
+            },
             patientTitle: function(){
                 let result = "";
                 let patient = this.patient;
@@ -65,6 +83,17 @@
                    result =" John Brown ¦ 49 years ¦ Male ¦ Shop St, Galway";
                 }
                 return result;
+            }
+        },
+        methods: {
+            ...mapMutations('search', {
+                setInput: 'setInput'
+            }),
+
+        },
+        watch:{
+            filter(newVal){
+                this.setInput(newVal);
             }
         }
     }
