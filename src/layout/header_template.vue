@@ -17,8 +17,13 @@
                         <b-navbar-nav class="ml-auto">
                             <b-nav-form>
                                 <b-form-input size="sm" class="mr-sm-2" placeholder="Search" v-model="search"></b-form-input>
-
-                                <b-button size="sm" class="my-2 my-sm-0"   @click="$router.push('search')" type="submit">Search</b-button>
+                                <router-link
+                                        class="my-2 my-sm-0"
+                                        :to="{ name: 'search' }"
+                                        tag="button"
+                                >
+                                    Search
+                                </router-link>
                             </b-nav-form>
 
                             <b-nav-item-dropdown text="Lang" right>
