@@ -1,6 +1,7 @@
 import {HTTP} from './axios'
 import {GRAPHQL} from "./graphql";
 import gql from "graphql-tag";
+import {filter} from "lodash"
 
 const initialState = {
     problems: [],
@@ -36,6 +37,15 @@ export default {
                 }
             });
             return lastId + 1;
+        },
+        getProblems: function(state, getters,rootState){
+            let patientId = rootState.patient.patientId;
+            if(patientId){
+                return filter(state.problems,{patientId: patientId});
+            }else{
+                return state.problems;
+            }
+
         }
     },
     actions: {

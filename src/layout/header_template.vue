@@ -9,8 +9,7 @@
 
                     <b-collapse id="nav-collapse" is-nav>
                         <b-navbar-nav>
-                            <b-nav-item href="#">Link</b-nav-item>
-                            <b-nav-item href="#" disabled>Disabled</b-nav-item>
+                            <b-nav-item v-show="patient" href="#" @click="closePatientCard" >Close</b-nav-item>
                         </b-navbar-nav>
 
                     <div class="bg-secondary text-light" align="center" v-html="patientTitle"/>
@@ -87,9 +86,17 @@
         },
         methods: {
             ...mapMutations('search', {
-                setInput: 'setInput'
+                setInput: 'setInput',
             }),
 
+            ...mapMutations('patient',{
+                setActivePatient: 'setPatient',
+                setPatientId: 'setPatientId',
+            }),
+            closePatientCard(){
+                this.setActivePatient(null);
+                this.setPatientId(null);
+            }
         },
         watch:{
             filter(newVal){

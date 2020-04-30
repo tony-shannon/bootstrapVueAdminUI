@@ -60,7 +60,7 @@
                         <b>{{ sortDesc ? 'Descending' : 'Ascending' }}</b>
                     </div>
                 </div>
-            </b-card> 
+            </b-card>
         </b-col>
         <b-col cols="6" sm="6">
             <editProblem v-if="status == 'edit'"
@@ -115,11 +115,12 @@
 </template>
 
 <script>
+
+
     import {
-        problemsState,
         problemsActions
     } from '@/store/helpers';
-
+    import {mapGetters} from 'vuex';
     import editProblem from './edit.vue';
     import createProblem from './create.vue';
     import {CONFIG} from '../../store/config';
@@ -138,7 +139,7 @@
 
                     },
                     {key: "CodeD", sortable: true},
-                   
+
                     {key: "Name", sortable: false},
                     {key: "Days", sortable: false}
                 ],filter: null,
@@ -157,9 +158,9 @@
                         return {text: f.label, value: f.key};
                     });
             },
-            ...problemsState([
-                'problems',
-            ]),
+            ...mapGetters({
+                problems: 'problems/getProblems'
+            }),
         },
         components: {
             editProblem,

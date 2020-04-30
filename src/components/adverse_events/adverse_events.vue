@@ -115,8 +115,8 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex';
     import {
-        adverse_eventsState,
         adverse_eventsActions
     } from '@/store/helpers';
     import editAdverse_Event from './edit.vue';
@@ -151,9 +151,9 @@
             createAdverse_Event
         },
         computed: {
-            ...adverse_eventsState([
-                'adverse_events',
-            ]),
+            ...mapGetters({
+                adverse_events: 'adverse_events/getAdverseEvents'
+            }),
         },
         methods: {
             ...adverse_eventsActions([

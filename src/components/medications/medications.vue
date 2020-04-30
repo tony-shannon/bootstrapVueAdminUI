@@ -115,8 +115,9 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
+
     import {
-        medicationsState,
         medicationsActions
     } from '@/store/helpers';
     import editMedication from './edit.vue';
@@ -155,9 +156,9 @@
             createMedication
         },
         computed: {
-            ...medicationsState([
-                'medications',
-            ]),
+            ...mapGetters({
+               medications: 'medications/getMedications'
+            }),
         },
         methods: {
             ...medicationsActions([

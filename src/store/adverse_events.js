@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 
 import {HTTP} from './axios';
 import {GRAPHQL} from './graphql';
+import {filter} from "lodash";
 
 const initialState = {
     adverse_events: []
@@ -30,6 +31,14 @@ export default {
                 }
             });
             return lastId + 1;
+        },
+        getAdverseEvents: function(state, getters,rootState){
+            let patientId = rootState.patient.patientId;
+            if(patientId){
+                return filter(state.adverse_events,{patientId: patientId});
+            }else{
+                return state.adverse_events;
+            }
         }
     },
     actions: {
