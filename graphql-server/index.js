@@ -7,7 +7,6 @@ const {typeDefs} = require('./typedefs');
 require('dotenv').config();
 
 const dbClient =  pgp(process.env.PG_SQLINIT);
-
 const server = new ApolloServer(
     {
         typeDefs,

@@ -6,6 +6,7 @@ import Vuex from 'vuex'
 import medications from './medications'
 import problems from './problems'
 import adverse_events from './adverse_events'
+import patients from './patients'
 
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
     modules: {
         medications,
         problems,
-        adverse_events
+        adverse_events,
+        patients,
     }
 })

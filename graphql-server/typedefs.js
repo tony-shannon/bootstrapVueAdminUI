@@ -23,6 +23,8 @@ const typeDefs = gql`
     Days: String
    
   }
+  
+  
   type Problem {
   
      id: ID!
@@ -34,10 +36,22 @@ const typeDefs = gql`
   
   }
   
+  type Patient {
+    id: ID! 
+    idN: Int!
+    FirstName: String!
+    LastName: String!
+    Sex: String!
+    Age: Int!
+    Address: String!
+  }
+
+  
   type Query {
     medications: [Medication]
     adverse_Events: [Adverse_Event]
     problems: [Problem]
+    patients: [Patient]
   }
   
   type Mutation {
@@ -52,6 +66,12 @@ const typeDefs = gql`
     createProblem(data: Data): Problem
     deleteProblem(where: Data): Problem
     updateProblem(where: Data, data: Data): Problem
+    
+    createPatient(data: Data): Patient
+    deletePatient(where: Data): Patient
+    updatePatient(where: Data, data: Data): Patient
+    
+    
   }
 `;
 

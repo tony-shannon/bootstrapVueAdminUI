@@ -2,8 +2,9 @@ import router from 'vue-router';
 
 const Home = () => import(/* webpackChunkName: "main" */ '../components/home.vue');
 const Problems = () => import(/* webpackChunkName: "main" */ '../components/problems/problems.vue');
+const Patients = () => import(/* webpackChunkName: "main" */ '../components/patients/patients.vue');
 const Medications = () => import(/* webpackChunkName: "main" */ '../components/medications/medications.vue');
-const Adverse_Events = ()  => import(/* webpackChunkName: "main" */ '../components/adverse_events/adverse_events.vue'); 
+const Adverse_Events = ()  => import(/* webpackChunkName: "main" */ '../components/adverse_events/adverse_events.vue');
 
 export default new router ({
   mode: 'history',
@@ -19,6 +20,11 @@ export default new router ({
       path: '/problems',
       name: 'problems',
       component: Problems
+    },
+    {
+      path: '/patients',
+      name: 'patients',
+      component: Patients
     },
     {
       path: '/medications',

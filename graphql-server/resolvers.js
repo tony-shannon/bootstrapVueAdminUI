@@ -16,7 +16,7 @@ const universalResolver = {
 
         const condition = lib.as.format(' WHERE id = ${id}', where);
         var prepareStatement = helpers.update(data, null, tableName) + condition + " RETURNING *";
-        const result = await client.one(prepareStatement);
+        const result =  client.one(prepareStatement).then((res)=>res);
         return result;
     },
     create: async (_, {data, tableName}, {dataSources}) => {
@@ -33,7 +33,7 @@ const universalResolver = {
         let lib = dataSources.db.lib;
 
         var prepareStatement = lib.as.format('DELETE FROM "'+tableName+'" WHERE id=${id} RETURNING *',where);
-        const result = await dataSources.db.client.one(prepareStatement);
+        const result =  dataSources.db.client.oneOrNone(prepareStatement).then((res)=>res);
         return result;
     },
 };
@@ -68,7 +68,8 @@ const resolvers = {
     },
     Mutation: {
 
-        createMedication: async (_, {data}, {dataSources}) => await universalResolver.create(_,
+        createMedication: async (_, {data}, {dataSources}) =>
+            await universalResolver.create(_,
             {
                 data: data,
                 tableName: 'Medication'
@@ -89,7 +90,7 @@ const resolvers = {
                 }
             ),
         updateMedication:  async (_, {where,data},{dataSources}) =>
-            await  universalResolver.update(_,
+            await universalResolver.update(_,
                 {
                     where: where,
                     data: data,
@@ -161,6 +162,40 @@ const resolvers = {
                     where: where,
                     data: data,
                     tableName: 'Problem'
+                },
+                {
+                    dataSources: dataSources
+                }),
+
+
+        createPatient: async (_, {data}, {dataSources}) =>
+            await universalResolver.create(_,
+                {
+                    data: data,
+                    tableName: 'Patient'
+                },
+                {
+                    dataSources: dataSources
+                }
+            ),
+
+        deletePatient: async (_, {where}, {dataSources}) =>
+            await universalResolver.delete(_,
+                {
+                    where: where,
+                    tableName: 'Patient'
+                },
+                {
+                    dataSources: dataSources
+                }
+            ),
+
+        updatePatient: async (_, {where, data}, {dataSources}) =>
+            await universalResolver.update(_,
+                {
+                    where: where,
+                    data: data,
+                    tableName: 'Patient'
                 },
                 {
                     dataSources: dataSources
