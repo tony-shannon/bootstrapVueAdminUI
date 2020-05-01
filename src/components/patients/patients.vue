@@ -149,8 +149,6 @@
                     {key: "Age", sortable: false}
                 ],filter: null,
                 filterOn: [],
-                activeItem: null,
-                status: 'view'
             };
         },
 
@@ -163,6 +161,27 @@
                         return {text: f.label, value: f.key};
                     });
             },
+
+            activeItem: {
+                get () {
+                    if(this.$store.state.patients.activeItem) {
+                        this.selectRow(this.$store.state.patients.activeItem.id);
+                    }
+                    return this.$store.state.patients.activeItem;
+                },
+                set (value) {
+                    this.$store.commit('patients/setActiveItem', value)
+                }
+            },
+            status: {
+                get () {
+                    return this.$store.state.patients.status;
+                },
+                set (value) {
+                    this.$store.commit('patients/setStatus', value)
+                }
+            },
+
             search: {
                 get () {
                     return this.$store.state.search.input;

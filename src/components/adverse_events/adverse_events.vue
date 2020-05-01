@@ -154,6 +154,9 @@
             }),
             activeItem: {
                 get () {
+                    if(this.$store.state.adverse_events.activeItem) {
+                        this.selectRow(this.$store.state.adverse_events.activeItem.id);
+                    }
                     return this.$store.state.adverse_events.activeItem;
                 },
                 set (value) {

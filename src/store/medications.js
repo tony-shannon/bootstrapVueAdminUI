@@ -257,7 +257,6 @@ export default {
                     mutation: query,
                     variables: payload,
                 }).then((response)=>{
-                    console.log(response);
                     commit('addMedication', response.data.createMedication);
                     commit('setActiveItem',response.data.createMedication);
                     commit('setStatus','view')

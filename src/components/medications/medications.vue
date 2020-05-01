@@ -159,6 +159,9 @@
             }),
             activeItem: {
                 get () {
+                    if(this.$store.state.medications.activeItem) {
+                        this.selectRow(this.$store.state.medications.activeItem.id);
+                    }
                     return this.$store.state.medications.activeItem;
                 },
                 set (value) {

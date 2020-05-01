@@ -162,6 +162,9 @@
 
             activeItem: {
                 get () {
+                    if(this.$store.state.problems.activeItem) {
+                        this.selectRow(this.$store.state.problems.activeItem.id);
+                    }
                     return this.$store.state.problems.activeItem;
                 },
                 set (value) {
