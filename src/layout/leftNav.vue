@@ -53,4 +53,10 @@
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
     }
+
+    .left-nav .list-group-item.active {
+        color: #495057;
+        background-color: rgba(0,0,0,.075) !important;
+        border-color: #d6d6d6;
+    }
 </style>
