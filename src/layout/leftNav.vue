@@ -1,19 +1,19 @@
 <template>
     <div>
         <b-list-group class="left-nav">
-            <b-list-group-item  class="no-border-top" href="/demographics">Demog</b-list-group-item>
-            <router-link
-                    class="list-group-item list-group-item-action"
-                    :to="{ name: 'problems' }"
-            >
-                Problems
-            </router-link>
             <router-link
                     class="list-group-item list-group-item-action"
                     :to="{ name: 'patients' }"
             >
                 Patients
             </router-link>
+             <router-link
+                    class="list-group-item list-group-item-action"
+                    :to="{ name: 'problems' }"
+            >
+                Problems
+            </router-link>
+           
             <router-link
                     class="list-group-item list-group-item-action"
                     :to="{ name: 'medications' }"
@@ -26,7 +26,6 @@
             >
                 AdvEvents
             </router-link>
-            <b-list-group-item href="adverseEvB">AdvEventB</b-list-group-item>
             <b-list-group-item href="Procedures">Procedures</b-list-group-item>
         </b-list-group>
     </div>

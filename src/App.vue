@@ -78,8 +78,8 @@
                 let patient = this.patient;
                 if(!patient){
                     patient = {};
-                    patient.FirstName = 'John';
-                    patient.LastName = 'Brown';
+                    patient.FirstName = 'Patient';
+                    patient.LastName = 'Banner';
                     patient.Dob = '1990-01-01';
                     patient.Address = '123 Park Avenue, Dublin, Rep. of Ireland';
                     patient.Phone = '+353 45 325 4453';
