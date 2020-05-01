@@ -15,5 +15,6 @@ module.exports = {
         extract: {
             filename: '[name].css',
         },
+
     },
 }

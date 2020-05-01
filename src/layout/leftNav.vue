@@ -1,8 +1,7 @@
 <template>
     <div>
-        Nav Bar
-        <b-list-group>
-            <b-list-group-item href="/demographics">Demog</b-list-group-item>
+        <b-list-group class="left-nav">
+            <b-list-group-item  class="no-border-top" href="/demographics">Demog</b-list-group-item>
             <router-link
                     class="list-group-item list-group-item-action"
                     :to="{ name: 'problems' }"
@@ -40,5 +39,18 @@
 </script>
 
 <style scoped>
+    .left-nav,
+    .left-nav .list-group-item{
+        background-color: #f4f4f4;
+    }
 
+    .left-nav .list-group-item:first-child {
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+    }
+
+    .left-nav .list-group-item:last-child {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
 </style>

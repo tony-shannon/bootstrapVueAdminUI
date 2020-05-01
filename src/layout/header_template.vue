@@ -1,6 +1,6 @@
 <template>
     <b-row>
-        <b-col cols="12" sm="12">Header
+        <b-col cols="12" sm="12">
             <div>
                 <b-navbar toggleable="lg" type="dark" variant="primary">
                     <b-navbar-brand href="#">Home</b-navbar-brand>
@@ -12,7 +12,7 @@
                             <b-nav-item v-show="patient" href="#" @click="closePatientCard" >Close</b-nav-item>
                         </b-navbar-nav>
 
-                    <div class="bg-secondary text-light" align="center" v-html="patientTitle"/>
+                    <div class="bg-secondary text-light" align="center"/>
                         <!-- Right aligned nav items -->
                         <b-navbar-nav class="ml-auto">
                             <b-nav-form>
@@ -65,7 +65,6 @@
         computed:{
             ...mapGetters({
                 patient: 'patient/patient',
-
             }),
             search: {
                 get () {

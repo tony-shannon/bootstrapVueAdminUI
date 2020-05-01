@@ -1,0 +1,42 @@
+.no-margin-h {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.no-padding-l {
+    padding-left: 0px;
+}
+
+.no-border-top {
+    border-top: 0px;
+}
+
+.no-padding-h {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.m-t-15 {
+    margin-top: 15px;
+}
+
+
+.border-b-gray {
+    border-bottom: 1px solid #dedede;
+}
+
+.border-r-gray {
+    border-right: 1px solid #dedede;
+}
+
+.border-l-gray {
+    border-left: 1px solid #dedede;
+}
+
+.border-t-gray {
+    border-top: 1px solid #dedede;
+}
+
+.border-gray {
+    border: 1px solid #dedede;
+}
