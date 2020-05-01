@@ -244,6 +244,9 @@ export default {
                 }).then((response)=>{
                     console.log(response);
                     commit('addPatient', response.data.createPatient);
+                    commit('setActiveItem',response.data.createPatient);
+                    commit('setStatus','view')
+
                 });
 
             } catch (error) {
