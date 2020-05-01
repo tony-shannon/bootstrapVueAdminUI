@@ -165,7 +165,9 @@
             activeItem: {
                 get () {
                     if(this.$store.state.patients.activeItem) {
-                        this.selectRow(this.$store.state.patients.activeItem.id);
+                        this.$nextTick(function () {
+                            this.selectRow(this.$store.state.patients.activeItem.id);
+                        })
                     }
                     return this.$store.state.patients.activeItem;
                 },
