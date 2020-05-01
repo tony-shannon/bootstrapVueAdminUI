@@ -19,7 +19,7 @@
                                 <b-form-input size="sm" class="mr-sm-2" placeholder="Search" v-model="search"></b-form-input>
                                 <router-link
                                         class="my-2 my-sm-0"
-                                        :to="{ name: 'search' }"
+                                        :to="{ name: 'patients' }"
                                         tag="button"
                                 >
                                     Search
