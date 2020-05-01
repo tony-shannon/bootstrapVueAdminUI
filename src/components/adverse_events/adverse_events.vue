@@ -154,6 +154,11 @@
             }),
             activeItem: {
                 get () {
+                    if(this.$store.state.adverse_events.activeItem) {
+                        this.$nextTick(function () {
+                            this.selectRow(this.$store.state.adverse_events.activeItem.id);
+                        });
+                    }
                     return this.$store.state.adverse_events.activeItem;
                 },
                 set (value) {

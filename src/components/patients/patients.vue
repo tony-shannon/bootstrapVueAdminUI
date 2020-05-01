@@ -19,13 +19,13 @@
                     >
                         <b-input-group size="sm">
                             <b-form-input
-                                    v-model="filter"
+                                    v-model="search"
                                     type="search"
                                     id="filterInput"
                                     placeholder="Type to Search"
                             ></b-form-input>
                             <b-input-group-append>
-                                <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+                                <b-button :disabled="!search" @click="search = ''">Clear</b-button>
                             </b-input-group-append>
                         </b-input-group>
                     </b-form-group>
@@ -43,7 +43,7 @@
                             select-mode="single"
                             primary-key="id"
                             responsive="sm"
-                            :filter="filter"
+                            :filter="search"
                             :filterIncludedFields="filterOn"
                             @row-clicked="setActiveItem"
                     ></b-table>
@@ -93,7 +93,11 @@
                 <b-card-footer
                         footer-bg-variant="white"
                         footer-border-variant="white">
-
+                    <b-button v-if="activeItem"
+                              class="float-left ml-3"
+                              @click="setPatient(activeItem)">
+                        Select Patient
+                    </b-button>
                     <b-button
                             v-if="activeItem"
                             variant="primary"
@@ -115,6 +119,8 @@
 </template>
 
 <script>
+    import {mapMutations} from 'vuex'
+
     import {
         patientsState,
         patientsActions
@@ -143,8 +149,6 @@
                     {key: "Age", sortable: false}
                 ],filter: null,
                 filterOn: [],
-                activeItem: null,
-                status: 'view'
             };
         },
 
@@ -156,6 +160,37 @@
                     .map(f => {
                         return {text: f.label, value: f.key};
                     });
+            },
+
+            activeItem: {
+                get () {
+                    if(this.$store.state.patients.activeItem) {
+                        this.$nextTick(function () {
+                            this.selectRow(this.$store.state.patients.activeItem.id);
+                        })
+                    }
+                    return this.$store.state.patients.activeItem;
+                },
+                set (value) {
+                    this.$store.commit('patients/setActiveItem', value)
+                }
+            },
+            status: {
+                get () {
+                    return this.$store.state.patients.status;
+                },
+                set (value) {
+                    this.$store.commit('patients/setStatus', value)
+                }
+            },
+
+            search: {
+                get () {
+                    return this.$store.state.search.input;
+                },
+                set (value) {
+                    this.$store.commit('search/setInput', value)
+                }
             },
             ...patientsState([
                 'patients',
@@ -180,6 +215,10 @@
             ...patientsActions([
                 'makeRequest',
             ]),
+            ...mapMutations('patient',{
+                setActivePatient: 'setPatient',
+                setPatientId: 'setPatientId',
+            }),
             setActiveItem (item) {
                 this.status = 'view';
                 this.activeItem = item;
@@ -230,6 +269,10 @@
                 this.status = 'create';
                 this.activeItem = null;
                 this.$refs.patientsTable.clearSelected();
+            },
+            setPatient(item){
+                this.setActivePatient(item);
+                this.setPatientId(parseInt(item.id));
             }
         },
         mounted: async function() {

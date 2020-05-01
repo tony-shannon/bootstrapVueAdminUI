@@ -35,17 +35,16 @@ export default{
             }`;
             const variables = {
                 login: login,
-                password: "ANY",
+                password: "ANY"+password,
             };
 
-            GRAPHQL.mutate({
+            return GRAPHQL.mutate({
                 mutation: query,
                 variables: variables,
             }).then((res)=>{
                 commit('token',res.data.obtainToken.token);
 
             });
-            return login + password;
         },
         logout: ({ commit})=>{
             commit('token',null);

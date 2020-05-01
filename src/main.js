@@ -20,7 +20,7 @@ import router from './router/index.js';
 
 router.beforeEach((to, from, next) => {
 
-    if (to.name !== 'login' && !store.state.auth.token) next({ name: 'login' })
+    if (to.name !== 'login' && store.state.auth.token == null) next({ name: 'login' })
     else next()
 });
 

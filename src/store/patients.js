@@ -3,7 +3,9 @@ import {GRAPHQL} from "./graphql";
 import gql from "graphql-tag";
 
 const initialState = {
-    patients: []
+    patients: [],
+    status: 'view',
+    activeItem: null,
 };
 
 export default {
@@ -18,7 +20,9 @@ export default {
         },
         addPatient (state, payload) {
             state.patients.push(payload)
-        }
+        },
+        setStatus: (state, status) => state.status = status,
+        setActiveItem: (state, activeItem) => state.activeItem = activeItem,
     },
     getters: {
         getNewId (state) {
@@ -240,6 +244,9 @@ export default {
                 }).then((response)=>{
                     console.log(response);
                     commit('addPatient', response.data.createPatient);
+                    commit('setActiveItem',response.data.createPatient);
+                    commit('setStatus','view')
+
                 });
 
             } catch (error) {
