@@ -38,7 +38,11 @@ export default {
         getMedications: function(state, getters,rootState){
             let patientId = rootState.patient.patientId;
             if(patientId){
-                return filter(state.medications,{patientId: parseInt(patientId)});
+                let data = filter(state.medications, {patientId: parseInt(patientId)});
+                if (!data.length) {
+                    state.activeItem = null;
+                }
+                return data;
             }else{
                 return state.medications;
             }

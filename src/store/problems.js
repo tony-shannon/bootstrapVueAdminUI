@@ -45,7 +45,12 @@ export default {
         getProblems: function(state, getters,rootState){
             let patientId = rootState.patient.patientId;
             if(patientId){
-                return filter(state.problems,{patientId: patientId});
+                let data =  filter(state.problems,{patientId: patientId});
+
+                if (!data.length) {
+                    state.activeItem = null;
+                }
+                return data;
             }else{
                 return state.problems;
             }
@@ -67,6 +72,10 @@ export default {
                         break;
                     case 'delete':
                         await dispatch('deleteProblem', payload.data);
+
+                        break;
+                    case 'getTerms':
+                        await dispatch('getTerms');
                         break;
                     default:
                         alert( "This action doesn't exist" );
@@ -88,7 +97,7 @@ export default {
                         await dispatch('deleteProblemGraph', payload.data);
                         break;
                     case 'getTerms':
-                        await dispatch('getTerms');
+                        await dispatch('getTermsGraph');
                         break;
                     default:
                         alert( "This action doesn't exist" );
@@ -305,7 +314,21 @@ export default {
                 });
             })
         },
+
         async getTerms({commit}) {
+            return new Promise((resolve, reject) => {
+                HTTP.get('Terms')
+                    .then(resp => {
+                        commit('setTerms', resp.data)
+                        resolve(resp)
+                    })
+                    .catch(err => {
+                        reject(err)
+                    })
+
+            });
+        },
+        async getTermsGraph({commit}) {
             try {
 
                 let query = gql`{

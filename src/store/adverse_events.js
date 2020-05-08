@@ -40,7 +40,12 @@ export default {
         getAdverseEvents: function(state, getters,rootState){
             let patientId = rootState.patient.patientId;
             if(patientId){
-                return filter(state.adverse_events,{patientId: patientId});
+                let data =  filter(state.adverse_events,{patientId: patientId});
+
+                if (!data.length) {
+                    state.activeItem = null;
+                }
+                return data;
             }else{
                 return state.adverse_events;
             }
@@ -135,6 +140,7 @@ export default {
                 HTTP.delete('Adverse_Events/' + payload.id)
                     .then(resp => {
                         dispatch('getAdverse_Events')
+
                         resolve(resp)
                     })
                     .catch(err => {
