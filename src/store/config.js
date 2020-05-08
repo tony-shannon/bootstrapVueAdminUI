@@ -5,7 +5,7 @@ let config = {
     //graphUrl: 'https://eu1.prisma.sh/hit-experiment-4/med-crud1/dev',
     graphUrl: 'https://4000-ecda3ed5-9072-4d3a-9efe-05f40e0b70ae.ws-eu01.gitpod.io',
    // graphUrl: 'http://localhost:4000/',
-    serverType: 'graph' //'graph' or 'rest'
+    serverType: 'rest' //'graph' or 'rest'
 };
 
 

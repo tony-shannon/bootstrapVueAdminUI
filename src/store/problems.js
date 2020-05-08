@@ -121,7 +121,9 @@ export default {
 
             });
         },
-        async createProblem ({dispatch}, payload) {
+        async createProblem ({dispatch,rootState}, payload) {
+            payload.patientId = rootState.patient.patientId ?  rootState.patient.patientId : 0 ;
+
             return new Promise((resolve, reject) => {
                 HTTP.post('Problems/', JSON.stringify(payload))
                     .then(resp => {

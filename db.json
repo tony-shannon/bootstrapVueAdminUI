@@ -34,6 +34,21 @@
       "Indication": "Dry Skin",
       "Name": "Betnovate",
       "Route": "Topical"
+    },
+    {
+      "id": 8,
+      "DoseMg": "wereq",
+      "Indication": "qwer",
+      "Name": "qwer",
+      "Route": "qwerty"
+    },
+    {
+      "id": 9,
+      "DoseMg": "10",
+      "Indication": "qwer",
+      "Name": "S",
+      "Route": "werw",
+      "patientId": 1
     }
   ],
   "Problems": [
@@ -69,7 +84,7 @@
       "id": 5,
       "CodeD": "UL500",
       "Description": "Red Eye",
-      "Name": "Eye Infection - mild",
+      "Name": "Eye Infection3 - mild",
       "Days": "62"
     },
     {
@@ -128,6 +143,34 @@
       "Type": "Allergy ",
       "Name": "Dermatitis",
       "Days": "11"
+    }
+  ],
+  "Terms": [
+    {
+      "id": 1,
+      "idN": 1,
+      "Term": "New",
+      "Subset": 10,
+      "Code": "test"
+    }
+  ],
+  "Patients": [
+    {
+      "id": 1,
+      "idN": 1,
+      "FirstName": "John",
+      "LastName": "Doe",
+      "Sex": "M",
+      "Age": 10,
+      "Address": "10200 DC"
+    },
+    {
+      "id": 2,
+      "FirstName": "TestP",
+      "LastName": "DF",
+      "Sex": "M",
+      "Age": "345",
+      "Address": "sdfgsdfg"
     }
   ]
 }

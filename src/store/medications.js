@@ -111,7 +111,9 @@ export default {
 
             });
         },
-        async createMedication({dispatch}, payload) {
+        async createMedication({dispatch,rootState}, payload) {
+            payload.patientId = rootState.patient.patientId ?  rootState.patient.patientId : 0 ;
+
             return new Promise((resolve, reject) => {
                 HTTP.post('Medications/', JSON.stringify(payload))
                     .then(resp => {

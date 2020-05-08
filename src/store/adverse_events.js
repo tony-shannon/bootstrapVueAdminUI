@@ -112,7 +112,9 @@ export default {
 
             });
         },
-        async createAdverse_Event ({dispatch}, payload) {
+        async createAdverse_Event ({dispatch,rootState}, payload) {
+            payload.patientId = rootState.patient.patientId ?  rootState.patient.patientId : 0 ;
+
             return new Promise((resolve, reject) => {
                 HTTP.post('Adverse_Events/', JSON.stringify(payload))
                     .then(resp => {
