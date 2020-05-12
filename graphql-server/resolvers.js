@@ -7,6 +7,7 @@ const universalResolver = {
         const result = await client.manyOrNone('SELECT * FROM "' + tableName + '"');
         return result.length ? result : [];
     },
+
     update: async (_, {where, data, tableName}, {dataSources}) => {
 
         let lib = dataSources.db.lib;
@@ -222,6 +223,31 @@ const resolvers = {
                     exp: Math.floor(Date.now() / 1000) + (60 * 60),
                     data: data,
                 },'secret'),
+            }
+        },
+
+        sign_in: async (_, {username, password, csfrtoken}, {dataSources})=>{
+
+            let lib = dataSources.db.lib;
+            let client = dataSources.db.client;
+            const condition = lib.as.format(' WHERE username = ${username} AND password = ${password}',
+                {
+                    username: username,
+                    password: password
+                });
+
+            const result = await client.oneOrNone('SELECT * FROM "User" '+condition);
+            if(result !== null){
+                return result;
+            }else{
+                return {
+                    ok: false,
+                    auth_ok: false,
+                    message: 'Not Authorized',
+                    require_password_change: false,
+                    require_otp: false,
+                    require_bat: false,
+                }
             }
         },
     },

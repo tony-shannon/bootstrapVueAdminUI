@@ -24,35 +24,45 @@ export default{
     actions:{
         setToken: (state,token) => state.token = token,
 
-        login: ({ dispatch},login,password) => {
+        login: ({ dispatch},{ login,password}) => {
             if (CONFIG.serverType == 'rest') {
-                dispatch('loginRest', login,password);
+              return  dispatch('loginRest', login,password);
             }else{
-                dispatch('loginGraph', login,password);
+              return  dispatch('loginGraph',{ login: login, password: password});
 
             }
         },
 
-        loginGraph: ({commit}, login, password)=>{
+        loginGraph: ({commit}, {login, password})=>{
 
-            const query = gql`mutation TokenRetrive($login: String!, $password: String!){
-                obtainToken(data:{
-                    login: $login,
+            const query = gql`mutation Signin($login: String!, $password: String!){
+                sign_in(
+                    username: $login,
                     password: $password,
-                }){
-                    token
+                ){
+                    ok 
+                    auth_ok
+                    message 
+                    require_password_change 
+                    require_otp 
+                    require_bat
                 }
             }`;
             const variables = {
                 login: login,
-                password: "ANY"+password,
+                password: password,
             };
 
             return GRAPHQL.mutate({
                 mutation: query,
                 variables: variables,
             }).then((res)=>{
-                commit('token',res.data.obtainToken.token);
+                if(!res.data.sign_in.ok){
+                    alert('Username and/or password are incorrect.');
+                }else{
+                    commit('token','11111111111');
+
+                }
 
             });
         },

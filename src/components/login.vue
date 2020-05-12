@@ -38,7 +38,7 @@
 
            clickLogin(){
 
-              this.loginUser(this.login, this.password).then(()=>{
+              this.loginUser({ login: this.login, password: this.password}).then(()=>{
                   this.$router.push({name:'home'}).catch((err) => {
                       console.log(err)
                   });

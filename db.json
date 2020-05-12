@@ -172,5 +172,19 @@
       "Age": "345",
       "Address": "sdfgsdfg"
     }
+  ],
+  "Users": [
+    {
+      "id": 1,
+      "username": "tony",
+      "password": "1c5c79e8b349fdb1dab6b5aecb4eb2c6",
+      "ok": true,
+      "auth_ok": true,
+      "message": "Authentificated",
+      "require_password_change": false,
+      "require_otp": false,
+      "require_bat": false
+    }
   ]
+
 }

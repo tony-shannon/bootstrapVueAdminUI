@@ -69,6 +69,19 @@ const typeDefs = gql`
     patients: [Patient]
     terms: [Term]
   }
+  
+  type User{
+      id: Int!, 
+      username: String!, 
+      password: String!,
+      csfrtoken: String, 
+      ok: String, 
+      auth_ok: String, 
+      message: String,
+      require_password_change: String, 
+      require_otp: String, 
+      require_bat: String, 
+  }
  
   
   type Mutation {
@@ -90,6 +103,7 @@ const typeDefs = gql`
     
    
     obtainToken(data: Data) : Token
+    sign_in(username: String!, password: String!, csfrtoken: String): User   
   }
 `;
 
