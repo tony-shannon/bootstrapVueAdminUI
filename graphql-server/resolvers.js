@@ -81,7 +81,24 @@ const resolvers = {
                     dataSources: dataSources
                 }
             ),
-        all_enrolments
+
+        all_enrolments: async (_, params, {dataSources})=>{
+            const res = await universalResolver.index(_,
+                {
+                    tableName: 'Patient'
+                }, {
+                    dataSources: dataSources
+                }
+            );
+            let response = res.map((el)=>{
+                return {
+                    created_date: '10-10-1970',
+                    patient_id: el.id,
+                }
+            });
+            return response;
+        }
+
     },
     Mutation: {
 
@@ -251,6 +268,25 @@ const resolvers = {
                 }
             }
         },
+    },
+    Enrolment: {
+      record:  async (parent, args, context) =>{
+          let lib = context.db.lib;
+          console.log(parent);
+          let client = context.db.client;
+          const condition = lib.as.format(' WHERE id = ${id}',{id: parseInt(parent.patient_id)});
+
+          const result = await client.one('SELECT * FROM "Patient" '+condition);
+          if(result){
+              return {
+                  first_name: result.FirstName,
+                  family_name: result.LastName,
+                  date_of_birth: '1960-01-01',
+                  gender: result.Sex,
+                  id: '23-123-4-3-2-3-4-3',
+              }
+          }
+      },
     },
     Data: GraphQLJSONObject,
 };

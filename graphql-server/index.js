@@ -38,7 +38,14 @@ const server = new ApolloServer(
                 })
             }
 
-            return { user };
+            return {
+                user: user,
+                db : {
+                    lib: pgp,
+                    helpers: pgp.helpers,
+                    client: dbClient,
+                },
+            };
         },
 
     });

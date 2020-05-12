@@ -72,7 +72,7 @@ const typeDefs = gql`
   }
   
   type Enrolment{
-      created_at: String!,
+      created_date: String!,
       patient_id: String!,
       record: EnrolmentPatient,
   }
