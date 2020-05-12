@@ -1,7 +1,12 @@
 import {HTTP} from './axios'
 import {GRAPHQL} from "./graphql";
+import {PATIENT_LIST} from "../mocking/patient_list"
 import gql from "graphql-tag";
 
+import {result, map} from 'lodash';
+
+
+console.log(PATIENT_LIST);
 const initialState = {
     patients: [],
     status: 'view',
@@ -255,6 +260,22 @@ export default {
         },
         async getPatientsGraph({commit}) {
             try {
+                // START MOCKING
+                let res = PATIENT_LIST;
+                console.log(res);
+                res = result(res,'data.all_enrolments');
+
+                let normalizeData = map( res,  (e) =>({
+                    ...result(e,'record'),
+                    created_date: e.created_date,
+                    patient_id: e.patient_id,
+                    id: e.patient_id,
+                }));
+                commit('setPatients', normalizeData);
+                return;
+                //END MOCKING
+                /*
+                console.log(res);
 
                 let query = gql`{
                                   patients {
@@ -273,6 +294,8 @@ export default {
                     console.log(response);
                     commit('setPatients', response.data.patients);
                 });
+                /
+                 */
             } catch (error) {
                 console.error(error);
             }

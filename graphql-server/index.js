@@ -7,8 +7,11 @@ const {resolvers} = require('./resolvers');
 const {typeDefs} = require('./typedefs');
 
 require('dotenv').config();
-
-const dbClient =  pgp(process.env.PG_SQLINIT);
+const cn = {
+    connectionString: process.env.PG_SQLINIT,
+    max: 1
+};
+const dbClient =  pgp(cn);
 const server = new ApolloServer(
     {
         typeDefs,

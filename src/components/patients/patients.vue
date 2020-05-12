@@ -1,6 +1,6 @@
 <template>
     <b-row>
-        <b-col cols="6" sm="6"> Main Content
+        <b-col cols="12" sm="12"> Main Content
             <b-card
                     border-variant="secondary"
                     header="Main"
@@ -143,10 +143,11 @@
                         label: "id"
 
                     },
-                    {key: "FirstName", sortable: true},
-                    {key: "LastName", sortable: true},
-                    {key: "Sex", sortable: false},
-                    {key: "Age", sortable: false}
+                    {key: "created_date", sortable: true, label: 'Created'},
+                    {key: "first_name", sortable: true, label: 'First Name'},
+                    {key: "family_name", sortable: true, label: 'Family Name'},
+                    {key: "date_of_birth", sortable: true, label: 'DOB'},
+                    {key: "gender", sortable: false, label: 'Gender'},
                 ],filter: null,
                 filterOn: [],
             };
