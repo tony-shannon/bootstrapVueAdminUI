@@ -68,7 +68,23 @@ const typeDefs = gql`
     problems: [Problem]
     patients: [Patient]
     terms: [Term]
+    all_enrolments(study_id: String!): [Enrolment] 
   }
+  
+  type Enrolment{
+      created_at: String!,
+      patient_id: String!,
+      record: EnrolmentPatient,
+  }
+  
+  
+  type EnrolmentPatient{
+      first_name: String!, 
+      family_name: String!, 
+      date_of_birth: String!, 
+      gender: String!, 
+      id: String! 
+  },
   
   type User{
       id: Int!, 

@@ -81,6 +81,7 @@ const resolvers = {
                     dataSources: dataSources
                 }
             ),
+        all_enrolments
     },
     Mutation: {
 

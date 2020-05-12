@@ -49,9 +49,9 @@
                 default: function () {
                     return {
                         "id": '',
-                        "FirstName": '',
-                        "LastName": '',
-                        "Sex": '',
+                        "first_name": '',
+                        "family_name": '',
+                        "gender": '',
                         "Age": '',
                         "Address": ''
                     }

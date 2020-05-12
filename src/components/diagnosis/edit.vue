@@ -22,7 +22,37 @@
                 Complete
             </b-button>
             <b-button variant="outline-danger"
+                      class="float-right"
+                      @click="cancel">
+                Cancel
+            </b-button>
+        </b-card-footer>
+    </b-card>
+</template>
 
+<script>
+    import {
+        diagnosisActions
+    } from '@/store/helpers';
+    import {CONFIG} from "../../store/config";
+
+    export default {
+        name: "edit",
+        data() {
+            return {
+                item: { ...this.itemProp }
+            };
+        },
+        props: {
+            itemProp: {
+                type: Object,
+                default: function () {
+                    return {
+                        "id": '',
+                        "CodeD": '',
+                        "Description": '',
+                        "Name": '',
+                        "Days": ''
                     }
                 }
             }
