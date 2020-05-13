@@ -1,18 +1,116 @@
 <template>
-    <b-row>
-        <b-col cols="12" sm="12">
-            <h3>Data Collection</h3>
-            <b-table
-                    :items="diagnosis"
-                    :fields="fields"
-                    responsive="sm"
-                    id="medicationsTable"
-                    ref="medicationsTable"
-            >
 
-            </b-table>
+
+    <b-row>
+        <b-col cols="6" sm="6"> Data Collection
+            <b-card
+                    border-variant="secondary"
+                    header="Main"
+                    header-bg-variant="primary"
+                    header-text-variant="white"
+                    align="left"
+            >
+                <b-col lg="6" class="my-1">
+                    <b-form-group
+                            label="Filter"
+                            label-cols-sm="3"
+                            label-align-sm="right"
+                            label-size="sm"
+                            label-for="filterInput"
+                            class="mb-0"
+                    >
+                        <b-input-group size="sm">
+                            <b-form-input
+                                    v-model="filter"
+                                    type="search"
+                                    id="filterInput"
+                                    placeholder="Type to Search"
+                            ></b-form-input>
+                            <b-input-group-append>
+                                <b-button :disabled="!filter" @click="filter = null">Clear</b-button>
+                            </b-input-group-append>
+                        </b-input-group>
+                    </b-form-group>
+                </b-col>
+
+                <div>
+                    <b-table
+                            :items="diagnosisList"
+                            :fields="fields"
+                            responsive="sm"
+                            id="medicationsTable"
+                            ref="medicationsTable"
+                            @row-clicked="setActiveItem"
+
+                    >
+
+                    </b-table>
+
+                    <b-button variant="primary"
+                              class="float-right ml-3"
+                              @click="createMed">
+                        Create
+                    </b-button>
+
+                    <div>
+                        Sorting By:
+                        <b>{{ sortBy }}</b>, Sort Direction:
+                        <b>{{ sortDesc ? 'Descending' : 'Ascending' }}</b>
+                    </div>
+                </div>
+            </b-card>
+        </b-col>
+        <b-col cols="6" sm="6" >
+            <editMedication v-if="status == 'edit' && activeItem"
+                            :itemProp="activeItem"
+                            @editComplete="editComplete"
+                            @cancel="cancel"
+            />
+
+            <createMedication
+                    v-if="status == 'create'"
+                    @createComplete="createComplete"
+                    @cancel="cancel"
+            />
+
+            <b-card
+                    v-if="status == 'view' && activeItem"
+                    border-variant="secondary"
+                    header="Detail"
+                    header-bg-variant="primary"
+                    header-text-variant="white"
+                    align="left"
+            >
+                <b-row v-for="(value, key) in activeItem" :key="key">
+                    <b-col cols="12" sm="12">
+                        <h5>{{key}}</h5>
+                        <p>{{value}}</p>
+                    </b-col>
+                </b-row>
+                <b-card-footer
+                        footer-bg-variant="white"
+                        footer-border-variant="white">
+
+                    <b-button
+                            v-if="activeItem"
+                            variant="primary"
+                            class="float-right ml-3"
+                            @click="editMed">
+                        Edit
+                    </b-button>
+                    <b-button
+                            v-if="activeItem"
+                            variant="outline-danger"
+                            class="float-right"
+                            @click="deleteMed">
+                        Delete
+                    </b-button>
+                </b-card-footer>
+            </b-card>
+
         </b-col>
     </b-row>
+
 </template>
 
 <script>
@@ -23,20 +121,9 @@
         name: "diagnosis",
 
         data(){
-            let res = result(DIAGNOSIS, 'content.c0001');
-
-
-            res = map(res, e => ({
-                    id: e.id,
-                    description: e.clin_descrip,
-                    problem_name: e.problem_diagnosis_name.term,
-                    severity: e.severity.rubric
-                }));
-
-            console.log(res);
 
             return {
-                diagnosis: res,
+
                 filterOn: [],
                 fields: [
                     {
@@ -53,8 +140,39 @@
                         label: 'Severity'
                     },
 
-                ]
+                ],
+                status: 'view',
+                activeItem: null,
             }
+        },
+
+        mounted(){
+
+        },
+        computed: {
+
+            diagnosisList(){
+                let res = result(DIAGNOSIS, 'content.c0001');
+
+
+                res = map(res, e => ({
+                    id: e.id,
+                    description: e.clin_descrip,
+                    problem_name: e.problem_diagnosis_name.rubric,
+                    severity: e.severity.rubric
+                }));
+
+                return res;
+
+            }
+        },
+        methods: {
+            setActiveItem(item){
+                this.activeItem = item;
+            },
+            deleteMed(){},
+            createMed(){},
+            editMed(){},
         }
     }
 </script>

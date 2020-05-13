@@ -1,6 +1,6 @@
 <template>
     <b-row>
-        <b-col cols="12" sm="12"> Main Content
+        <b-col cols="6" sm="6"> Main Content
             <b-card
                     border-variant="secondary"
                     header="Main"
@@ -143,11 +143,9 @@
                         label: "id"
 
                     },
-                    {key: "created_date", sortable: true, label: 'Created'},
                     {key: "first_name", sortable: true, label: 'First Name'},
                     {key: "family_name", sortable: true, label: 'Family Name'},
                     {key: "date_of_birth", sortable: true, label: 'DOB'},
-                    {key: "gender", sortable: false, label: 'Gender'},
                 ],filter: null,
                 filterOn: [],
             };
@@ -221,6 +219,8 @@
                 setPatientId: 'setPatientId',
             }),
             setActiveItem (item) {
+                this.status = 'view';
+                this.activeItem = item;
                 this.setActivePatient(item);
                 this.setPatientId(parseInt(item.id));
             },
