@@ -36,6 +36,13 @@
                     <b-table
                             :items="documents"
                             :fields="fields"
+                            :sort-by.sync="sortBy"
+                            :sort-desc.sync="sortDesc"
+                            :filter="filter"
+                            :filterIncludedFields="filterOn"
+                            select-mode="single"
+                            selectable
+
                             responsive="sm"
                             id="medicationsTable"
                             ref="medicationsTable"
@@ -121,7 +128,12 @@
 
 
             return {
+                sortBy: "id",
+                sortDesc: false,
+                filter: null,
                 filterOn: [],
+                status: 'view',
+                activeItem: null,
                 fields: [
                     {
                         key: 'name',
@@ -142,6 +154,14 @@
                     }
                 ]
             }
+        },
+        methods: {
+            setActiveItem(item){
+                this.activeItem = item;
+            },
+            deleteMed(){},
+            createMed(){},
+            editMed(){},
         },
         computed: {
            documents(){

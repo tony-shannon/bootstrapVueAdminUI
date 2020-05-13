@@ -41,7 +41,13 @@
                             id="medicationsTable"
                             ref="medicationsTable"
                             @row-clicked="setActiveItem"
+                            selectable
+                            select-mode="single"
 
+                            :sort-by.sync="sortBy"
+                            :sort-desc.sync="sortDesc"
+                            :filter="filter"
+                            :filterIncludedFields="filterOn"
                     >
 
                     </b-table>
@@ -125,6 +131,10 @@
             return {
 
                 filterOn: [],
+                sortBy: "id",
+                sortDesc: false,
+                filter: null,
+
                 fields: [
                     {
                         key: 'problem_name',
