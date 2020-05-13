@@ -78,10 +78,10 @@
                 let result = "";
                 let patient = this.patient;
                 if(this.patient){
-                   result+=patient.FirstName + " " + patient.LastName + " | ";
-                   result+=patient.Age + " years | ";
-                   result+=patient.Sex + " | ";
-                   result+=patient.Address + "";
+                    console.log(this.patient);
+                   result+=patient.first_name + " " + patient.family_name + " | ";
+                   result+=patient.date_of_birth + " ";
+                   result+=patient.gender;
                 }else{
                    result =" John Brown ¦ 49 years ¦ Male ¦ Shop St, Galway";
                 }

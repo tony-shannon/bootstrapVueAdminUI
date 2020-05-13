@@ -11,16 +11,16 @@
                     <b-col cols="10" sm="10" class="patient-data  border-l-gray">
                         <b-row>
                             <b-col cols="6" sm="6">
-                                <h3>{{ appealing }} {{ patientTemp.FirstName + " " + patientTemp.LastName }}</h3>
+                                <h3>{{ appealing }} {{ patientTemp.first_name + " " + patientTemp.family_name }}</h3>
                                 <p>Address: {{ patientTemp.Address }}</p>
                             </b-col>
                             <b-col cols="3" sm="3">
-                                <p>D.O.B: {{ patientTemp.Dob }}</p>
+                                <p>D.O.B: {{ patientTemp.date_of_birth }}</p>
                                 <p>Phone: {{ patientTemp.Phone }}</p>
                             </b-col>
                             <b-col cols="3" sm="3">
-                                <p>Gender: {{ patientTemp.Gender }}</p>
-                                <p>Medical ID: {{ patientTemp.MedicalId }}</p>
+                                <p>Gender: {{ patientTemp.gender }}</p>
+                                <p>Medical ID: {{ patientTemp.patient_id }}</p>
                             </b-col>
                         </b-row>
                     </b-col>
@@ -78,18 +78,18 @@
                 let patient = this.patient;
                 if(!patient){
                     patient = {};
-                    patient.FirstName = 'Patient';
-                    patient.LastName = 'Banner';
-                    patient.Dob = '1990-01-01';
+                    patient.first_name = 'Patient';
+                    patient.family_name = 'Banner';
+                    patient.date_of_birth = '1990-01-01';
                     patient.Address = '123 Park Avenue, Dublin, Rep. of Ireland';
                     patient.Phone = '+353 45 325 4453';
-                    patient.Gender = 'Male';
-                    patient.MedicalId = '01234';
+                    patient.gender = 'Male';
+                    patient.patient_id = '01234';
                 }
                 return patient;
             },
             appealing () {
-                if (this.patientTemp.Gender == 'Male') {
+                if (this.patientTemp.gender == 'Male') {
                     return 'Mr.';
                 } else {
                     return 'Ms.';

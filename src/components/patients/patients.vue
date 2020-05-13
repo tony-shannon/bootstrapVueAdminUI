@@ -221,8 +221,8 @@
                 setPatientId: 'setPatientId',
             }),
             setActiveItem (item) {
-                this.status = 'view';
-                this.activeItem = item;
+                this.setActivePatient(item);
+                this.setPatientId(parseInt(item.id));
             },
             editPatient() {
                 this.status = 'edit';
