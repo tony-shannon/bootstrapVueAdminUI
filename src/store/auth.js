@@ -57,7 +57,7 @@ export default{
                 mutation: query,
                 variables: variables,
             }).then((res)=>{
-                if(!res.data.sign_in.ok){
+                if( res.data.sign_in.ok == "false"){
                     alert('Username and/or password are incorrect.');
                 }else{
                     commit('token','11111111111');

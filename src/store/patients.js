@@ -3,8 +3,8 @@ import {GRAPHQL} from "./graphql";
 import {PATIENT_LIST} from "../mocking/patient_list"
 import gql from "graphql-tag";
 
-import {result, map} from 'lodash';
-
+import {result, map} from 'lodash'
+import moment from 'moment'
 
 console.log(PATIENT_LIST);
 const initialState = {
@@ -267,7 +267,7 @@ export default {
 
                 let normalizeData = map( res,  (e) =>({
                     ...result(e,'record'),
-                    created_date: e.created_date,
+                    created_date: moment(e.created_date).format('LL'),
                     patient_id: e.patient_id,
                     id: e.patient_id,
                 }));

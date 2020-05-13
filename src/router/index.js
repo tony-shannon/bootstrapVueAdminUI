@@ -7,6 +7,14 @@ const Medications = () => import(/* webpackChunkName: "main" */ '../components/m
 const Adverse_Events = ()  => import(/* webpackChunkName: "main" */ '../components/adverse_events/adverse_events.vue');
 const Login = () => import(/* webpackChunkName: "main" */ '../components/login.vue');
 
+
+/*
+Mocking
+ */
+
+const MockDocuments = () => import(/* webpackChunkName: "main" */ '../components/mocked/documents.vue');
+const MockDiagnosis = () => import(/* webpackChunkName: "main" */ '../components/mocked/diagnosis.vue');
+
 export default new router ({
   mode: 'history',
   linkActiveClass: "active",
@@ -37,7 +45,16 @@ export default new router ({
       name: 'adverse_events',
       component: Adverse_Events
     },
-
+    {
+      path: '/documents',
+      name: 'documents',
+      component: MockDocuments
+    },
+    {
+      path: '/diagnosis',
+      name: 'diagnosis',
+      component: MockDiagnosis
+    },
     {
       path: '/login',
       name: 'login',

@@ -7,13 +7,25 @@
             >
                 Patients
             </router-link>
+            <router-link
+                    class="list-group-item list-group-item-action"
+                    :to="{ name: 'documents' }"
+            >
+                Data Collection
+            </router-link>
+            <router-link
+                    class="list-group-item list-group-item-action"
+                    :to="{ name: 'diagnosis' }"
+            >
+                Diagnosis
+            </router-link>
              <router-link
                     class="list-group-item list-group-item-action"
                     :to="{ name: 'problems' }"
             >
                 Problems
             </router-link>
-           
+
             <router-link
                     class="list-group-item list-group-item-action"
                     :to="{ name: 'medications' }"
