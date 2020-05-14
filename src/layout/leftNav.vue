@@ -19,25 +19,7 @@
             >
                 Diagnosis
             </router-link>
-             <router-link
-                    class="list-group-item list-group-item-action"
-                    :to="{ name: 'problems' }"
-            >
-                Problems
-            </router-link>
-
-            <router-link
-                    class="list-group-item list-group-item-action"
-                    :to="{ name: 'medications' }"
-            >
-                Meds
-            </router-link>
-            <router-link
-                    class="list-group-item list-group-item-action"
-                    :to="{ name: 'adverse_events' }"
-            >
-                AdvEvents
-            </router-link>
+            
             <b-list-group-item href="Procedures">Procedures</b-list-group-item>
         </b-list-group>
     </div>
