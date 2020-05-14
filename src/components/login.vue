@@ -1,56 +1,81 @@
 <template>
     <div class="login-page">
         <div>
-        <b-row>
-            <b-col xs="3" sm="3" lg="3">
-                <label for="password">Login:</label>
+            <b-row>
+                <b-col xs="3" sm="3" lg="3">
+                    <label for="password">Login:</label>
+                </b-col>
+
+                <b-col xs="6" sm="6" lg="4">
+                    <b-form-input v-model="login"></b-form-input>
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col xs="3" sm="3" lg="3"><label for="password">Password:</label></b-col>
+                <b-col xs="6" sm="6" lg="4">
+                    <b-form-input id="password" type="password" v-model="password"></b-form-input>
+                </b-col>
+
+            </b-row>
+            <hr/>
+            <b-row>
+            <b-col xs="3" sm="3" lg="3"><label for="password">Cookie:</label></b-col>
+            <b-col xs="6" sm="6" lg="4">
+                <b-form-input id="password" type="text" v-model="cookie"></b-form-input>
             </b-col>
 
+            </b-row>
+            <b-row>
+            <b-col xs="3" sm="3" lg="3"><label for="password">Token:</label></b-col>
             <b-col xs="6" sm="6" lg="4">
-                <b-form-input v-model="login"></b-form-input>
+                <b-form-input id="password" type="text" v-model="token"></b-form-input>
             </b-col>
-        </b-row>
-        <b-row>
-            <b-col xs="3" sm="3" lg="3"><label for="password">Password:</label></b-col>
-            <b-col xs="6" sm="6" lg="4">
-                <b-form-input id="password" type="password" v-model="password"></b-form-input>
-            </b-col>
-        </b-row>
-        <b-button @click="clickLogin">Login</b-button>
+
+            </b-row>
+            <b-button @click="clickLogin">Login</b-button>
         </div>
     </div>
 </template>
 
 <script>
     import {mapActions} from 'vuex';
+
     export default {
         name: "login",
-        data(){
+        data() {
             return {
-               login: "",
-               password: "",
+                login: "",
+                password: "",
+                cookie: "",
+                token: "",
             }
         },
-        methods:{
-           ...mapActions('auth',{
-               loginUser: "login",
-           }),
+        methods: {
+            ...mapActions('auth', {
+                loginUser: "login",
+                setCookie: "setCookie",
+                setCSFR: "setCSFR",
 
-           clickLogin(){
+            }),
 
-              this.loginUser({ login: this.login, password: this.password}).then(()=>{
-                  this.$router.push({name:'patients'}).catch((err) => {
-                      console.log(err)
-                  });
-              });
+            clickLogin() {
 
-           }
+                this.setCSFR(this.token);
+                this.setCookie(this.cookie);
+
+                this.loginUser({login: this.login, password: this.password}).then(() => {
+                    this.$router.push({name: 'patients'}).catch((err) => {
+                        console.log(err)
+                    });
+                });
+
+            }
         }
     }
 </script>
 
 <style scoped>
-    .login-page{
+    .login-page {
         height: 100%;
 
         display: flex;

@@ -258,30 +258,30 @@ export default {
                 console.error(error);
             }
         },
-        async getPatientsGraph({commit}) {
+        async getPatientsGraph({commit, rootState}) {
             try {
+                axios.defaults.headers.common = {
+                    "Content-Type": "application/json"
+                }
 
+                console.log(rootState);
                 axios.post('http://localhost:5000/patients',{
-                    cookie: 'Cookie: pk_ses.1.dedb=*; csrftoken=4txE5acX64rBekyec3nwZgRgAu9fV3w6jEYdSfh7Z8LRkN5FXzsqZDJ5k5eEGrEx; sessionid_saas=h84l3mwhqtgdoj8cg1u1ilk4jnkzb13f; pk_id.1.dedb=549b827e438334cc.1588926653.11.1589464060.1589464049.'
+                    cookie: rootState.auth.cookie,
+                    csfttoken: rootState.auth.crfstoken,
                 }).then((res)=>{
                     console.log(res);
+                    res = result(res.data,'data.all_enrolments');
+
+                    let normalizeData = map( res,  (e) =>({
+                        ...result(e,'record'),
+                        created_date: moment(e.created_date).format('LL'),
+                        patient_id: e.patient_id,
+                        id: e.patient_id,
+                    }));
+                    commit('setPatients', normalizeData);
                 }).catch((err)=>{
                     console.log(err);
-                })
-
-                // START MOCKING
-                let res = PATIENT_LIST;
-                console.log(res);
-                res = result(res,'data.all_enrolments');
-
-                let normalizeData = map( res,  (e) =>({
-                    ...result(e,'record'),
-                    created_date: moment(e.created_date).format('LL'),
-                    patient_id: e.patient_id,
-                    id: e.patient_id,
-                }));
-                commit('setPatients', normalizeData);
-                return;
+                });
                 //END MOCKING
                 /*
                 console.log(res);
