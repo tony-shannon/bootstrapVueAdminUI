@@ -121,7 +121,8 @@
 
 <script>
     import {map, result} from 'lodash';
-    import {DIAGNOSIS} from "../../mocking/diagnosis";
+    import {mapGetters} from 'vuex';
+    import axios from 'axios';
 
     export default {
         name: "diagnosis",
@@ -153,16 +154,23 @@
                 ],
                 status: 'view',
                 activeItem: null,
+                diagnosisList: [],
             }
         },
 
         mounted(){
+            axios.defaults.headers.common = {
+                "Content-Type": "application/json"
+            }
 
-        },
-        computed: {
+            axios.post('http://localhost:5000/documents',{
+                cookie: this.cookie,
+                csfttoken: this.crfstoken,
 
-            diagnosisList(){
-                let res = result(DIAGNOSIS, 'content.c0001');
+            }).then((res)=>{
+                console.log(res);
+
+                 res = result(res.data, 'content.c0001');
 
 
                 res = map(res, e => ({
@@ -171,12 +179,23 @@
                     problem_name: e.problem_diagnosis_name.rubric,
                     severity: e.severity.rubric
                 }));
-
+                console.log(res);
+                this.$set(this,'diagnosisList',res);
                 return res;
-
-            }
+            }).catch((err)=>{
+                console.log(err);
+            });
+        },
+        computed: {
+            ...mapGetters({
+               'cookie': 'auth/cookie',
+               'crfstoken': 'auth/crfstoken',
+            }),
         },
         methods: {
+
+
+
             setActiveItem(item){
                 this.activeItem = item;
             },

@@ -82,7 +82,37 @@ app.post('/patients', function (req, res) {
     );
 });
 app.post('/documents', function (req, res) {
-    res.send('POST request to the homepage');
+
+    var xcrtoken =  req.param('csfttoken');
+    var cookieLine = req.param('cookie');
+
+    let curlcommand = "curl 'https://tony-staging.openappregistry.com/api/insight/demo1-centre/record/57962105-27e7-421a-9007-54f738f1d347/documentv2/00ca6980-ec64-424f-b7a7-deb863ec738e/' \\\n" +
+        "  -H 'Connection: keep-alive' \\\n" +
+        "  -H 'Accept: application/json, text/plain, */*' \\\n" +
+        "  -H 'X-Requested-With: XMLHttpRequest' \\\n" +
+        "  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36' \\\n" +
+        "  -H 'X-CSRFTOKEN: "+xcrtoken+"' \\\n" +
+        "  -H 'Sec-Fetch-Site: same-origin' \\\n" +
+        "  -H 'Sec-Fetch-Mode: cors' \\\n" +
+        "  -H 'Sec-Fetch-Dest: empty' \\\n" +
+        "  -H 'Referer: https://tony-staging.openappregistry.com/insight/demo1-centre/' \\\n" +
+        "  -H 'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7' \\\n" +
+        "  -H 'Cookie: "+cookieLine+"' \\\n" +
+        "  --compressed";
+    console.log(curlcommand);
+    exec(curlcommand
+        ,(error, stdout, stderr) => {
+            if (error) {
+                console.log(`error: ${error.message}`);
+                res.send(`${stderr}`);
+                return;
+            }
+            if (stderr) {
+                console.log(`stderr: ${stderr}`);
+            }
+            res.send(`${stdout}`);
+        }
+    );
 });
 
 app.get('/', function (req, res) {

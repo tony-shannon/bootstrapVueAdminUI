@@ -21,6 +21,9 @@ export default {
 
     getters: {
         token: state => state.token,
+        cookie: state => state.cookie,
+        crfstoken: state => state.crfstoken,
+
         isAuth: state => {
             return state.token
         }
