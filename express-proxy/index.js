@@ -40,9 +40,8 @@ app.post('/login', function (req, res) {
 app.post('/patients', function (req, res) {
 
     var cookieLine = req.param('cookie');
-    res.send('POST request to the patient list');
 
-    exec("curl 'https://tony-staging.openappregistry.com/api/insight/demo1-centre/graphql/' \\\n" +
+    console.log(exec("curl 'https://tony-staging.openappregistry.com/api/insight/demo1-centre/graphql/' \\\n" +
         "  -H 'Connection: keep-alive' \\\n" +
         "  -H 'Accept: application/json, text/plain, */*' \\\n" +
         "  -H 'X-CSRFTOKEN: PEArUIMpvpiukyRPgQjFlJDCPG4KSLTY4P10HNRzotCKq1og1mozl6vrzh99D91p' \\\n" +
@@ -64,15 +63,11 @@ app.post('/patients', function (req, res) {
                 return;
             }
             if (stderr) {
-
                 console.log(`stderr: ${stderr}`);
-                res.send(`${stderr}`);
-
-                return;
             }
             res.send(`${stdout}`);
         }
-    );
+    ));
 });
 app.post('/documents', function (req, res) {
     res.send('POST request to the homepage');
