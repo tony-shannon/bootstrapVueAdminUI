@@ -3,10 +3,10 @@ var patientSelectedLinks = [
         title: 'Patients',
         to: {name: 'patients'},
     },
-    {
+ /*   {
         title: 'Data Collection',
         to: {name: 'documents', params: {id: '57962105-27e7-421a-9007-54f738f1d347'}},
-    },
+    },*/
     {
         title: 'Diagnosis',
         to: {
