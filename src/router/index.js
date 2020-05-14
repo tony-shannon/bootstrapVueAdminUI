@@ -28,12 +28,12 @@ export default new router ({
       component: Patients
     },
     {
-      path: '/documents',
+      path: '/patient/:id/documents',
       name: 'documents',
       component: MockDocuments
     },
     {
-      path: '/diagnosis',
+      path: '/patient/:id/document/:document_id',
       name: 'diagnosis',
       component: MockDiagnosis
     },

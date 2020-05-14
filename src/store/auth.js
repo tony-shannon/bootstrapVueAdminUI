@@ -23,9 +23,12 @@ export default {
     actions: {
         setToken: (state, token) => state.token = token,
 
-        login: ({dispatch}, {login, password}) => {
-
-            return dispatch('loginGraph', {login: login, password: password});
+        login: ({dispatch, commit}, {login, password}) => {
+            commit('token', '11111111111');
+            dispatch('loginGraph', {login: login, password: password}).catch((err)=>{
+                console.log(err);
+            });
+           return true;
 
 
         },
