@@ -2,23 +2,12 @@
     <div>
         <b-list-group class="left-nav">
             <template v-if="isAuth">
-                <router-link
+
+                <router-link v-for="(link, index ) in sidebarLinks" :key="index"
                         class="list-group-item list-group-item-action"
-                        :to="{ name: 'patients' }"
+                        :to="link.to"
                 >
-                    Patients
-                </router-link>
-                <router-link
-                        class="list-group-item list-group-item-action"
-                        :to="{ name: 'documents', params: {id: '57962105-27e7-421a-9007-54f738f1d347' }}"
-                >
-                    Data Collection
-                </router-link>
-                <router-link
-                        class="list-group-item list-group-item-action"
-                        :to="{ name: 'diagnosis', params: {document_id: '00ca6980-ec64-424f-b7a7-deb863ec738e', id: '57962105-27e7-421a-9007-54f738f1d347'} }"
-                >
-                    Diagnosis
+                    {{link.title}}
                 </router-link>
             </template>
         </b-list-group>
@@ -34,7 +23,7 @@
         computed: {
             ...mapGetters({
                 'isAuth': 'auth/isAuth',
-                'sidebarLinks': 'website/links',
+                'sidebarLinks': 'website/getSidebarLinks',
             }),
         }
     }

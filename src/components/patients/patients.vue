@@ -150,7 +150,15 @@
                 filterOn: [],
             };
         },
+        mounted: async function(){
 
+            this.$nextTick(function() {
+                this.makeRequest({
+                    type: CONFIG.serverType,
+                    action: 'get'
+                });
+            })
+        },
         computed: {
             sortOptions() {
                 // Create an options list from our fields
@@ -217,6 +225,7 @@
             ...mapMutations('patient',{
                 setActivePatient: 'setPatient',
                 setPatientId: 'setPatientId',
+
             }),
             setActiveItem (item) {
                 this.status = 'view';
@@ -276,14 +285,7 @@
                 this.setPatientId(parseInt(item.id));
             }
         },
-        mounted: async function() {
-            this.$nextTick(function() {
-                this.makeRequest({
-                    type: CONFIG.serverType,
-                    action: 'get'
-                });
-            })
-        },
+
     }
 
 </script>

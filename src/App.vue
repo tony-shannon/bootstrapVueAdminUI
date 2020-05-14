@@ -58,7 +58,8 @@
     import HeaderEl from './layout/header_template.vue'
     import FooterEl from './layout/footer_template.vue'
     import LeftNav from './layout/leftNav.vue'
-    import {mapGetters} from "vuex";
+    import {mapGetters, mapActions} from "vuex";
+    import {PATIENT_IS_SELECTED_LINKS, PATIENT_NOT_SELECTED_LINKS} from "./mocking/links";
 
     export default {
         components: {
@@ -74,6 +75,7 @@
             ...mapGetters({
                 patient: 'patient/patient',
             }),
+
             patientTemp: function(){
                 let patient = this.patient;
                 if(!patient){
@@ -85,6 +87,9 @@
                     patient.Phone = '+353 45 325 4453';
                     patient.gender = 'Male';
                     patient.patient_id = '01234';
+                    this.setLinks(PATIENT_NOT_SELECTED_LINKS);
+                }else{
+                    this.setLinks(PATIENT_IS_SELECTED_LINKS);
                 }
                 return patient;
             },
@@ -98,6 +103,10 @@
 
         },
         methods: {
+            ...mapActions({
+                setLinks: 'website/setLinks'
+
+            }),
             crumbs () {
                 let pathArray = this.$route.path.split("/")
                 console.log('this.$route', this.$route);

@@ -27,6 +27,7 @@ export default new router ({
       name: 'patients',
       component: Patients
     },
+
     {
       path: '/patient/:id/documents',
       name: 'documents',

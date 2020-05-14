@@ -53,7 +53,7 @@
                     </b-table>
                     <b-button variant="primary"
                               class="float-right ml-3"
-                              @click="createMedication">
+                             >
                         Create
                     </b-button>
 
