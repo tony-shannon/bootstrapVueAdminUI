@@ -1,11 +1,10 @@
 import {ApolloClient } from "apollo-client";
-
 import {CONFIG} from './config.js';
 import {InMemoryCache} from "apollo-cache-inmemory";
 import { RestLink } from 'apollo-link-rest';
 
 const client = new ApolloClient({
-    link: new RestLink({uri: CONFIG.graphUrl}),
+    link: new RestLink({uri: CONFIG.graphUrl, credentials: 'same-origin'}),
     cache: new InMemoryCache({
       addTypename: false
     }),
