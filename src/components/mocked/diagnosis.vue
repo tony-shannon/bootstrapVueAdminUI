@@ -123,7 +123,7 @@
     import {map, result} from 'lodash';
     import {mapGetters} from 'vuex';
     import axios from 'axios';
-
+    import {CONFIG} from '@/store/config';
     export default {
         name: "diagnosis",
 
@@ -163,8 +163,8 @@
                 "Content-Type": "application/json"
             }
 
-            axios.post('http://localhost:5000/documents',{
-                cookie: this.cookie,
+            axios.post(CONFIG.ciUrl + 'documents',{
+                cookieRequest: this.cookie,
                 csfttoken: this.crfstoken,
 
             }).then((res)=>{

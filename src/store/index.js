@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import 'es6-promise/auto'
 import Vuex from 'vuex'
-
+import VuexPersistence from 'vuex-persist'
+const vuexLocal = new VuexPersistence({
+    storage: window.localStorage
+})
 //Modules
 import patients from './patients'
 import patient from './patient'
@@ -17,5 +20,7 @@ export default new Vuex.Store({
         search,
         auth,
         website
-    }
+    },
+    plugins: [vuexLocal.plugin]
+
 })

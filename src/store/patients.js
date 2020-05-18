@@ -5,6 +5,7 @@ import gql from "graphql-tag";
 import axios from "axios";
 import {result, map} from 'lodash'
 import moment from 'moment'
+import {CONFIG} from "./config";
 
 console.log(PATIENT_LIST);
 const initialState = {
@@ -265,8 +266,8 @@ export default {
                 }
 
                 console.log(rootState);
-                axios.post('http://localhost:5000/patients',{
-                    cookie: rootState.auth.cookie,
+                axios.post(CONFIG.ciUrl+ 'patients',{
+                    cookieRequest: rootState.auth.cookie,
                     csfttoken: rootState.auth.crfstoken,
 
                 }).then((res)=>{

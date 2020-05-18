@@ -7,7 +7,7 @@ const {curlQueryBuilder} = require('./lib/curlQueryBuilder');
 var app = express();
 // configure the app to use bodyParser()
 
-//app.use(cors());
+app.use(cors());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -51,16 +51,24 @@ app.post('/patients', function (req, res) {
 
 
     var xcrtoken =  req.param('csfttoken');
-    var cookieLine = req.param('cookie');
+    var cookieLine = req.param('cookieRequest');
 
-    let curlcommand = curlQueryBuilder({
-        host: 'https://tony-staging.openappregistry.com/api/insight/demo1-centre/graphql/',
-        cookie: cookieLine,
-        crfs: xcrtoken,
-        dataBinary: "  --data-binary '{\"query\":\"\\n                    query q($study_id: UUID) {\\n                        all_enrolments(study_id: $study_id) {\\n                            created_date patient_id record\\n                                { first_name family_name date_of_birth gender id }\\n                        }\\n                    }\",\"variables\":{\"study_id\":\"67385377-9514-4104-b6c3-27d20a79132b\"}}' \\\n --compressed"
-    });
-
-
+    let curlcommand = "curl 'https://tony-staging.openappregistry.com/api/insight/demo1-centre/graphql/' \\\n" +
+        "  -H 'Connection: keep-alive' \\\n" +
+        "  -H 'Accept: application/json, text/plain, */*' \\\n" +
+        "  -H 'X-CSRFTOKEN: "+xcrtoken+"' \\\n" +
+        "  -H 'X-Requested-With: XMLHttpRequest' \\\n" +
+        "  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36' \\\n" +
+        "  -H 'Content-Type: application/json;charset=UTF-8' \\\n" +
+        "  -H 'Origin: https://tony-staging.openappregistry.com' \\\n" +
+        "  -H 'Sec-Fetch-Site: same-origin' \\\n" +
+        "  -H 'Sec-Fetch-Mode: cors' \\\n" +
+        "  -H 'Sec-Fetch-Dest: empty' \\\n" +
+        "  -H 'Referer: https://tony-staging.openappregistry.com/insight/demo1-centre/' \\\n" +
+        "  -H 'Accept-Language: en-US,en;q=0.9' \\\n" +
+        "  -H 'Cookie: "+cookieLine+"' \\\n" +
+        "  --data-binary '{\"query\":\"\\n                    query q($study_id: UUID) {\\n                        all_enrolments(study_id: $study_id) {\\n                            created_date patient_id record\\n                                { first_name family_name date_of_birth gender id }\\n                        }\\n                    }\",\"variables\":{\"study_id\":\"67385377-9514-4104-b6c3-27d20a79132b\"}}' \\\n" +
+        "  --compressed";
     console.log(curlcommand);
     exec(curlcommand
         ,(error, stdout, stderr) => {
@@ -75,11 +83,12 @@ app.post('/patients', function (req, res) {
             res.send(`${stdout}`);
         }
     );
+
 });
 app.post('/documents', function (req, res) {
 
     var xcrtoken =  req.param('csfttoken');
-    var cookieLine = req.param('cookie');
+    var cookieLine = req.param('cookieRequest');
 
     let curlcommand = "curl 'https://tony-staging.openappregistry.com/api/insight/demo1-centre/record/57962105-27e7-421a-9007-54f738f1d347/documentv2/00ca6980-ec64-424f-b7a7-deb863ec738e/' \\\n" +
         "  -H 'Connection: keep-alive' \\\n" +
