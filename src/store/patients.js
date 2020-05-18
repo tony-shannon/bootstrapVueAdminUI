@@ -268,6 +268,7 @@ export default {
                 axios.post('http://localhost:5000/patients',{
                     cookie: rootState.auth.cookie,
                     csfttoken: rootState.auth.crfstoken,
+
                 }).then((res)=>{
                     console.log(res);
                     res = result(res.data,'data.all_enrolments');
