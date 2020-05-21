@@ -11,6 +11,7 @@ import patient from './patient'
 import search from './search'
 import auth from './auth'
 import website from './website'
+import diagnosis from './diagnosis'
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -19,7 +20,8 @@ export default new Vuex.Store({
         patient,
         search,
         auth,
-        website
+        website,
+        diagnosis,
     },
     plugins: [vuexLocal.plugin]
 
