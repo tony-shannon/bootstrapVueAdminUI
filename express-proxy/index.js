@@ -86,7 +86,7 @@ app.post('/patients', function (req, res) {
 
 });
 
-app.get('/diagnosis/terms', function (req, res) {
+app.get('/diagnosis/list', function (req, res) {
     res.send(require('./constants/probs-json1'));
 });
 
