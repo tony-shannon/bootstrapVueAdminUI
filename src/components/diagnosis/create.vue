@@ -43,7 +43,7 @@
 
 <script>
     import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
-    import {mapGetters} from 'vuex'
+    import {mapGetters, mapActions} from 'vuex'
     import {filter} from 'lodash'
 
     export default {
@@ -81,6 +81,9 @@
             }
         },
         methods: {
+            ...mapActions({
+               'putToServer': 'diagnosis/putDataToServer'
+            }),
             cancelCreate() {
                 this.$emit('cancel');
             },
@@ -88,7 +91,7 @@
 
             },
             createComplete(){
-
+                this.putToServer();
             }
         },
     }

@@ -6,14 +6,21 @@ const state = () => ({
     nameAllowed: [],
 });
 
-export default{
+export default {
     namespaced: true,
 
     state,
 
-    getters:{
+    getters: {
         nameAllowed: (state) => state.nameAllowed,
-        list: (state)=> state.diagnosisList,
+        list: (state) => {
+            return map(state.diagnosisList, e => ({
+                id: e.id,
+                description: e.clin_descrip,
+                problem_name: e.problem_diagnosis_name.rubric,
+                severity: e.severity.rubric
+            }));
+        },
     },
 
     mutations: {
@@ -21,39 +28,46 @@ export default{
         setDiagnosisList: (state, list) => state.diagnosisList = list,
     },
 
-    actions:{
-        fetchDiagnosisList({commit, rootState}){
+    actions: {
+        fetchDiagnosisList({commit, rootState}) {
 
-            HTTP.post('/diagnosis',{
+            HTTP.post('/diagnosis', {
                 cookieRequest: rootState.auth.cookie,
                 csfttoken: rootState.auth.crfstoken,
 
-            }).then((res)=>{
+            }).then((res) => {
                 console.log(res);
 
                 res = result(res.data, 'content.c0001');
 
-
-                res = map(res, e => ({
-                    id: e.id,
-                    description: e.clin_descrip,
-                    problem_name: e.problem_diagnosis_name.rubric,
-                    severity: e.severity.rubric
-                }));
-                commit('setDiagnosisList',res);
-            }).catch((err)=>{
+                commit('setDiagnosisList', res);
+            }).catch((err) => {
                 console.log(err);
             });
 
         },
 
-        fetchNameAllowed({commit}){
-           HTTP.get('/diagnosis/list')
-               .then((res)=>{
-               commit('setNameAllowed',res.data);
-           }).catch((err)=>{
-               console.log(err);
-           });
+        fetchNameAllowed({commit}) {
+            HTTP.get('/diagnosis/list')
+                .then((res) => {
+                    commit('setNameAllowed', res.data);
+                }).catch((err) => {
+                console.log(err);
+            });
+        },
+
+        putDataToServer({store, rootState,commit}) {
+            HTTP.post('/diagnosis/store',
+                {
+                    cookieRequest: rootState.auth.cookie,
+                    csfttoken: rootState.auth.crfstoken,
+                    dataToSave: JSON.stringify(store.diagnosisList),
+                }).then((res) => {
+                console.log(res);
+                this.fetchDiagnosisList({commit:commit, rootState: rootState})
+            }).catch((res) => {
+                console.log(res)
+            });
         }
     },
 }
