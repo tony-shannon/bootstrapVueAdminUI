@@ -48,9 +48,9 @@ export default{
         },
 
         fetchNameAllowed({commit}){
-           HTTP.get('/diagnosis/terms')
+           HTTP.get('/diagnosis/list')
                .then((res)=>{
-               commit('nameAllowed',res.data);
+               commit('setNameAllowed',res.data);
            }).catch((err)=>{
                console.log(err);
            });

@@ -2,7 +2,7 @@
 
 
     <b-row>
-        <b-col cols="6" sm="6"> Data Collection
+        <b-col cols="6" sm="6"> Diagnosis
             <b-card
                     border-variant="secondary"
                     header="Main"
@@ -38,8 +38,8 @@
                             :items="list"
                             :fields="fields"
                             responsive="sm"
-                            id="medicationsTable"
-                            ref="medicationsTable"
+                            id="diagnosisTable"
+                            ref="diagnosisTable"
                             @row-clicked="setActiveItem"
                             selectable
                             select-mode="single"
@@ -73,7 +73,7 @@
                             @cancel="cancel"
             />
 
-            <createMedication
+            <createDiagnosis
                     v-if="status == 'create'"
                     @createComplete="createComplete"
                     @cancel="cancel"
@@ -121,8 +121,12 @@
 
 <script>
     import {mapGetters, mapActions} from 'vuex';
+    import createDiagnosis from './create'
     export default {
         name: "diagnosis",
+        components:{
+            createDiagnosis
+        },
 
         data(){
 
@@ -156,6 +160,7 @@
 
         mounted(){
             this.fetchList();
+            this.fetchNameAllowed();
 
         },
         computed: {
@@ -165,7 +170,8 @@
         },
         methods: {
             ...mapActions({
-               'fetchList': 'diagnosis/fetchDiagnosisList',
+                'fetchList': 'diagnosis/fetchDiagnosisList',
+                'fetchNameAllowed': 'diagnosis/fetchNameAllowed',
             }),
 
 
@@ -173,8 +179,19 @@
                 this.activeItem = item;
             },
             deleteMed(){},
-            createMed(){},
+            createMed(){
+                this.status = 'create';
+                this.activeItem = null;
+                this.$refs.diagnosisTable.clearSelected();
+
+            },
             editMed(){},
+            createComplete(){
+
+            },
+            cancel () {
+                this.status = 'view';
+            },
         }
     }
 </script>
