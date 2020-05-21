@@ -56,12 +56,12 @@ export default {
             });
         },
 
-        putDataToServer({store, rootState,commit}) {
+        putDataToServer({state, rootState,commit}) {
             HTTP.post('/diagnosis/store',
                 {
                     cookieRequest: rootState.auth.cookie,
                     csfttoken: rootState.auth.crfstoken,
-                    dataToSave: JSON.stringify(store.diagnosisList),
+                    dataToSave: JSON.stringify(state.diagnosisList),
                 }).then((res) => {
                 console.log(res);
                 this.fetchDiagnosisList({commit:commit, rootState: rootState})

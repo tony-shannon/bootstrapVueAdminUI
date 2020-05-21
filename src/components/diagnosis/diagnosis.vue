@@ -172,21 +172,28 @@
             ...mapActions({
                 'fetchList': 'diagnosis/fetchDiagnosisList',
                 'fetchNameAllowed': 'diagnosis/fetchNameAllowed',
+                'putToServer': 'diagnosis/putDataToServer'
+
             }),
 
 
             setActiveItem(item){
                 this.activeItem = item;
             },
-            deleteMed(){},
+            deleteMed(){
+
+            },
             createMed(){
                 this.status = 'create';
                 this.activeItem = null;
                 this.$refs.diagnosisTable.clearSelected();
 
             },
-            editMed(){},
+            editMed(){
+
+            },
             createComplete(){
+                this.putToServer();
 
             },
             cancel () {

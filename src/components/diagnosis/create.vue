@@ -88,6 +88,7 @@
                 this.$emit('cancel');
             },
             create(){
+                this.putToServer();
 
             },
             createComplete(){
