@@ -7,7 +7,7 @@
             align="left"
     >
         <b-row v-for="(value, key) in item" :key="key">
-            <b-col cols="6" sm="6" v-if="key != 'ProblemDiagnosisName'">
+            <b-col cols="6" sm="6" v-if="key != 'ProblemDiagnosisName' && key!='Severity'">
                 <h5>{{key}}</h5>
                 <b-form-input :disabled="key == 'id'" v-model="item[key]"></b-form-input>
             </b-col>
@@ -19,6 +19,16 @@
                         :data="nameAllowedFiltered"
                         :serializer="item => item.rubric"
                         @hit="item.ProblemDiagnosisName = $event"
+                />
+            </b-col>
+            <b-col cols="6" sm="6" v-if="key == 'Severity'">
+                <h5>{{key}}</h5>
+                <vue-bootstrap-typeahead
+                        class="mb-4"
+                        v-model="query_severity"
+                        :data="severityFiltered"
+                        :serializer="item => item.rubric"
+                        @hit="item.Severity = $event"
                 />
             </b-col>
         </b-row>
@@ -57,7 +67,8 @@
                     "Severity": '',
                 },
                 names: [],
-                query: ''
+                query: '',
+                query_severity: '',
             };
         },
         components: {
@@ -65,11 +76,18 @@
         },
         computed: {
             ...mapGetters({
-                'nameAllowed': 'diagnosis/nameAllowed'
+                'nameAllowed': 'diagnosis/nameAllowed',
+                'severity': 'diagnosis/severity',
+
+
             }),
 
             nameAllowedFiltered() {
                 let res = filter(this.nameAllowed, (e) => e.term.toUpperCase().includes(this.query.toUpperCase()));
+                return res;
+            },
+            severityFiltered() {
+                let res = filter(this.severity, (e) => e.term.toUpperCase().includes(this.query_severity.toUpperCase()));
                 return res;
             }
         },

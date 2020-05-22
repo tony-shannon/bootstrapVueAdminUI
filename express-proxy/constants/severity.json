@@ -1,0 +1,14 @@
+[
+ {
+   "term": "severity/mod",
+   "rubric": "Moderate"
+ },
+ {
+   "term": "severity/severe",
+   "rubric": "Severe"
+ },
+ {
+   "term": "severity/mild",
+   "rubric": "Mild"
+ }
+]

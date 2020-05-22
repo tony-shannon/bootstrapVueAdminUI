@@ -43,6 +43,7 @@
                             @row-clicked="setActiveItem"
                             selectable
                             select-mode="single"
+                            primary-key="id"
 
                             :sort-by.sync="sortBy"
                             :sort-desc.sync="sortDesc"
@@ -154,24 +155,38 @@
 
                 ],
                 status: 'view',
-                activeItem: null,
             }
         },
 
         mounted(){
             this.fetchList();
             this.fetchNameAllowed();
+            this.fetchSeverity();
 
         },
         computed: {
             ...mapGetters({
                'list': 'diagnosis/list',
             }),
+            activeItem: {
+                get () {
+                    if(this.$store.state.diagnosis.activeItem) {
+                        this.$nextTick(function () {
+                            this.selectRow(this.$store.state.diagnosis.activeItem.id);
+                        })
+                    }
+                    return this.$store.state.diagnosis.activeItem;
+                },
+                set (value) {
+                    this.$store.commit('diagnosis/setActiveItem', value)
+                }
+            },
         },
         methods: {
             ...mapActions({
                 'fetchList': 'diagnosis/fetchDiagnosisList',
                 'fetchNameAllowed': 'diagnosis/fetchNameAllowed',
+                'fetchSeverity':'diagnosis/fetchSeverityList',
                 'putToServer': 'diagnosis/putDataToServer'
 
             }),
@@ -198,6 +213,11 @@
             },
             cancel () {
                 this.status = 'view';
+            },
+            selectRow(id) {
+                let row = document.getElementById('diagnosisTable__row_' + id);
+                let index = Array.from(document.querySelectorAll('#diagnosisTable tr')).indexOf(row) - 1;
+                this.$refs.diagnosisTable.selectRow(index);
             },
         }
     }

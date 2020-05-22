@@ -90,6 +90,10 @@ app.get('/diagnosis/list', function (req, res) {
     res.send(require('./constants/probs-json1'));
 });
 
+app.get('/severity/list', function (req, res) {
+    res.send(require('./constants/severity'));
+});
+
 app.post('/diagnosis', function (req, res) {
 
     var xcrtoken =  req.param('csfttoken');
