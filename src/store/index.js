@@ -13,6 +13,7 @@ import auth from './auth'
 import website from './website'
 import diagnosis from './diagnosis'
 import adverse_reactions from './adverse_reactions'
+import medications from './medications'
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -23,7 +24,8 @@ export default new Vuex.Store({
         auth,
         website,
         diagnosis,
-        adverse_reactions
+        adverse_reactions,
+        medications,
     },
     plugins: [vuexLocal.plugin]
 

@@ -368,6 +368,77 @@ app.post('/medication', function (req, res) {
     );
 });
 
+app.get('/medication/list', function (req, res) {
+    res.send(require('./constants/meds_json1'));
+});
+
+app.post('/medication/store', function(req,res){
+    var xcrtoken =  req.param('csfttoken');
+    var cookieLine = req.param('cookieRequest');
+    var dataToSave = req.param('dataToSave');
+
+    let curlcommand = "curl 'https://tony-staging.openappregistry.com/api/insight/demo1-centre/record/57962105-27e7-421a-9007-54f738f1d347/documentv2/35623fcc-0449-4e6a-9e30-02680f43ca83/lock_acquire/' \\\n" +
+        "  -H 'Connection: keep-alive' \\\n" +
+        "  -H 'Accept: application/json, text/plain, */*' \\\n" +
+        "  -H 'X-Requested-With: XMLHttpRequest' \\\n" +
+        "  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36' \\\n" +
+        "  -H 'X-CSRFTOKEN: "+xcrtoken+"' \\\n" +
+        "  -H 'Sec-Fetch-Site: same-origin' \\\n" +
+        "  -H 'Sec-Fetch-Mode: cors' \\\n" +
+        "  -H 'Sec-Fetch-Dest: empty' \\\n" +
+        "  -H 'Referer: https://tony-staging.openappregistry.com/insight/demo1-centre/' \\\n" +
+        "  -H 'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7' \\\n" +
+        "  -H 'Cookie: "+cookieLine+"' \\\n" +
+        "  --compressed";
+
+    console.log(curlcommand);
+    exec(curlcommand
+        ,(error, stdout, stderr) => {
+            if (error) {
+                console.log(`error: ${error.message}`);
+                res.send(`${stderr}`);
+                return;
+            }
+            if (stderr) {
+                console.log(`stderr: ${stderr}`);
+            }
+
+            let curlcommand2 = dataToSave;
+            curlcommand2 = "curl 'https://tony-staging.openappregistry.com/api/insight/demo1-centre/record/57962105-27e7-421a-9007-54f738f1d347/documentv2/8a1f009d-1dda-4e5d-810a-7d61e8bad221/' \\\n" +
+                "  -X 'PUT' \\\n" +
+                "  -H 'Connection: keep-alive' \\\n" +
+                "  -H 'Accept: application/json, text/plain, */*' \\\n" +
+                "  -H 'X-CSRFTOKEN: "+xcrtoken+"' \\\n" +
+                "  -H 'X-Requested-With: XMLHttpRequest' \\\n" +
+                "  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36' \\\n" +
+                "  -H 'Content-Type: application/json;charset=UTF-8' \\\n" +
+                "  -H 'Origin: https://tony-staging.openappregistry.com' \\\n" +
+                "  -H 'Sec-Fetch-Site: same-origin' \\\n" +
+                "  -H 'Sec-Fetch-Mode: cors' \\\n" +
+                "  -H 'Sec-Fetch-Dest: empty' \\\n" +
+                "  -H 'Referer: https://tony-staging.openappregistry.com/insight/demo1-centre/' \\\n" +
+                "  -H 'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7' \\\n" +
+                "  -H 'Cookie: "+cookieLine+"' \\\n" +
+                "  --data-binary '{\"id\":\"8a1f009d-1dda-4e5d-810a-7d61e8bad221\",\"content\":{\"c0001\":"+dataToSave+"},\"age_hours\":95.68728469916667,\"age_days\":4,\"created_by_name\":\"Tony Shannon\",\"updated_by_name\":\"Tony Shannon\",\"edcevent_id\":\"721c0531-afdd-4cd5-92f6-6cd2682533b9\",\"edcevent_type\":\"0be82e9a-29e0-4c21-81b1-2494b27ffa3b\",\"data_verified\":false,\"data_verified_date\":null,\"data_verification\":null,\"data_verification_pct\":null,\"pathway\":\"1e1ce6f0-3504-43e7-8f4f-0374801323a9\",\"label\":\"Medication Model for Data InOut v3\",\"frozen\":false,\"locked\":false,\"sdv_enabled\":false,\"created_date\":\"2020-05-18T11:30:47.595243+01:00\",\"updated_date\":\"2020-05-18T11:43:52.415703+01:00\",\"event_date\":\"2020-05-18T12:00:00+01:00\",\"state\":1,\"etl_state\":0,\"external_id\":null,\"deleted\":false,\"track_changes\":false,\"rag\":\"G\",\"section_rag\":{\"Medications\":\"G\"},\"concept_rag\":{\"c0001\":[\"G\",\"G\"]},\"variations\":\"\",\"ui_state\":{},\"record\":\"57962105-27e7-421a-9007-54f738f1d347\",\"template\":\"6c73b127-f5b1-4828-a10f-e34ba0c2bbbc\",\"created_by\":745543738,\"updated_by\":745543738,\"owned_by\":946648253,\"study\":\"67385377-9514-4104-b6c3-27d20a79132b\",\"wf_state\":\"Open\",\"transitions\":[[\"Frozen\",\"Freeze\",null]],\"actions\":[\"Edit\",\"View\"],\"changelog\":[{\"path\":\"c0001\",\"id\":null,\"fake_id\":0.4160324907072146,\"reason\":null,\"comment\":null},{\"path\":\"c0001\",\"id\":null,\"fake_id\":0.6095114718762997,\"reason\":null,\"comment\":null}]}' \\\n" +
+                "  --compressed"
+            exec(curlcommand2
+                ,(error, stdout, stderr) => {
+                    if (error) {
+                        console.log(`error: ${error.message}`);
+                        res.send(`${stderr}`);
+                        return;
+                    }
+                    if (stderr) {
+                        console.log(`stderr: ${stderr}`);
+                    }
+                    res.send(`${stdout}`);
+                }
+            );
+        }
+    );
+});
+
+
 
 
 app.get('/', function (req, res) {
