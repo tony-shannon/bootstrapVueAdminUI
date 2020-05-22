@@ -7,9 +7,19 @@
             align="left"
     >
         <b-row v-for="(value, key) in item" :key="key">
-            <b-col cols="6" sm="6">
+            <b-col cols="6" sm="6" v-if="key != 'name'">
                 <h5>{{key}}</h5>
                 <b-form-input :disabled="key == 'id'" v-model="item[key]" ></b-form-input>
+            </b-col>
+            <b-col cols="6" sm="6" v-if="key == 'name'">
+                <h5>{{key}}</h5>
+                <vue-bootstrap-typeahead
+                        class="mb-4"
+                        v-model="query"
+                        :data="nameAllowedFiltered"
+                        :serializer="item => item.rubric"
+                        @hit="item.name = $event"
+                />
             </b-col>
         </b-row>
         <b-card-footer
@@ -31,16 +41,17 @@
 </template>
 
 <script>
-    import {
-        patientsActions
-    } from '@/store/helpers';
-    import {CONFIG} from "../../store/config";
+    import {mapGetters} from 'vuex'
+    import {filter} from 'lodash'
+    import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 
     export default {
         name: "edit",
         data() {
             return {
-                item: { ...this.itemProp }
+                item: { ...this.itemProp },
+                query: '',
+
             };
         },
         props: {
@@ -59,21 +70,26 @@
             }
         },
         methods: {
-            ...patientsActions([
-                'makeRequest'
-            ]),
-            async update () {
-                await this.makeRequest({
-                    type: CONFIG.serverType,
-                    action: 'edit',
-                    data: this.item
-                });
+            update () {
                 this.$emit('editComplete', this.item);
             },
             cancel() {
                 this.$emit('cancel');
             }
         },
+        components: {
+            VueBootstrapTypeahead
+        },
+        computed:{
+            ...mapGetters({
+                'nameAllowed': 'medications/nameAllowed',
+            }),
+
+            nameAllowedFiltered() {
+                let res = filter(this.nameAllowed, (e) => e.term.toUpperCase().includes(this.query.toUpperCase()));
+                return res;
+            },
+        }
     }
 </script>
 

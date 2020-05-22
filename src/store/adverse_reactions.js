@@ -1,5 +1,5 @@
 import {HTTP} from './axiosProxyBroker'
-import {result, map} from 'lodash'
+import {result, map, filter} from 'lodash'
 
 const state = () => ({
     adverse_reactionsList: [],
@@ -90,7 +90,7 @@ export default {
             item.adverse_reaction_event_name = newItem.EventName;
             item.adverse_reaction_severity = newItem.Severity;
             item.adverse_reaction_substance = newItem.Substance;
-            
+
             adverse_reactionsList.push(item);
 
 
@@ -107,6 +107,32 @@ export default {
 
         },
 
+        replaceItem(context, newItem) {
+            let adverse_reactionsList = context.state.adverse_reactionsList;
+
+            adverse_reactionsList = map(adverse_reactionsList, (e) => {
+
+                if (e._id_ == newItem.id) {
+
+                    e.adverse_reaction_comment = newItem.comment;
+                    e.adverse_reaction_event_name = newItem.name;
+                    e.adverse_reaction_severity = newItem.severity;
+                    e.adverse_reaction_substance = newItem.substance;
+                }
+                return e;
+            });
+
+            context.commit('setAdverse_reactionsList', adverse_reactionsList);
+            context.dispatch('putDataToServer');
+            context.commit('setActiveItem', newItem);
+
+        },
+        deleteItem(context, itemToDelete){
+            let adverse_reactionsList = context.state.adverse_reactionsList;
+            context.commit('setAdverse_reactionsList',filter(adverse_reactionsList, (e) => e._id_ != itemToDelete.id));
+            context.commit('setActiveItem', null);
+            context.dispatch('putDataToServer');
+        },
         putDataToServer({state, rootState, dispatch}) {
             HTTP.post('/adverse_reactions/store',
                 {

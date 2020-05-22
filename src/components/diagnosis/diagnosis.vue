@@ -68,7 +68,7 @@
             </b-card>
         </b-col>
         <b-col cols="6" sm="6" >
-            <editMedication v-if="status == 'edit' && activeItem"
+            <editDiagnosis v-if="status == 'edit' && activeItem"
                             :itemProp="activeItem"
                             @editComplete="editComplete"
                             @cancel="cancel"
@@ -102,7 +102,8 @@
                             v-if="activeItem"
                             variant="primary"
                             class="float-right ml-3"
-                            @click="editMed">
+                            @click="editMed"
+                            >
                         Edit
                     </b-button>
                     <b-button
@@ -123,10 +124,14 @@
 <script>
     import {mapGetters, mapActions} from 'vuex';
     import createDiagnosis from './create'
+    import editDiagnosis from './edit'
+
+
     export default {
         name: "diagnosis",
         components:{
-            createDiagnosis
+            createDiagnosis,
+            editDiagnosis
         },
 
         data(){
@@ -187,7 +192,9 @@
                 'fetchList': 'diagnosis/fetchDiagnosisList',
                 'fetchNameAllowed': 'diagnosis/fetchNameAllowed',
                 'fetchSeverity':'diagnosis/fetchSeverityList',
-                'putToServer': 'diagnosis/putDataToServer'
+                'putToServer': 'diagnosis/putDataToServer',
+                'replaceItem': 'diagnosis/replaceItem',
+                'deleteItem': 'diagnosis/deleteItem',
 
             }),
 
@@ -196,7 +203,7 @@
                 this.activeItem = item;
             },
             deleteMed(){
-
+                this.deleteItem(this.activeItem);
             },
             createMed(){
                 this.status = 'create';
@@ -205,6 +212,14 @@
 
             },
             editMed(){
+                this.status = 'edit';
+
+            },
+            editComplete(item){
+                this.replaceItem(item);
+                console.log(item);
+                this.status = 'view';
+
 
             },
             createComplete(){

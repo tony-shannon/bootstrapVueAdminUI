@@ -78,8 +78,6 @@
             ...mapGetters({
                 'nameAllowed': 'diagnosis/nameAllowed',
                 'severity': 'diagnosis/severity',
-
-
             }),
 
             nameAllowedFiltered() {

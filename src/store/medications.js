@@ -1,5 +1,5 @@
 import {HTTP} from './axiosProxyBroker'
-import {result, map} from 'lodash'
+import {result, map, filter} from 'lodash'
 
 const state = () => ({
     medicationsList: [],
@@ -103,7 +103,36 @@ export default {
 
 
         },
+        replaceItem(context, newItem) {
+            let medicationsList = context.state.medicationsList;
+            medicationsList = map(medicationsList, (e) => {
 
+                if (e._id_ == newItem.id) {
+                    e.medication_name = newItem.name;
+                    e.medication_name.term = 'medication_names/' + e.medication_name.term;
+                    e.medication_form = newItem.form;
+                    e.medication_strength = newItem.strength;
+                    e.medication_amount = newItem.strength;
+                }
+                return e;
+            });
+
+            context.commit('setMedicationsList', medicationsList);
+            context.dispatch('putDataToServer');
+            newItem.name = newItem.name.rubric;
+
+            context.commit('setActiveItem', newItem);
+
+
+        },
+
+        deleteItem(context, itemToDelete){
+            let medicationsList = context.state.medicationsList;
+            context.commit('setMedicationsList',filter(medicationsList, (e) => e._id_ != itemToDelete.id));
+            context.commit('setActiveItem', null);
+            context.dispatch('putDataToServer');
+
+        },
         putDataToServer({state, rootState, dispatch}) {
             HTTP.post('/medication/store',
                 {

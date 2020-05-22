@@ -31,10 +31,6 @@
 </template>
 
 <script>
-    import {
-        patientsActions
-    } from '@/store/helpers';
-    import {CONFIG} from "../../store/config";
 
     export default {
         name: "edit",
@@ -59,15 +55,8 @@
             }
         },
         methods: {
-            ...patientsActions([
-                'makeRequest'
-            ]),
-            async update () {
-                await this.makeRequest({
-                    type: CONFIG.serverType,
-                    action: 'edit',
-                    data: this.item
-                });
+
+            update () {
                 this.$emit('editComplete', this.item);
             },
             cancel() {

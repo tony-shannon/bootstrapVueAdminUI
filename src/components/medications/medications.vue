@@ -68,7 +68,7 @@
             </b-card>
         </b-col>
         <b-col cols="6" sm="6" >
-            <editMedication v-if="status == 'edit' && activeItem"
+            <editMedications v-if="status == 'edit' && activeItem"
                             :itemProp="activeItem"
                             @editComplete="editComplete"
                             @cancel="cancel"
@@ -123,10 +123,13 @@
 <script>
     import {mapGetters, mapActions} from 'vuex';
     import createMedications from './create'
+    import editMedications from './edit'
+
     export default {
         name: "medications",
         components:{
-            createMedications
+            createMedications,
+            editMedications
         },
 
         data(){
@@ -191,7 +194,9 @@
                 'fetchList': 'medications/fetchMedicationsList',
                 'fetchNameAllowed': 'medications/fetchNameAllowed',
                 'fetchSeverity':'medications/fetchSeverityList',
-                'putToServer': 'medications/putDataToServer'
+                'putToServer': 'medications/putDataToServer',
+                'replaceItem': 'medications/replaceItem',
+                'deleteItem': 'medications/deleteItem',
 
             }),
 
@@ -200,6 +205,7 @@
                 this.activeItem = item;
             },
             deleteMed(){
+                this.deleteItem(this.activeItem);
 
             },
             createMed(){
@@ -208,8 +214,15 @@
                 this.$refs.medicationsTable.clearSelected();
 
             },
-            editMed(){
 
+            editComplete(item){
+                this.replaceItem(item);
+                console.log(item);
+                this.status = 'view';
+
+            },
+            editMed(){
+                this.status = 'edit';
             },
             createComplete(){
               //  this.putToServer();

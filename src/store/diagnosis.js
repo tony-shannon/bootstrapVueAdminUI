@@ -1,5 +1,5 @@
 import {HTTP} from './axiosProxyBroker'
-import {result, map} from 'lodash'
+import {result, map, filter} from 'lodash'
 
 const state = () => ({
     diagnosisList: [],
@@ -31,7 +31,7 @@ export default {
         setNameAllowed: (state, nameAllowed) => state.nameAllowed = nameAllowed,
         setDiagnosisList: (state, list) => state.diagnosisList = list,
         setActiveItem: (state, item) => state.activeItem = item,
-        setSeverityList: (state, list)=>state.severity = list,
+        setSeverityList: (state, list) => state.severity = list,
     },
 
     actions: {
@@ -70,6 +70,8 @@ export default {
                 console.log(err);
             });
         },
+
+
         addItem(context, newItem) {
             let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                 var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -88,7 +90,6 @@ export default {
 
             diagnosisList.push(item);
 
-
             context.commit('setDiagnosisList', diagnosisList);
             context.dispatch('putDataToServer');
             context.commit('setActiveItem', {
@@ -97,10 +98,37 @@ export default {
                 problem_name: item.problem_diagnosis_name.rubric,
                 severity: item.severity.rubric
             });
+        },
+        replaceItem(context, newItem) {
+            let diagnosisList = context.state.diagnosisList;
+            diagnosisList = map(diagnosisList, (e) => {
 
+                if (e._id_ == newItem.id) {
+
+                    e.clin_descrip = newItem.description;
+                    e.problem_diagnosis_name = newItem.problem_name;
+                    e.problem_diagnosis_name.term = 'problem_diagnosis_names/' + e.problem_diagnosis_name.term;
+                    e.severity = newItem.severity;
+
+                }
+                return e;
+            });
+            context.commit('setDiagnosisList', diagnosisList);
+            context.dispatch('putDataToServer');
+
+            newItem.problem_name = newItem.problem_name.rubric;
+            newItem.severity = newItem.severity.rubric;
+
+            context.commit('setActiveItem', newItem);
 
         },
+        deleteItem(context, itemToDelete){
+            let diagnosisList = context.state.diagnosisList;
+            context.commit('setDiagnosisList',filter(diagnosisList, (e) => e._id_ != itemToDelete.id));
+            context.commit('setActiveItem', null);
+            context.dispatch('putDataToServer');
 
+        },
         putDataToServer({state, rootState, dispatch}) {
             HTTP.post('/diagnosis/store',
                 {

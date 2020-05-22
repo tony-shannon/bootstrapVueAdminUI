@@ -68,7 +68,7 @@
             </b-card>
         </b-col>
         <b-col cols="6" sm="6" >
-            <editMedication v-if="status == 'edit' && activeItem"
+            <editAdverse_reactions v-if="status == 'edit' && activeItem"
                             :itemProp="activeItem"
                             @editComplete="editComplete"
                             @cancel="cancel"
@@ -123,10 +123,13 @@
 <script>
     import {mapGetters, mapActions} from 'vuex';
     import createAdverse_reactions from './create'
+    import editAdverse_reactions from './edit'
+
     export default {
         name: "adverse_reactions",
         components:{
-            createAdverse_reactions
+            createAdverse_reactions,
+            editAdverse_reactions
         },
 
         data(){
@@ -191,7 +194,9 @@
                 'fetchList': 'adverse_reactions/fetchAdverse_reactionsList',
                 'fetchNameAllowed': 'adverse_reactions/fetchNameAllowed',
                 'fetchSeverity':'adverse_reactions/fetchSeverityList',
-                'putToServer': 'adverse_reactions/putDataToServer'
+                'putToServer': 'adverse_reactions/putDataToServer',
+                'replaceItem': 'adverse_reactions/replaceItem',
+                'deleteItem': 'adverse_reactions/deleteItem',
 
             }),
 
@@ -200,6 +205,7 @@
                 this.activeItem = item;
             },
             deleteMed(){
+                this.deleteItem(this.activeItem);
 
             },
             createMed(){
@@ -209,11 +215,16 @@
 
             },
             editMed(){
-
+                this.status = 'edit';
             },
             createComplete(){
               //  this.putToServer();
 
+            },
+            editComplete(item){
+                this.replaceItem(item);
+                console.log(item);
+                this.status = 'view';
             },
             cancel () {
                 this.status = 'view';
