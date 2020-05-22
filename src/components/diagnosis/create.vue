@@ -9,7 +9,7 @@
         <b-row v-for="(value, key) in item" :key="key">
             <b-col cols="6" sm="6" v-if="key != 'ProblemDiagnosisName'">
                 <h5>{{key}}</h5>
-                <b-form-input :disabled="key == 'id'" v-model="item[key]" ></b-form-input>
+                <b-form-input :disabled="key == 'id'" v-model="item[key]"></b-form-input>
             </b-col>
             <b-col cols="6" sm="6" v-if="key == 'ProblemDiagnosisName'">
                 <h5>{{key}}</h5>
@@ -64,17 +64,16 @@
             VueBootstrapTypeahead
         },
         computed: {
-           ...mapGetters({
-               'nameAllowed': 'diagnosis/nameAllowed'
-           }),
+            ...mapGetters({
+                'nameAllowed': 'diagnosis/nameAllowed'
+            }),
 
-           nameAllowedFiltered(){
-                let res =  filter(this.nameAllowed, (e)=>e.term.toUpperCase().includes(this.query.toUpperCase()));
+            nameAllowedFiltered() {
+                let res = filter(this.nameAllowed, (e) => e.term.toUpperCase().includes(this.query.toUpperCase()));
                 return res;
-           }
+            }
         },
-        watch: {
-        },
+        watch: {},
         filters: {
             stringify(value) {
                 return JSON.stringify(value, null, 2)
@@ -82,16 +81,16 @@
         },
         methods: {
             ...mapActions({
-               'putToServer': 'diagnosis/putDataToServer'
+                'putToServer': 'diagnosis/putDataToServer',
+                'addItem': 'diagnosis/addItem'
             }),
             cancelCreate() {
                 this.$emit('cancel');
             },
-            create(){
-                this.putToServer();
-
+            create() {
+                this.addItem(this.item);
             },
-            createComplete(){
+            createComplete() {
                 this.putToServer();
             }
         },

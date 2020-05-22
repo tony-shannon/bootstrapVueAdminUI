@@ -15,7 +15,7 @@ export default {
         nameAllowed: (state) => state.nameAllowed,
         list: (state) => {
             return map(state.diagnosisList, e => ({
-                id: e.id,
+                id: e._id_,
                 description: e.clin_descrip,
                 problem_name: e.problem_diagnosis_name.rubric,
                 severity: e.severity.rubric
@@ -56,7 +56,32 @@ export default {
             });
         },
 
-        putDataToServer({state, rootState,commit}) {
+        addItem(context,newItem){
+                let uuid  = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+
+
+            let diagnosisList = context.state.diagnosisList;
+            let item = {};
+            item._id_ = uuid;
+            item._fake_id = Math.random();
+            item.clin_descrip = newItem.Description;
+            item.problem_diagnosis_name = newItem.ProblemDiagnosisName;
+            item.problem_diagnosis_name.term = 'problem_diagnosis_names/'+item.problem_diagnosis_name.term
+            item.severity = {
+                rubric: "Moderate",
+                term: "severity/mod",
+            }
+
+            diagnosisList.push(item);
+            context.commit('setDiagnosisList', diagnosisList);
+            context.dispatch('putDataToServer');
+
+        },
+
+        putDataToServer({state, rootState,dispatch}) {
             HTTP.post('/diagnosis/store',
                 {
                     cookieRequest: rootState.auth.cookie,
@@ -64,7 +89,7 @@ export default {
                     dataToSave: JSON.stringify(state.diagnosisList),
                 }).then((res) => {
                 console.log(res);
-                this.fetchDiagnosisList({commit:commit, rootState: rootState})
+                dispatch('fetchDiagnosisList');
             }).catch((res) => {
                 console.log(res)
             });

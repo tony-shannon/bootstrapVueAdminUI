@@ -193,7 +193,7 @@
 
             },
             createComplete(){
-                this.putToServer();
+              //  this.putToServer();
 
             },
             cancel () {
