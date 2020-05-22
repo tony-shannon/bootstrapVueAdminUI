@@ -263,6 +263,77 @@ app.post('/adverse_reactions', function (req, res) {
     );
 });
 
+app.get('/adverse_reactions/list', function (req, res) {
+    res.send(require('./constants/adv_reactions'));
+});
+
+app.post('/adverse_reactions/store', function(req,res){
+    var xcrtoken =  req.param('csfttoken');
+    var cookieLine = req.param('cookieRequest');
+    var dataToSave = req.param('dataToSave');
+
+    let curlcommand = "curl 'https://tony-staging.openappregistry.com/api/insight/demo1-centre/record/57962105-27e7-421a-9007-54f738f1d347/documentv2/35623fcc-0449-4e6a-9e30-02680f43ca83/lock_acquire/' \\\n" +
+        "  -H 'Connection: keep-alive' \\\n" +
+        "  -H 'Accept: application/json, text/plain, */*' \\\n" +
+        "  -H 'X-Requested-With: XMLHttpRequest' \\\n" +
+        "  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36' \\\n" +
+        "  -H 'X-CSRFTOKEN: "+xcrtoken+"' \\\n" +
+        "  -H 'Sec-Fetch-Site: same-origin' \\\n" +
+        "  -H 'Sec-Fetch-Mode: cors' \\\n" +
+        "  -H 'Sec-Fetch-Dest: empty' \\\n" +
+        "  -H 'Referer: https://tony-staging.openappregistry.com/insight/demo1-centre/' \\\n" +
+        "  -H 'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7' \\\n" +
+        "  -H 'Cookie: "+cookieLine+"' \\\n" +
+        "  --compressed";
+
+    console.log(curlcommand);
+    exec(curlcommand
+        ,(error, stdout, stderr) => {
+            if (error) {
+                console.log(`error: ${error.message}`);
+                res.send(`${stderr}`);
+                return;
+            }
+            if (stderr) {
+                console.log(`stderr: ${stderr}`);
+            }
+
+            let curlcommand2 = dataToSave;
+            curlcommand2 = "curl 'https://tony-staging.openappregistry.com/api/insight/demo1-centre/record/57962105-27e7-421a-9007-54f738f1d347/documentv2/35623fcc-0449-4e6a-9e30-02680f43ca83/' \\\n" +
+                "  -X 'PUT' \\\n" +
+                "  -H 'Connection: keep-alive' \\\n" +
+                "  -H 'Accept: application/json, text/plain, */*' \\\n" +
+                "  -H 'X-CSRFTOKEN: "+xcrtoken+"' \\\n" +
+                "  -H 'X-Requested-With: XMLHttpRequest' \\\n" +
+                "  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36' \\\n" +
+                "  -H 'Content-Type: application/json;charset=UTF-8' \\\n" +
+                "  -H 'Origin: https://tony-staging.openappregistry.com' \\\n" +
+                "  -H 'Sec-Fetch-Site: same-origin' \\\n" +
+                "  -H 'Sec-Fetch-Mode: cors' \\\n" +
+                "  -H 'Sec-Fetch-Dest: empty' \\\n" +
+                "  -H 'Referer: https://tony-staging.openappregistry.com/insight/demo1-centre/' \\\n" +
+                "  -H 'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7' \\\n" +
+                "  -H 'Cookie: "+cookieLine+"' \\\n" +
+                "  --data-binary '{\"id\":\"35623fcc-0449-4e6a-9e30-02680f43ca83\",\"content\":{\"c0001\":"+dataToSave+"},\"age_hours\":93.92286478833333,\"age_days\":4,\"created_by_name\":\"Tony Shannon\",\"updated_by_name\":\"Tony Shannon\",\"edcevent_id\":\"4b9a2afb-bd94-499f-b894-9a7f56228ce3\",\"edcevent_type\":\"cd5addf6-c927-441f-8803-7e08914ad7e9\",\"data_verified\":false,\"data_verified_date\":null,\"data_verification\":null,\"data_verification_pct\":null,\"pathway\":\"1e1ce6f0-3504-43e7-8f4f-0374801323a9\",\"label\":\"Adverse_Events_v3\",\"frozen\":false,\"locked\":false,\"sdv_enabled\":false,\"created_date\":\"2020-05-18T12:45:27.371384+01:00\",\"updated_date\":\"2020-05-18T12:47:31.779771+01:00\",\"event_date\":\"2020-05-18T12:00:00+01:00\",\"state\":1,\"etl_state\":0,\"external_id\":null,\"deleted\":false,\"track_changes\":false,\"rag\":\"G\",\"section_rag\":{\"AdverseReactions_v3\":\"G\"},\"concept_rag\":{\"c0001\":[\"G\",\"G\"]},\"variations\":\"\",\"ui_state\":{},\"record\":\"57962105-27e7-421a-9007-54f738f1d347\",\"template\":\"ec16c7c2-da6a-4ad5-ace2-4d1ed2c67d06\",\"created_by\":745543738,\"updated_by\":745543738,\"owned_by\":946648253,\"study\":\"67385377-9514-4104-b6c3-27d20a79132b\",\"wf_state\":\"Open\",\"transitions\":[[\"Frozen\",\"Freeze\",null]],\"actions\":[\"Edit\",\"View\"],\"changelog\":[{\"path\":\"c0001\",\"id\":null,\"fake_id\":0.3042427042007221,\"reason\":null,\"comment\":null},{\"path\":\"c0001\",\"id\":null,\"fake_id\":0.26163898737798386,\"reason\":null,\"comment\":null}]}' \\\n" +
+                "  --compressed"
+            exec(curlcommand2
+                ,(error, stdout, stderr) => {
+                    if (error) {
+                        console.log(`error: ${error.message}`);
+                        res.send(`${stderr}`);
+                        return;
+                    }
+                    if (stderr) {
+                        console.log(`stderr: ${stderr}`);
+                    }
+                    res.send(`${stdout}`);
+                }
+            );
+        }
+    );
+});
+
+
 app.post('/medication', function (req, res) {
 
     var xcrtoken =  req.param('csfttoken');

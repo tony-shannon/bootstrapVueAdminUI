@@ -1,0 +1,38 @@
+[
+  {
+    "term": "asthma",
+    "rubric": "Asthma"
+  },
+  {
+    "term": "skin_rash",
+    "rubric": "Skin Rash"
+  },
+  {
+    "term": "angioedema",
+    "rubric": "Angiodema"
+  },
+  {
+    "term": "confusion",
+    "rubric": "Confusion"
+  },
+  {
+    "term": "renal_injury",
+    "rubric": "Renal Injury"
+  },
+  {
+    "term": "liver_injury",
+    "rubric": "Liver Injury"
+  },
+  {
+    "term": "cardiac_arrhythmia",
+    "rubric": "Cardiac Arrhythmia"
+  },
+  {
+    "term": "gastro_upset",
+    "rubric": "GastroIntestinal Upset"
+  },
+  {
+    "term": "gi_bleed",
+    "rubric": "GastoIntestinal Bleed"
+  }
+]

@@ -10,7 +10,7 @@ Mocking
  */
 
 const Diagnosis = () => import(/* webpackChunkName: "main" */ '../components/diagnosis/diagnosis.vue');
-const MockAdverseReactions = () => import(/* webpackChunkName: "main" */ '../components/mocked/adverse_reactions.vue');
+const AdverseReactions = () => import(/* webpackChunkName: "main" */ '../components/adverse_reactions/adverse_reactions.vue');
 const MockMedications = () => import(/* webpackChunkName: "main" */ '../components/mocked/medications.vue');
 
 export default new router ({
@@ -37,7 +37,7 @@ export default new router ({
     {
       path: '/patient/:id/advreaction/:document_id',
       name: 'advreaction',
-      component: MockAdverseReactions
+      component: AdverseReactions
     },
     {
       path: '/patient/:id/medications/:document_id',
