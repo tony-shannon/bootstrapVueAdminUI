@@ -1,5 +1,5 @@
 import {HTTP} from './axiosProxyBroker'
-import {result, map, filter} from 'lodash'
+import {result, map, filter,find} from 'lodash'
 
 const state = () => ({
     medicationsList: [],
@@ -36,6 +36,10 @@ export default {
     },
 
     actions: {
+
+        getById({state}, id) {
+            return find(state.medicationsList,{_id_: id});
+        },
         fetchMedicationsList({commit, rootState}) {
 
             HTTP.post('/medication', {

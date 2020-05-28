@@ -55,7 +55,7 @@
 
 <script>
     import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
-    import {mapGetters} from 'vuex'
+    import {mapGetters, mapActions} from 'vuex'
     import {filter} from 'lodash'
 
 
@@ -69,9 +69,19 @@
             };
         },
         mounted(){
-          this.$refs.severityTypehead.inputValue = this.itemProp.severity;
-          this.$refs.problem_name.inputValue = this.itemProp.problem_name;
 
+        this.$nextTick(async ()=>{
+           let obj = await this.getById(this.item.id);
+           if(this.$refs.severityTypehead){
+            this.$refs.severityTypehead[0].inputValue = obj.severity.rubric;
+           }
+           if(this.$refs.problem_name){
+            this.$refs.problem_name[0].inputValue =obj.problem_diagnosis_name.rubric;
+           }
+           this.item.problem_name = obj.problem_diagnosis_name;
+           this.item.severity = obj.severity;
+        })
+         
         },
         components:{
             VueBootstrapTypeahead,
@@ -87,7 +97,9 @@
             }
         },
         methods: {
-
+            ...mapActions({
+                'getById': 'diagnosis/getById',
+            }),
             update () {
                 this.$emit('editComplete', this.item);
             },

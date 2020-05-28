@@ -16,6 +16,7 @@
                 <vue-bootstrap-typeahead
                         class="mb-4"
                         v-model="query"
+                        ref=nameOfMedication
                         :data="nameAllowedFiltered"
                         :serializer="item => item.rubric"
                         @hit="item.name = $event"
@@ -41,7 +42,7 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
+    import {mapGetters, mapActions} from 'vuex'
     import {filter} from 'lodash'
     import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 
@@ -53,6 +54,16 @@
                 query: '',
 
             };
+        },
+        mounted(){
+
+        this.$nextTick(async ()=>{
+           let obj = await this.getById(this.item.id);
+           if(this.$refs.nameOfMedication){
+            this.$refs.nameOfMedication[0].inputValue = obj.medication_name.rubric;
+           }
+           this.item.name = obj.medication_name;
+        })
         },
         props: {
             itemProp: {
@@ -70,6 +81,9 @@
             }
         },
         methods: {
+             ...mapActions({
+                'getById': 'medications/getById',
+            }),
             update () {
                 this.$emit('editComplete', this.item);
             },

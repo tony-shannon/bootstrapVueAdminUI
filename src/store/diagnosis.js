@@ -1,5 +1,5 @@
 import {HTTP} from './axiosProxyBroker'
-import {result, map, filter} from 'lodash'
+import {result, map, filter,find} from 'lodash'
 
 const state = () => ({
     diagnosisList: [],
@@ -25,6 +25,8 @@ export default {
             }));
         },
         severity: (state) => state.severity,
+
+      
     },
 
     mutations: {
@@ -70,7 +72,9 @@ export default {
                 console.log(err);
             });
         },
-
+        getById({state}, id) {
+            return find(state.diagnosisList,{_id_: id});
+        },
 
         addItem(context, newItem) {
             let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
