@@ -1,6 +1,6 @@
 <template>
     <b-container fluid class="bv-example-row">
-        <b-row>
+        <b-row v-if="isLoggedIn">
             <b-col cols="12" sm="12">
 
                 <HeaderEl/>
@@ -43,6 +43,11 @@
                 <FooterEl />
             </b-col>
         </b-row>
+        <b-row class="not-logged-in" v-else>
+            <div class="not-logged-in-container">
+            <router-view />
+            </div>
+        </b-row>
     </b-container>
 </template>
 
@@ -73,6 +78,7 @@
         },
         computed: {
             ...mapGetters({
+                isLoggedIn: 'auth/token',
                 patient: 'patient/patient',
             }),
 
@@ -158,6 +164,12 @@
         color: #007bff;
         cursor: pointer;
     }
-
+    .not-logged-in{
+        min-height: 100vh;
+    }
+    .not-logged-in-container{
+        width: 100%;
+        padding: 50px;
+    }
 
 </style>

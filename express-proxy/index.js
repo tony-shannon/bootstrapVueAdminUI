@@ -159,12 +159,14 @@ app.post('/diagnosis/store', function(req,res){
                 console.log(`stderr: ${stderr}`);
             }
 
-            let curlcommand2 = dataToSave;
-            curlcommand2 = "curl 'https://tony-staging.openappregistry.com/api/insight/demo1-centre/record/57962105-27e7-421a-9007-54f738f1d347/documentv2/00ca6980-ec64-424f-b7a7-deb863ec738e/' \\\n" +
+            let curlcommand3 = dataToSave;
+
+
+             curlcommand3 = "curl 'https://tony-staging.openappregistry.com/api/insight/demo1-centre/record/57962105-27e7-421a-9007-54f738f1d347/documentv2/00ca6980-ec64-424f-b7a7-deb863ec738e/' \\\n" +
                 "  -X 'PUT' \\\n" +
                 "  -H 'Connection: keep-alive' \\\n" +
                 "  -H 'Accept: application/json, text/plain, */*' \\\n" +
-                "  -H 'X-CSRFTOKEN: J5RwNBMFOocPVZwz8sZVXrLN8SsAjdsT4HfQPTqi34ZjTcV6xClI9QGdsrbf3SDP' \\\n" +
+                "  -H 'X-CSRFTOKEN: "+xcrtoken+"' \\\n" +
                 "  -H 'X-Requested-With: XMLHttpRequest' \\\n" +
                 "  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36' \\\n" +
                 "  -H 'Content-Type: application/json;charset=UTF-8' \\\n" +
@@ -174,11 +176,10 @@ app.post('/diagnosis/store', function(req,res){
                 "  -H 'Sec-Fetch-Dest: empty' \\\n" +
                 "  -H 'Referer: https://tony-staging.openappregistry.com/insight/demo1-centre/' \\\n" +
                 "  -H 'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7' \\\n" +
-                "  -H 'Cookie: sessionid_saas=s0q0q9sm3xftnw3alcho7j05mkn1kisd; csrftoken=zL91LAd6dYW5lt5fbPpjNyYeylZOOxEQUnxlNSRJsEJzjGuMAZL6ZXTESUItycPM; _pk_ses.1.dedb=*; _pk_id.1.dedb=2c119dd535756fd3.1589450290.13.1590096592.1590095515.' \\\n" +
-                "  --data-binary '{\"id\":\"00ca6980-ec64-424f-b7a7-deb863ec738e\",\"content\":{\"c0001\":"+dataToSave+"},\"age_hours\":246.39481672500003,\"age_days\":10,\"created_by_name\":\"Tony Shannon\",\"updated_by_name\":\"Tony Shannon\",\"edcevent_id\":\"d2eb6bf7-b3e7-4f28-86b3-e9138a17e8eb\",\"edcevent_type\":\"d6cde447-9726-4130-8b91-33f0538a2212\",\"data_verified\":false,\"data_verified_date\":null,\"data_verification\":null,\"data_verification_pct\":null,\"pathway\":\"1e1ce6f0-3504-43e7-8f4f-0374801323a9\",\"label\":\"Diagnosis_form4\",\"frozen\":false,\"locked\":false,\"sdv_enabled\":false,\"created_date\":\"2020-05-11T16:06:11.791269+01:00\",\"updated_date\":\"2020-05-21T17:58:21.852547+01:00\",\"event_date\":\"2020-05-11T12:00:00+01:00\",\"state\":1,\"etl_state\":0,\"external_id\":null,\"deleted\":false,\"track_changes\":false,\"rag\":\"G\",\"section_rag\":{\"Main\":\"G\"},\"concept_rag\":{\"c0001\":[\"G\",\"G\",\"G\",\"G\"]},\"variations\":\"\",\"ui_state\":{},\"record\":\"57962105-27e7-421a-9007-54f738f1d347\",\"template\":\"40ce24b6-1c28-44f3-bd1a-bd9a759a7d33\",\"created_by\":745543738,\"updated_by\":745543738,\"owned_by\":946648253,\"study\":\"67385377-9514-4104-b6c3-27d20a79132b\",\"wf_state\":\"Open\",\"transitions\":[[\"Frozen\",\"Freeze\",null]],\"actions\":[\"Edit\",\"View\"],\"changelog\":[{\"path\":\"c0001\",\"id\":null,\"fake_id\":0.22640472142921975,\"reason\":null,\"comment\":null},{\"path\":\"c0001\",\"id\":null,\"fake_id\":0.35903937208892867,\"reason\":null,\"comment\":null},{\"path\":\"c0001\",\"id\":null,\"fake_id\":0.7190646948493462,\"reason\":null,\"comment\":null},{\"path\":\"c0001\",\"id\":null,\"fake_id\":0.36703750021885373,\"reason\":null,\"comment\":null}]}' \\\n" +
+                "  -H 'Cookie: "+cookieLine+"' \\\n" +
+                "  --data-binary '{\"id\":\"00ca6980-ec64-424f-b7a7-deb863ec738e\",\"content\":{\"c0001\":"+dataToSave+"},\"age_hours\":408.10600468861116,\"age_days\":17,\"created_by_name\":\"Tony Shannon\",\"updated_by_name\":\"Tony Shannon\",\"edcevent_id\":\"d2eb6bf7-b3e7-4f28-86b3-e9138a17e8eb\",\"edcevent_type\":\"d6cde447-9726-4130-8b91-33f0538a2212\",\"data_verified\":false,\"data_verified_date\":null,\"data_verification\":null,\"data_verification_pct\":null,\"pathway\":\"1e1ce6f0-3504-43e7-8f4f-0374801323a9\",\"label\":\"Diagnosis_form4\",\"frozen\":false,\"locked\":false,\"sdv_enabled\":false,\"created_date\":\"2020-05-11T16:06:11.791269+01:00\",\"updated_date\":\"2020-05-22T18:14:56.477122+01:00\",\"event_date\":\"2020-05-11T12:00:00+01:00\",\"state\":1,\"etl_state\":0,\"external_id\":null,\"deleted\":false,\"track_changes\":false,\"rag\":\"G\",\"section_rag\":{\"Main\":\"G\"},\"concept_rag\":{\"c0001\":[\"G\",\"G\",\"G\",\"G\",\"G\",\"G\",\"G\",\"G\",\"G\"]},\"variations\":\"\",\"ui_state\":{},\"record\":\"57962105-27e7-421a-9007-54f738f1d347\",\"template\":\"40ce24b6-1c28-44f3-bd1a-bd9a759a7d33\",\"created_by\":745543738,\"updated_by\":745543738,\"owned_by\":946648253,\"study\":\"67385377-9514-4104-b6c3-27d20a79132b\",\"wf_state\":\"Open\",\"transitions\":[[\"Frozen\",\"Freeze\",null]],\"actions\":[\"Edit\",\"View\"],\"changelog\":[{\"path\":\"c0001\",\"id\":null,\"fake_id\":0.22640472142921975,\"reason\":null,\"comment\":null},{\"path\":\"c0001\",\"id\":null,\"fake_id\":0.35903937208892867,\"reason\":null,\"comment\":null},{\"path\":\"c0001\",\"id\":null,\"fake_id\":0.7190646948493462,\"reason\":null,\"comment\":null},{\"path\":\"c0001\",\"id\":null,\"fake_id\":0.36703750021885373,\"reason\":null,\"comment\":null},{\"path\":\"c0001\",\"id\":null,\"fake_id\":0.9690135640212356,\"reason\":null,\"comment\":null},{\"path\":\"c0001\",\"id\":null,\"fake_id\":0.5982308340582612,\"reason\":null,\"comment\":null},{\"path\":\"c0001\",\"id\":null,\"fake_id\":0.594128125865869,\"reason\":null,\"comment\":null},{\"path\":\"c0001\",\"id\":null,\"fake_id\":0.836522371872803,\"reason\":null,\"comment\":null},{\"path\":\"c0001\",\"id\":null,\"fake_id\":0.9796838517458648,\"reason\":null,\"comment\":null}]}' \\\n" +
                 "  --compressed";
-            console.log(curlcommand2);
-            exec(curlcommand2
+            exec(curlcommand3
                 ,(error, stdout, stderr) => {
                     if (error) {
                         console.log(`error: ${error.message}`);

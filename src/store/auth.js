@@ -58,6 +58,7 @@ export default {
             }).catch((err)=>{
                 console.log(err);
             })*/
+            commit('token', '11111111111');
 
 
             const queryLine = `mutation Signin($login: String!, $password: String!){
@@ -120,6 +121,10 @@ export default {
                     commit('token', '11111111111');
 
                 }
+
+            }).catch((error)=>{
+                console.log(error);
+                commit('token', '11111111111');
 
             });
         },
