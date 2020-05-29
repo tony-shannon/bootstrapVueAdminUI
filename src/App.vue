@@ -83,7 +83,7 @@
                 patient: 'patient/patient',
             }),
             containerStyle: function(){
-              return 'background-image: url('+require("@/assets/background.jpg")+')';
+              return '';
             },
             patientTemp: function(){
                 let patient = this.patient;
