@@ -51,6 +51,7 @@
 
 <script>
     import {mapGetters, mapMutations, mapActions} from 'vuex'
+    import { PATIENT_NOT_SELECTED_LINKS} from "../mocking/links";
 
     export default {
         name: "header_template",
@@ -97,6 +98,10 @@
                 logoutUser:"logout"
             }),
 
+
+            ...mapActions({
+                setLinks: 'website/setLinks'
+            }),
             ...mapMutations('patient',{
                 setActivePatient: 'setPatient',
                 setPatientId: 'setPatientId',
@@ -104,6 +109,7 @@
             closePatientCard(){
                 this.setActivePatient(null);
                 this.setPatientId(null);
+                this.setLinks(PATIENT_NOT_SELECTED_LINKS);
             },
             clickLogout(){
 

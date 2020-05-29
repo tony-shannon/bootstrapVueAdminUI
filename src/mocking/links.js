@@ -31,17 +31,9 @@ export  const  PATIENT_IS_SELECTED_LINKS = patientSelectedLinks;
 
 var patientNotSelectedLinks = [
     {
-        title: 'Centre',
-        to: {name: 'home'},
-    },
-    {
         title: 'Patients',
         to: { name: 'patients' },
     },
-    {
-        title: 'Queries',
-        to: {name: 'home'},
-    }
 ]
 
 export const PATIENT_NOT_SELECTED_LINKS = patientNotSelectedLinks;

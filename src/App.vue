@@ -9,7 +9,7 @@
                         <font-awesome-icon icon="bars" />
                     </b-col>
                     <b-col cols="10" sm="10" class="patient-data  border-l-gray">
-                        <b-row>
+                        <b-row v-if="patient">
                             <b-col cols="6" sm="6">
                                 <h3>{{ appealing }} {{ patientTemp.first_name + " " + patientTemp.family_name }}</h3>
                                 <p>Address: {{ patientTemp.Address }}</p>
@@ -21,6 +21,11 @@
                             <b-col cols="3" sm="3">
                                 <p>Gender: {{ patientTemp.gender }}</p>
                                 <p>Medical ID: {{ patientTemp.patient_id }}</p>
+                            </b-col>
+                        </b-row>
+                        <b-row v-else>
+                            <b-col cols="6" sm="6">
+                                <h3>Professional View: Patient List</h3>
                             </b-col>
                         </b-row>
                     </b-col>
@@ -88,20 +93,21 @@
             patientTemp: function(){
                 let patient = this.patient;
                 if(!patient){
-                    patient = {};
-                    patient.first_name = 'Patient';
-                    patient.family_name = 'Banner';
-                    patient.date_of_birth = '1990-01-01';
-                    patient.Address = '123 Park Avenue, Dublin, Rep. of Ireland';
-                    patient.Phone = '+353 45 325 4453';
-                    patient.gender = 'Male';
-                    patient.patient_id = '01234';
+                    // patient = {};
+                    // patient.first_name = 'Patient';
+                    // patient.family_name = 'Banner';
+                    // patient.date_of_birth = '1990-01-01';
+                    // patient.Address = '123 Park Avenue, Dublin, Rep. of Ireland';
+                    // patient.Phone = '+353 45 325 4453';
+                    // patient.gender = 'Male';
+                    // patient.patient_id = '01234';
                     this.setLinks(PATIENT_NOT_SELECTED_LINKS);
                 }else{
                     this.setLinks(PATIENT_IS_SELECTED_LINKS);
                 }
                 return patient;
             },
+
             appealing () {
                 if (this.patientTemp.gender == 'Male') {
                     return 'Mr.';
@@ -111,6 +117,16 @@
             },
 
         },
+        mounted() {
+            if(!this.patient){
+                this.setLinks(PATIENT_NOT_SELECTED_LINKS);
+
+            }else{
+                this.setLinks(PATIENT_IS_SELECTED_LINKS);
+
+            }
+        },
+
         methods: {
             ...mapActions({
                 setLinks: 'website/setLinks'
