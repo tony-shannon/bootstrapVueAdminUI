@@ -1,12 +1,12 @@
 <template>
-    <b-container fluid class="bv-example-row" :style="this.containerStyle" >
+    <b-container fluid class="bv-example-row" :style="this.containerStyle">
         <b-row v-if="isLoggedIn">
             <b-col cols="12" sm="12">
 
                 <HeaderEl/>
                 <b-row class="no-margin-h border-b-gray border-r-gray">
                     <b-col cols="2" sm="2" class="left-menu-toggle  no-padding-l">
-                        <font-awesome-icon icon="bars" />
+                        <font-awesome-icon icon="bars"/>
                     </b-col>
                     <b-col cols="10" sm="10" class="patient-data  border-l-gray">
                         <b-row v-if="patient">
@@ -32,7 +32,7 @@
                 </b-row>
                 <b-row>
                     <b-col cols="2" sm="2">
-                        <LeftNav />
+                        <LeftNav/>
                     </b-col>
                     <b-col cols="10" class="m-t-15">
                         <b-breadcrumb>
@@ -42,16 +42,16 @@
                             <b-breadcrumb-item active @click="crumbs">Baz</b-breadcrumb-item>
                         </b-breadcrumb>
 
-                        <router-view />
+                        <router-view/>
                     </b-col>
                 </b-row>
-                <FooterEl />
+                <FooterEl/>
             </b-col>
         </b-row>
         <b-row class="not-logged-in" v-else>
 
             <div class="not-logged-in-container">
-            <router-view />
+                <router-view/>
             </div>
         </b-row>
     </b-container>
@@ -79,20 +79,20 @@
             LeftNav
         },
         data() {
-            return {
-            };
+            return {};
         },
         computed: {
             ...mapGetters({
                 isLoggedIn: 'auth/token',
                 patient: 'patient/patient',
+
             }),
-            containerStyle: function(){
-              return '';
+            containerStyle: function () {
+                return '';
             },
-            patientTemp: function(){
+            patientTemp: function () {
                 let patient = this.patient;
-                if(!patient){
+                if (!patient) {
                     // patient = {};
                     // patient.first_name = 'Patient';
                     // patient.family_name = 'Banner';
@@ -102,13 +102,13 @@
                     // patient.gender = 'Male';
                     // patient.patient_id = '01234';
                     this.setLinks(PATIENT_NOT_SELECTED_LINKS);
-                }else{
+                } else {
                     this.setLinks(PATIENT_IS_SELECTED_LINKS);
                 }
                 return patient;
             },
 
-            appealing () {
+            appealing() {
                 if (this.patientTemp.gender == 'Male') {
                     return 'Mr.';
                 } else {
@@ -118,13 +118,13 @@
 
         },
         mounted() {
-            this.$nextTick(() => {
+            setInterval(() => {
                 if (!this.patient) {
                     this.setLinks(PATIENT_NOT_SELECTED_LINKS);
                 } else {
                     this.setLinks(PATIENT_IS_SELECTED_LINKS);
                 }
-            });
+            }, 100);
         },
 
         methods: {
@@ -132,7 +132,7 @@
                 setLinks: 'website/setLinks'
 
             }),
-            crumbs () {
+            crumbs() {
                 let pathArray = this.$route.path.split("/")
                 console.log('this.$route', this.$route);
                 console.log('pathArray', pathArray);
@@ -178,17 +178,20 @@
     .left-menu-toggle > svg {
         position: absolute;
         font-size: 40px;
-        top: calc((100% - 40px)/2);
-        left: calc((100% - 40px)/2 - 9.5px);
+        top: calc((100% - 40px) / 2);
+        left: calc((100% - 40px) / 2 - 9.5px);
         color: #007bff;
         cursor: pointer;
     }
-    .not-logged-in-bg{
+
+    .not-logged-in-bg {
     }
-    .not-logged-in{
+
+    .not-logged-in {
         min-height: 100vh;
     }
-    .not-logged-in-container{
+
+    .not-logged-in-container {
         width: 100%;
         padding: 50px;
     }
