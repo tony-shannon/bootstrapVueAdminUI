@@ -1,5 +1,5 @@
 <template>
-    <b-container fluid class="bv-example-row">
+    <b-container fluid class="bv-example-row" :style="this.containerStyle" >
         <b-row v-if="isLoggedIn">
             <b-col cols="12" sm="12">
 
@@ -44,6 +44,7 @@
             </b-col>
         </b-row>
         <b-row class="not-logged-in" v-else>
+
             <div class="not-logged-in-container">
             <router-view />
             </div>
@@ -81,7 +82,9 @@
                 isLoggedIn: 'auth/token',
                 patient: 'patient/patient',
             }),
-
+            containerStyle: function(){
+              return 'background-image: url('+require("@/assets/background.jpg")+')';
+            },
             patientTemp: function(){
                 let patient = this.patient;
                 if(!patient){
@@ -163,6 +166,8 @@
         left: calc((100% - 40px)/2 - 9.5px);
         color: #007bff;
         cursor: pointer;
+    }
+    .not-logged-in-bg{
     }
     .not-logged-in{
         min-height: 100vh;

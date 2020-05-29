@@ -23,7 +23,7 @@ router.beforeEach((to, from, next) => {
     if (to.name !== 'login' && store.state.auth.token == null) next({ name: 'login' })
     else next()
 });
-
+require('./assets/background.jpg');
 require('./assets/styles/main.css');
 
 String.prototype.capitalize = function() {
