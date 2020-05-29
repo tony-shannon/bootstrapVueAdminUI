@@ -118,13 +118,13 @@
 
         },
         mounted() {
-            if(!this.patient){
-                this.setLinks(PATIENT_NOT_SELECTED_LINKS);
-
-            }else{
-                this.setLinks(PATIENT_IS_SELECTED_LINKS);
-
-            }
+            this.$nextTick(() => {
+                if (!this.patient) {
+                    this.setLinks(PATIENT_NOT_SELECTED_LINKS);
+                } else {
+                    this.setLinks(PATIENT_IS_SELECTED_LINKS);
+                }
+            });
         },
 
         methods: {

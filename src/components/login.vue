@@ -38,7 +38,7 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex';
+    import {mapActions, mapMutations} from 'vuex';
 
     export default {
         name: "login",
@@ -58,12 +58,20 @@
 
             }),
 
+            ...mapMutations({
+                setActivePatient: 'patients/setActiveItem',
+                setSelectedPatient: 'patient/setPatient'
+            }),
             clickLogin() {
 
                 this.setCSFR(this.token);
                 this.setCookie(this.cookie);
 
+                this.setActivePatient(null);
+                this.setSelectedPatient(null);
+
                 this.loginUser({login: this.login, password: this.password}).then(() => {
+
                     this.$router.push({name: 'patients'}).catch((err) => {
                         console.log(err)
                     });
