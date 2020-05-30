@@ -88,6 +88,20 @@
 
             }),
             containerStyle: function () {
+                let patient = this.patient;
+                if (!patient) {
+                    // patient = {};
+                    // patient.first_name = 'Patient';
+                    // patient.family_name = 'Banner';
+                    // patient.date_of_birth = '1990-01-01';
+                    // patient.Address = '123 Park Avenue, Dublin, Rep. of Ireland';
+                    // patient.Phone = '+353 45 325 4453';
+                    // patient.gender = 'Male';
+                    // patient.patient_id = '01234';
+                    this.setLinks(PATIENT_NOT_SELECTED_LINKS);
+                } else {
+                    this.setLinks(PATIENT_IS_SELECTED_LINKS);
+                }
                 return '';
             },
             patientTemp: function () {
@@ -118,13 +132,13 @@
 
         },
         mounted() {
-            setInterval(() => {
+           /* setInterval(() => {
                 if (!this.patient) {
                     this.setLinks(PATIENT_NOT_SELECTED_LINKS);
                 } else {
                     this.setLinks(PATIENT_IS_SELECTED_LINKS);
                 }
-            }, 100);
+            }, 100);*/
         },
 
         methods: {
