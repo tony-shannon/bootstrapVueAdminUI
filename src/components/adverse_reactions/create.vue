@@ -41,10 +41,10 @@
             return {
                 item: {
                     "id": '',
-                    "EventName": '',
-                    "Severity": '',
-                    "Substance": '',
-                    "CommentLine": '',
+                    "name": '',
+                    "severity": '',
+                    "substance": '',
+                    "comment": '',
 
                 },
                 names: [],

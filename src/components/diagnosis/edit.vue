@@ -76,12 +76,12 @@
             this.$refs.severityTypehead[0].inputValue = obj.severity.rubric;
            }
            if(this.$refs.problem_name){
-            this.$refs.problem_name[0].inputValue =obj.problem_diagnosis_name.rubric;
+            this.$refs.problem_name[0].inputValue =obj.problem_name.rubric;
            }
-           this.item.problem_name = obj.problem_diagnosis_name;
+           this.item.problem_name = obj.problem_name;
            this.item.severity = obj.severity;
         })
-         
+
         },
         components:{
             VueBootstrapTypeahead,

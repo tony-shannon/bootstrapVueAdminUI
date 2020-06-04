@@ -11,24 +11,24 @@
                 <h5>{{key}}</h5>
                 <b-form-input :disabled="key == 'id'" v-model="item[key]"></b-form-input>
             </b-col>
-            <b-col cols="6" sm="6" v-if="key == 'ProblemDiagnosisName'">
+            <b-col cols="6" sm="6" v-if="key == 'problem_name'">
                 <h5>{{key}}</h5>
                 <vue-bootstrap-typeahead
                         class="mb-4"
                         v-model="query"
                         :data="nameAllowedFiltered"
                         :serializer="item => item.rubric"
-                        @hit="item.ProblemDiagnosisName = $event"
+                        @hit="item.problem_name = $event"
                 />
             </b-col>
-            <b-col cols="6" sm="6" v-if="key == 'Severity'">
+            <b-col cols="6" sm="6" v-if="key == 'severity'">
                 <h5>{{key}}</h5>
                 <vue-bootstrap-typeahead
                         class="mb-4"
                         v-model="query_severity"
                         :data="severityFiltered"
                         :serializer="item => item.rubric"
-                        @hit="item.Severity = $event"
+                        @hit="item.severity = $event"
                 />
             </b-col>
         </b-row>
@@ -62,9 +62,9 @@
             return {
                 item: {
                     "id": '',
-                    "ProblemDiagnosisName": '',
-                    "Description": '',
-                    "Severity": '',
+                    "problem_name": '',
+                    "description": '',
+                    "severity": '',
                 },
                 names: [],
                 query: '',

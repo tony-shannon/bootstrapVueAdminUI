@@ -1,5 +1,5 @@
 import {HTTP} from './axios'
-import {filter, find} from 'lodash'
+import {filter, find,map} from 'lodash'
 
 const state = () => ({
     medicationsList: [],
@@ -17,11 +17,20 @@ export default {
     getters: {
         nameAllowed: (state) => state.nameAllowed,
         list: (state,getters, rootState) => {
+
+            let list =  map(state.medicationsList, e => ({
+                id: e.id,
+                form: e.form,
+                name: e.name.rubric,
+                strength: e.strength,
+                amount: e.amount,
+                patient_id: e.patient_id,
+            }));
             if(rootState.patient.patientId){
-                return filter(state.medicationsList,
+                return filter(list,
                     {patient_id: rootState.patient.patientId});
             }else {
-                return state.medicationsList;
+                return list;
             }
         },
         severity: (state) => state.severity,
@@ -37,7 +46,7 @@ export default {
     actions: {
 
         getById({state}, id) {
-            return find(state.medicationsList,{_id_: id});
+            return find(state.medicationsList,{id: id});
         },
         fetchMedicationsList({commit}) {
 
@@ -87,7 +96,7 @@ export default {
                 .then(res => {
                     console.log(res);
                     context.dispatch('fetchMedicationsList');
-                    context.commit('setActiveItem', newItem);
+                    context.commit('setActiveItem', find(context.getters.list,{'id': newItem.id}));
                 })
                 .catch(err => {
                     console.log(err)

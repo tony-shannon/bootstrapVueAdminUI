@@ -7,18 +7,18 @@
             align="left"
     >
         <b-row v-for="(value, key) in item" :key="key">
-            <b-col cols="6" sm="6" v-if="key != 'MedicationName' && key!='Severity'">
+            <b-col cols="6" sm="6" v-if="key != 'name' && key!='Severity'">
                 <h5>{{key}}</h5>
                 <b-form-input :disabled="key == 'id'" v-model="item[key]"></b-form-input>
             </b-col>
-            <b-col cols="6" sm="6" v-if="key == 'MedicationName'">
+            <b-col cols="6" sm="6" v-if="key == 'name'">
                 <h5>{{key}}</h5>
                 <vue-bootstrap-typeahead
                         class="mb-4"
                         v-model="query"
                         :data="nameAllowedFiltered"
                         :serializer="item => item.rubric"
-                        @hit="item.MedicationName = $event"
+                        @hit="item.name = $event"
                 />
             </b-col>
         </b-row>
@@ -52,10 +52,10 @@
             return {
                 item: {
                     "id": '',
-                    "MedicationName": '',
-                    "Form": '',
-                    "Strength": '',
-                    "Amount": '',
+                    "name": '',
+                    "form": '',
+                    "strength": '',
+                    "amount": '',
                 },
                 names: [],
                 query: '',

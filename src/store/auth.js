@@ -65,7 +65,7 @@ export default {
                 commit('role', 'patient');
                 HTTP.get('Patients')
                     .then(resp => {
-                        commit('setPatients', resp.data)
+                        //commit('patients/setPatients', resp.data)
                         let patient = first(resp.data);
                         rootState.patient.patientId = patient.id;
                         rootState.patient.patient = patient;

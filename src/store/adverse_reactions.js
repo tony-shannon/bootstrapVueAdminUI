@@ -1,5 +1,5 @@
 import {HTTP} from './axios'
-import {filter} from 'lodash';
+import {filter,map,find} from 'lodash';
 const state = () => ({
     adverse_reactionsList: [],
     nameAllowed: [],
@@ -16,10 +16,20 @@ export default {
     getters: {
         nameAllowed: (state) => state.nameAllowed,
         list: (state, getters, rootState) => {
+
+            let list =  map(state.adverse_reactionsList, e => ({
+                id: e.id,
+                name: e.EventName,
+                substance: e.Substance,
+                severity: e.Severity,
+                comment: e.CommentLine,
+                patient_id: e.patient_id,
+            }));
+
             if(rootState.patient.patientId){
-                return filter(state.adverse_reactionsList, {patient_id: rootState.patient.patientId});
+                return filter(list, {patient_id: rootState.patient.patientId});
             }else {
-                return state.adverse_reactionsList
+                return list;
             }
         },
         severity: (state) => state.severity,
@@ -80,7 +90,7 @@ export default {
                 .then(res => {
                     console.log(res);
                     context.dispatch('fetchAdverse_reactionsList');
-                    context.commit('setActiveItem', newItem);
+                    context.commit('setActiveItem', find(context.getters.list,{'id': newItem.id}));
                 })
                 .catch(err => {
                     console.log(err)

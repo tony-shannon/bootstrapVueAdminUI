@@ -60,9 +60,8 @@
         this.$nextTick(async ()=>{
            let obj = await this.getById(this.item.id);
            if(this.$refs.nameOfMedication){
-            this.$refs.nameOfMedication[0].inputValue = obj.medication_name.rubric;
+            this.$refs.nameOfMedication[0].inputValue = obj.name.rubric;
            }
-           this.item.name = obj.medication_name;
         })
         },
         props: {

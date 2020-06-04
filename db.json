@@ -2,20 +2,30 @@
   "Medications": [
     {
       "id": 1,
-      "amount": 500,
-      "strength": "Pain Relief",
-      "name": "Paracetamol",
-      "form": "Po",
-      "patient_id": 0
+      "form": "sdf",
+      "name": {
+        "term": "oral methotrexate",
+        "rubric": "Oral Methotrexate"
+      },
+      "strength": "qwe",
+      "amount": "10",
+      "patient_id": 1
     }
   ],
   "Diagnosis": [
     {
       "id": 1,
-      "problem_name": "Swelling in Knee",
-      "description": "Trauma",
-      "severity": "Mild",
-      "patient_id": 0
+      "description": "Desc",
+      "problem_name": {
+        "term": "asthma",
+        "rubric": "Asthma"
+      },
+      "severity": {
+        "id": 1,
+        "term": "severity/mod",
+        "rubric": "Moderate"
+      },
+      "patient_id": 1
     }
   ],
   "DiagnosisAllowed": [
@@ -392,16 +402,7 @@
       "rubric": "GastoIntestinal Bleed"
     }
   ],
-  "Allergiers": [
-    {
-      "id": 1,
-      "name": "Allergier",
-      "substance": "Trauma",
-      "severity": "Moderate",
-      "comment": "6",
-      "patient_id": 0
-    }
-  ],
+  "Allergiers": [],
   "Severity": [
     {
       "id": 1,
