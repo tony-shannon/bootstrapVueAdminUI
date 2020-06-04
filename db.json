@@ -14,7 +14,7 @@
       "id": 1,
       "problem_name": "Swelling in Knee",
       "description": "Trauma",
-      "severity": "Haematoma",
+      "severity": "Mild",
       "patient_id": 0
     }
   ],
@@ -395,9 +395,9 @@
   "Allergiers": [
     {
       "id": 1,
-      "name": "Swelling in Knee",
+      "name": "Allergier",
       "substance": "Trauma",
-      "severity": "Haematoma",
+      "severity": "Moderate",
       "comment": "6",
       "patient_id": 0
     }

@@ -1,12 +1,12 @@
 <template>
     <div class="">
         <b-row>
-            <b-col sm="6">
+            <b-col col="6" sm="6" class="align-content-end">
                 <div class="patient-image">
                     <img src="https://picsum.photos/seed/picsum/64/64"/>
                 </div>
             </b-col>
-            <b-col sm="6">
+            <b-col col="6" sm="6">
                 <div><b>D.O.B:</b> {{ patient.date_of_birth }}</div>
                 <div><b>Phone:</b> {{ patient.Phone }}</div>
                 <div><b>Gender:</b> {{ patient.gender }}</div>

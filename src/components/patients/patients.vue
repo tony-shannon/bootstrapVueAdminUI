@@ -118,14 +118,17 @@
             </b-col>
         </b-row>
         <div class="d-sm-flex d-md-none">
-            <mobile-table :fields="mobileFields" :items="patients"></mobile-table>
+            <mobile-table :fields="mobileAllergier" :items="allergiers"></mobile-table>
+            <mobile-table :fields="mobileMedications" :items="medications"></mobile-table>
+            <mobile-table :fields="mobileProblems" :items="problems"></mobile-table>
+
         </div>
     </div>
 
 </template>
 
 <script>
-    import {mapMutations} from 'vuex'
+    import {mapMutations,mapGetters} from 'vuex'
 
     import {
         patientsState,
@@ -154,9 +157,18 @@
                     {key: "family_name", sortable: true, label: 'Family Name'},
                     {key: "date_of_birth", sortable: true, label: 'DOB'},
                 ], filter: null,
-                mobileFields: [
-                    {key: "first_name", sortable: true, label: 'First Name'},
-                    {key: "date_of_birth", sortable: true, label: 'DOB'},
+
+                mobileAllergier: [
+                    {key: "name", label: 'Name'},
+                    {key: "severity", label: 'Severity'},
+                ],
+                mobileProblems: [
+                    {key: "problem_name", label: 'Problem Name'},
+                    {key: "severity", label: 'Severity'},
+                ],
+                mobileMedications: [
+                    {key: "name",  label: 'Name'},
+                    {key: "form",  label: 'Form'},
                 ],
                 filterOn: [],
             };
@@ -171,6 +183,12 @@
             })
         },
         computed: {
+
+            ...mapGetters({
+                'medications': 'medications/list',
+                'allergiers': 'adverse_reactions/list',
+                'problems': 'diagnosis/list',
+            }),
             sortOptions() {
                 // Create an options list from our fields
                 return this.fields

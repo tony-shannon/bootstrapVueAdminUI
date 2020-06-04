@@ -1,6 +1,7 @@
 <template>
     <b-container fluid class="bv-example-row" :style="this.containerStyle">
         <b-row v-if="isLoggedIn">
+            <mobile-patient/>
             <b-col cols="12" sm="12">
 
                 <HeaderEl/>
@@ -66,9 +67,11 @@
     import LeftNav from './layout/leftNav.vue'
     import {mapGetters, mapActions} from "vuex";
     import {PATIENT_IS_SELECTED_LINKS, PATIENT_NOT_SELECTED_LINKS} from "./mocking/links";
+    import MobilePatient from "./components/patient_views/mobile-patient";
 
     export default {
         components: {
+            MobilePatient,
             HeaderEl,
             FooterEl,
             LeftNav

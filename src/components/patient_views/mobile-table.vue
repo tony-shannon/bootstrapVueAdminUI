@@ -24,8 +24,5 @@
 </script>
 
 <style >
-    .mobile-table-thead {
-        background: #007bff;
-        color: white
-    }
+
 </style>
