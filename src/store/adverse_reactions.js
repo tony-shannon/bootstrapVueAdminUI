@@ -1,5 +1,5 @@
 import {HTTP} from './axios'
-
+import {filter} from 'lodash';
 const state = () => ({
     adverse_reactionsList: [],
     nameAllowed: [],
@@ -15,8 +15,12 @@ export default {
 
     getters: {
         nameAllowed: (state) => state.nameAllowed,
-        list: (state) => {
-            return state.adverse_reactionsList
+        list: (state, getters, rootState) => {
+            if(rootState.patient.patientId){
+                return filter(state.adverse_reactionsList, {patient_id: rootState.patient.patientId});
+            }else {
+                return state.adverse_reactionsList
+            }
         },
         severity: (state) => state.severity,
     },
@@ -57,6 +61,12 @@ export default {
             });
         },
         addItem(context, newItem) {
+
+            if(context.rootState.patient.patientId){
+                let patientId = context.rootState.patient.patientId;
+                newItem.patient_id = patientId;
+            }
+
             HTTP.post('Allergiers/', JSON.stringify(newItem))
                 .then(() => {
                     context.dispatch('fetchAdverse_reactionsList');

@@ -1,5 +1,5 @@
 import {HTTP} from './axios'
-import {find} from 'lodash'
+import {filter, find} from 'lodash'
 
 const state = () => ({
     diagnosisList: [],
@@ -16,8 +16,12 @@ export default {
 
     getters: {
         nameAllowed: (state) => state.nameAllowed,
-        list: (state) => {
-            return state.diagnosisList;
+        list: (state,getters, rootState) => {
+            if(rootState.patient.patientId){
+                return filter(state.diagnosisList, {patient_id: rootState.patient.patientId});
+            }else {
+                return state.diagnosisList;
+            }
         },
         severity: (state) => state.severity,
 
@@ -53,7 +57,6 @@ export default {
         },
 
         fetchSeverityList({commit}) {
-
             HTTP.get('Severity')
                 .then((res) => {
                     commit('setSeverityList', res.data);
@@ -66,6 +69,12 @@ export default {
         },
 
         addItem(context, newItem) {
+
+            if(context.rootState.patient.patientId){
+                let patientId = context.rootState.patient.patientId;
+                newItem.patient_id = patientId;
+            }
+
             HTTP.post('Diagnosis/', JSON.stringify(newItem))
                 .then(() => {
                     context.dispatch('fetchDiagnosisList');
