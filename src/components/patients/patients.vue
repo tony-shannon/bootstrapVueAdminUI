@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="width: 100%">
         <b-row class="d-none d-md-flex">
             <b-col cols="6" sm="6"> Main Content
                 <b-card
@@ -118,8 +118,13 @@
             </b-col>
         </b-row>
         <div class="d-sm-flex d-md-none">
+            <mobile-divider icon="display-fill" title="Alergier"/>
             <mobile-table :fields="mobileAllergier" :items="allergiers"></mobile-table>
+            <mobile-divider icon="exclamation-octagon" title="Medications"/>
+
             <mobile-table :fields="mobileMedications" :items="medications"></mobile-table>
+            <mobile-divider icon="files" title="Problems"/>
+
             <mobile-table :fields="mobileProblems" :items="problems"></mobile-table>
 
         </div>
@@ -139,6 +144,7 @@
     import createPatient from './create.vue';
     import {CONFIG} from '../../store/config';
     import MobileTable from "../patient_views/mobile-table";
+    import MobileDivider from "../patient_views/mobile-divider";
 
     export default {
         name: "patients",
@@ -233,6 +239,7 @@
             ]),
         },
         components: {
+            MobileDivider,
             MobileTable,
             editPatient,
             createPatient

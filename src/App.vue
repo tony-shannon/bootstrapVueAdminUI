@@ -35,7 +35,7 @@
                     <b-col cols="2" sm="2"  class="d-none d-md-block">
                         <LeftNav/>
                     </b-col>
-                    <b-col cols="10" sm="12" md="10" class="m-t-15">
+                    <b-col sm="12" md="10" >
                         <b-breadcrumb class="d-none d-md-inline-flex">
                             <b-breadcrumb-item href="#home">Home</b-breadcrumb-item>
                             <b-breadcrumb-item href="#foo">Foo</b-breadcrumb-item>
