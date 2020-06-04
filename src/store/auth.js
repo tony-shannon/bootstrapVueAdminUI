@@ -12,8 +12,9 @@ export default {
 
     mutations: {
         token: (state, token) => state.token = token,
-        cookie: (state,cookie) => state.cookie = cookie,
-        crfstoken: (state,token) => state.crfstoken = token,
+        cookie: (state, cookie) => state.cookie = cookie,
+        crfstoken: (state, token) => state.crfstoken = token,
+        role: (state,role) => state.role = role,
     },
 
     getters: {
@@ -31,27 +32,33 @@ export default {
             return true;
         },
         canDelete: state => {
-            if (state.role == 'patient') return false;
+            if (state.role === 'patient') return false;
             return true;
         },
         canCreate: state => {
-            if (state.role == 'patient') return false;
+            if (state.role === 'patient') return false;
             return true;
         }
     },
     actions: {
         setToken: (state, token) => state.token = token,
-        setCookie: ({commit}, cookie) =>{
-            commit('cookie',cookie);
+        setCookie: ({commit}, cookie) => {
+            commit('cookie', cookie);
 
         },
-        setCSFR: ({commit},crfs) =>{
-            commit('crfstoken',crfs)
+        setCSFR: ({commit}, crfs) => {
+            commit('crfstoken', crfs)
         },
 
 
         login: ({commit}, {login, password}) => {
-            commit('token', login+password);
+            if (login === 'ts') {
+                commit('role', 'doctor');
+            } else {
+                commit('role', 'patient');
+
+            }
+            commit('token', login + password);
 
             return true;
 
@@ -65,6 +72,7 @@ export default {
         },
         logout: ({commit}) => {
             commit('token', null);
+            commit('role', null);
         }
     },
 }

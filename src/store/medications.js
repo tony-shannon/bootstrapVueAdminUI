@@ -1,5 +1,5 @@
-import {HTTP} from './axiosProxyBroker'
-import {result, map, filter,find} from 'lodash'
+import {HTTP} from './axios'
+import {find} from 'lodash'
 
 const state = () => ({
     medicationsList: [],
@@ -34,18 +34,11 @@ export default {
         getById({state}, id) {
             return find(state.medicationsList,{_id_: id});
         },
-        fetchMedicationsList({commit, rootState}) {
+        fetchMedicationsList({commit}) {
 
-            HTTP.post('Medications', {
-                cookieRequest: rootState.auth.cookie,
-                csfttoken: rootState.auth.crfstoken,
-
-            }).then((res) => {
+            HTTP.get('Medications').then((res) => {
                 console.log(res);
-
-                res = result(res.data, 'content.c0001');
-
-                commit('setMedicationsList', res);
+                commit('setMedicationsList', res.data);
             }).catch((err) => {
                 console.log(err);
             });

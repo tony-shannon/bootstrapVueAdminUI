@@ -4,8 +4,8 @@
             <b-col cols="12" sm="12">
 
                 <HeaderEl/>
-                <b-row class="no-margin-h border-b-gray border-r-gray">
-                    <b-col cols="2" sm="2" class="left-menu-toggle  no-padding-l">
+                <b-row class="no-margin-h border-b-gray border-r-gray" :class="{'is-patient-role': role === 'patient'}">
+                    <b-col cols="2" sm="false" md="2" class="left-menu-toggle  no-padding-l">
                         <font-awesome-icon icon="bars"/>
                     </b-col>
                     <b-col cols="10" sm="10" class="patient-data  border-l-gray">
@@ -80,6 +80,7 @@
             ...mapGetters({
                 isLoggedIn: 'auth/isAuth',
                 patient: 'patient/patient',
+                role: 'auth/role'
 
             }),
             containerStyle: function () {
@@ -127,13 +128,6 @@
 
         },
         mounted() {
-           /* setInterval(() => {
-                if (!this.patient) {
-                    this.setLinks(PATIENT_NOT_SELECTED_LINKS);
-                } else {
-                    this.setLinks(PATIENT_IS_SELECTED_LINKS);
-                }
-            }, 100);*/
         },
 
         methods: {

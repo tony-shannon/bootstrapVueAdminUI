@@ -1,6 +1,4 @@
 <template>
-
-
     <b-row>
         <b-col cols="6" sm="6"> Adverse Reactions
             <b-card
@@ -118,7 +116,6 @@
 
         </b-col>
     </b-row>
-
 </template>
 
 <script>
@@ -174,10 +171,11 @@
         },
         computed: {
             ...mapGetters({
-               'list': 'adverse_reactions/list',
+                'list': 'adverse_reactions/list',
                 'canEdit': 'auth/canEdit',
                 'canDelete': 'auth/canDelete',
                 'canCreate': 'auth/canCreate',
+                'role': 'auth/role',
             }),
             activeItem: {
                 get () {
