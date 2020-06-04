@@ -17,16 +17,11 @@ export default {
     getters: {
         nameAllowed: (state) => state.nameAllowed,
         list: (state) => {
-            return map(state.diagnosisList, e => ({
-                id: e._id_,
-                description: e.clin_descrip,
-                problem_name: e.problem_diagnosis_name.rubric,
-                severity: e.severity.rubric
-            }));
+            return state.diagnosisList;
         },
         severity: (state) => state.severity,
 
-      
+
     },
 
     mutations: {
@@ -37,26 +32,19 @@ export default {
     },
 
     actions: {
-        fetchDiagnosisList({commit, rootState}) {
-
-            HTTP.post('/diagnosis', {
-                cookieRequest: rootState.auth.cookie,
-                csfttoken: rootState.auth.crfstoken,
-
-            }).then((res) => {
-                console.log(res);
-
-                res = result(res.data, 'content.c0001');
-
-                commit('setDiagnosisList', res);
-            }).catch((err) => {
-                console.log(err);
-            });
-
+        fetchDiagnosisList({commit}) {
+            HTTP.get('Diagnosis')
+                .then(resp => {
+                    commit('setDiagnosisList', resp.data)
+                })
+                .catch(err => {
+                    console.log(err);
+                })
         },
 
         fetchNameAllowed({commit}) {
-            HTTP.get('/diagnosis/list')
+
+            HTTP.get('DiagnosisAllowed')
                 .then((res) => {
                     commit('setNameAllowed', res.data);
                 }).catch((err) => {
@@ -65,7 +53,8 @@ export default {
         },
 
         fetchSeverityList({commit}) {
-            HTTP.get('/severity/list')
+
+            HTTP.get('Severity')
                 .then((res) => {
                     commit('setSeverityList', res.data);
                 }).catch((err) => {
@@ -77,64 +66,36 @@ export default {
         },
 
         addItem(context, newItem) {
-            let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-                return v.toString(16);
-            });
-
-
-            let diagnosisList = context.state.diagnosisList;
-            let item = {};
-            item._id_ = uuid;
-            item._fake_id = Math.random();
-            item.clin_descrip = newItem.Description;
-            item.problem_diagnosis_name = newItem.ProblemDiagnosisName;
-            item.problem_diagnosis_name.term = 'problem_diagnosis_names/' + item.problem_diagnosis_name.term
-            item.severity = newItem.Severity;
-
-            diagnosisList.push(item);
-
-            context.commit('setDiagnosisList', diagnosisList);
-            context.dispatch('putDataToServer');
-            context.commit('setActiveItem', {
-                id: item._id_,
-                description: item.clin_descrip,
-                problem_name: item.problem_diagnosis_name.rubric,
-                severity: item.severity.rubric
-            });
+            HTTP.post('Diagnosis/', JSON.stringify(newItem))
+                .then(() => {
+                    context.dispatch('fetchDiagnosisList');
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         },
         replaceItem(context, newItem) {
-            let diagnosisList = context.state.diagnosisList;
-            diagnosisList = map(diagnosisList, (e) => {
-
-                if (e._id_ == newItem.id) {
-
-                    e.clin_descrip = newItem.description;
-                    e.problem_diagnosis_name = newItem.problem_name;
-                    e.problem_diagnosis_name.term = 'problem_diagnosis_names/' + e.problem_diagnosis_name.term;
-                    e.severity = newItem.severity;
-
-                }
-                return e;
-            });
-            context.commit('setDiagnosisList', diagnosisList);
-            context.dispatch('putDataToServer');
-
-            newItem.problem_name = newItem.problem_name.rubric;
-            newItem.severity = newItem.severity.rubric;
-
-            context.commit('setActiveItem', newItem);
-
+            HTTP.put('Diagnosis/' + newItem.id, JSON.stringify(newItem))
+                .then(res => {
+                    console.log(res);
+                    context.dispatch('fetchDiagnosisList');
+                    context.commit('setActiveItem', newItem);
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         },
         deleteItem(context, itemToDelete){
-            let diagnosisList = context.state.diagnosisList;
-            context.commit('setDiagnosisList',filter(diagnosisList, (e) => e._id_ != itemToDelete.id));
-            context.commit('setActiveItem', null);
-            context.dispatch('putDataToServer');
-
+            HTTP.delete('Diagnosis/' + itemToDelete.id)
+                .then(() => {
+                    context.dispatch('fetchDiagnosisList')
+                })
+                .catch(err => {
+                    console.log(err);
+                })
         },
-        putDataToServer({state, rootState, dispatch}) {
-            HTTP.post('/diagnosis/store',
+        putDataToServer({}) {
+         /*   HTTP.post('/diagnosis/store',
                 {
                     cookieRequest: rootState.auth.cookie,
                     csfttoken: rootState.auth.crfstoken,
@@ -144,7 +105,7 @@ export default {
                 dispatch('fetchDiagnosisList');
             }).catch((res) => {
                 console.log(res)
-            });
+            });*/
         }
 
     },

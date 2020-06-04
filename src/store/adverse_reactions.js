@@ -17,14 +17,7 @@ export default {
     getters: {
         nameAllowed: (state) => state.nameAllowed,
         list: (state) => {
-            return map(state.adverse_reactionsList, e => ({
-                id: e._id_,
-                name: e.adverse_reaction_event_name,
-                substance: e.adverse_reaction_substance,
-                severity: e.adverse_reaction_severity,
-                comment: e.adverse_reaction_comment,
-
-            }));
+            return state.adverse_reactionsList
         },
         severity: (state) => state.severity,
     },
@@ -37,18 +30,10 @@ export default {
     },
 
     actions: {
-        fetchAdverse_reactionsList({commit, rootState}) {
+        fetchAdverse_reactionsList({commit}) {
 
-            HTTP.post('/adverse_reactions', {
-                cookieRequest: rootState.auth.cookie,
-                csfttoken: rootState.auth.crfstoken,
-
-            }).then((res) => {
-                console.log(res);
-
-                res = result(res.data, 'content.c0001');
-
-                commit('setAdverse_reactionsList', res);
+            HTTP.get('Allergiers').then((res) => {
+                commit('setAdverse_reactionsList', res.data);
             }).catch((err) => {
                 console.log(err);
             });
@@ -56,7 +41,7 @@ export default {
         },
 
         fetchNameAllowed({commit}) {
-            HTTP.get('/adverse_reactions/list')
+            HTTP.get('AllergierReactionsAllowed')
                 .then((res) => {
                     commit('setNameAllowed', res.data);
                 }).catch((err) => {
@@ -65,7 +50,7 @@ export default {
         },
 
         fetchSeverityList({commit}) {
-            HTTP.get('/severity/list')
+            HTTP.get('Severity')
                 .then((res) => {
                     commit('setSeverityList', res.data);
                 }).catch((err) => {
@@ -73,68 +58,36 @@ export default {
             });
         },
         addItem(context, newItem) {
-            let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-                return v.toString(16);
-            });
-
-
-            let adverse_reactionsList = context.state.adverse_reactionsList;
-            let item = {};
-
-
-            item._id_ = uuid;
-            item._fake_id = Math.random();
-
-            item.adverse_reaction_comment = newItem.CommentLine;
-            item.adverse_reaction_event_name = newItem.EventName;
-            item.adverse_reaction_severity = newItem.Severity;
-            item.adverse_reaction_substance = newItem.Substance;
-
-            adverse_reactionsList.push(item);
-
-
-            context.commit('setAdverse_reactionsList', adverse_reactionsList);
-            context.dispatch('putDataToServer');
-            context.commit('setActiveItem', {
-                id: item._id_,
-                name: item.adverse_reaction_event_name,
-                substance: item.adverse_reaction_substance,
-                severity: item.adverse_reaction_severity,
-                comment: item.adverse_reaction_comment,
-            });
-
-
+            HTTP.post('Allergiers/', JSON.stringify(newItem))
+                .then(() => {
+                    context.dispatch('fetchAdverse_reactionsList');
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         },
-
         replaceItem(context, newItem) {
-            let adverse_reactionsList = context.state.adverse_reactionsList;
-
-            adverse_reactionsList = map(adverse_reactionsList, (e) => {
-
-                if (e._id_ == newItem.id) {
-
-                    e.adverse_reaction_comment = newItem.comment;
-                    e.adverse_reaction_event_name = newItem.name;
-                    e.adverse_reaction_severity = newItem.severity;
-                    e.adverse_reaction_substance = newItem.substance;
-                }
-                return e;
-            });
-
-            context.commit('setAdverse_reactionsList', adverse_reactionsList);
-            context.dispatch('putDataToServer');
-            context.commit('setActiveItem', newItem);
-
+            HTTP.put('Allergiers/' + newItem.id, JSON.stringify(newItem))
+                .then(res => {
+                    console.log(res);
+                    context.dispatch('fetchAdverse_reactionsList');
+                    context.commit('setActiveItem', newItem);
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         },
         deleteItem(context, itemToDelete){
-            let adverse_reactionsList = context.state.adverse_reactionsList;
-            context.commit('setAdverse_reactionsList',filter(adverse_reactionsList, (e) => e._id_ != itemToDelete.id));
-            context.commit('setActiveItem', null);
-            context.dispatch('putDataToServer');
+            HTTP.delete('Allergiers/' + itemToDelete.id)
+                .then(() => {
+                    context.dispatch('fetchAdverse_reactionsList')
+                })
+                .catch(err => {
+                    console.log(err);
+                })
         },
-        putDataToServer({state, rootState, dispatch}) {
-            HTTP.post('/adverse_reactions/store',
+        putDataToServer({}) {
+          /*  HTTP.post('/adverse_reactions/store',
                 {
                     cookieRequest: rootState.auth.cookie,
                     csfttoken: rootState.auth.crfstoken,
@@ -144,7 +97,7 @@ export default {
                 dispatch('fetchAdverse_reactionsList');
             }).catch((res) => {
                 console.log(res)
-            });
+            });*/
         }
 
     },

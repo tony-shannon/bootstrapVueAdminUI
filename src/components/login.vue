@@ -17,21 +17,6 @@
                 </b-col>
 
             </b-row>
-            <hr/>
-            <b-row>
-            <b-col xs="3" sm="3" lg="3"><label for="password">Cookie:</label></b-col>
-            <b-col xs="6" sm="6" lg="4">
-                <b-form-input id="password" type="text" v-model="cookie"></b-form-input>
-            </b-col>
-
-            </b-row>
-            <b-row>
-            <b-col xs="3" sm="3" lg="3"><label for="password">Token:</label></b-col>
-            <b-col xs="6" sm="6" lg="4">
-                <b-form-input id="password" type="text" v-model="token"></b-form-input>
-            </b-col>
-
-            </b-row>
             <b-button @click="clickLogin">Login</b-button>
         </div>
     </div>
@@ -53,8 +38,7 @@
         methods: {
             ...mapActions('auth', {
                 loginUser: "login",
-                setCookie: "setCookie",
-                setCSFR: "setCSFR",
+
 
             }),
 
@@ -64,8 +48,6 @@
             }),
             clickLogin() {
 
-                this.setCSFR(this.token);
-                this.setCookie(this.cookie);
 
                 this.setActivePatient(null);
                 this.setSelectedPatient(null);

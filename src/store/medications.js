@@ -17,13 +17,7 @@ export default {
     getters: {
         nameAllowed: (state) => state.nameAllowed,
         list: (state) => {
-            return map(state.medicationsList, e => ({
-                id: e._id_,
-                form: e.medication_form,
-                name: e.medication_name.rubric,
-                strength: e.medication_strength,
-                amount: e.medication_amount,
-            }));
+            return state.medicationsList;
         },
         severity: (state) => state.severity,
     },
@@ -42,7 +36,7 @@ export default {
         },
         fetchMedicationsList({commit, rootState}) {
 
-            HTTP.post('/medication', {
+            HTTP.post('Medications', {
                 cookieRequest: rootState.auth.cookie,
                 csfttoken: rootState.auth.crfstoken,
 
@@ -59,7 +53,7 @@ export default {
         },
 
         fetchNameAllowed({commit}) {
-            HTTP.get('/medication/list')
+            HTTP.get('MedicationsAllowed')
                 .then((res) => {
                     commit('setNameAllowed', res.data);
                 }).catch((err) => {
@@ -68,7 +62,7 @@ export default {
         },
 
         fetchSeverityList({commit}) {
-            HTTP.get('/severity/list')
+            HTTP.get('Severity')
                 .then((res) => {
                     commit('setSeverityList', res.data);
                 }).catch((err) => {
@@ -76,66 +70,33 @@ export default {
             });
         },
         addItem(context, newItem) {
-            let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-                return v.toString(16);
-            });
-
-
-            let medicationsList = context.state.medicationsList;
-            let item = {};
-            item._id_ = uuid;
-            item._fake_id = Math.random();
-            item.medication_name = newItem.MedicationName;
-            item.medication_name.term = 'medication_names/' + item.medication_name.term;
-            item.medication_form = newItem.Form;
-            item.medication_strength = newItem.Strength;
-            item.medication_amount = newItem.Amount;
-
-            medicationsList.push(item);
-
-
-            context.commit('setMedicationsList', medicationsList);
-            context.dispatch('putDataToServer');
-            context.commit('setActiveItem', {
-                id: item._id_,
-                form: item.medication_form,
-                name: item.medication_name.rubric,
-                strength: item.medication_strength,
-                amount: item.medication_amount,
-            });
-
-
+            HTTP.post('Medications/', JSON.stringify(newItem))
+                .then(() => {
+                    context.dispatch('fetchMedicationsList');
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         },
         replaceItem(context, newItem) {
-            let medicationsList = context.state.medicationsList;
-            medicationsList = map(medicationsList, (e) => {
-
-                if (e._id_ == newItem.id) {
-                    e.medication_name = newItem.name;
-                    e.medication_name.term = 'medication_names/' + e.medication_name.term;
-                    e.medication_form = newItem.form;
-                    e.medication_strength = newItem.strength;
-                    e.medication_amount = newItem.strength;
-                }
-                return e;
-            });
-
-            context.commit('setMedicationsList', medicationsList);
-            context.dispatch('putDataToServer');
-            newItem.name = newItem.name.rubric;
-
-            context.commit('setActiveItem', newItem);
-
-
+            HTTP.put('Medications/' + newItem.id, JSON.stringify(newItem))
+                .then(res => {
+                    console.log(res);
+                    context.dispatch('fetchMedicationsList');
+                    context.commit('setActiveItem', newItem);
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         },
-
         deleteItem(context, itemToDelete){
-            let medicationsList = context.state.medicationsList;
-            context.commit('setMedicationsList',filter(medicationsList, (e) => e._id_ != itemToDelete.id));
-            context.commit('setActiveItem', null);
-            context.dispatch('putDataToServer');
-
+            HTTP.delete('Medications/' + itemToDelete.id)
+                .then(() => {
+                    context.dispatch('fetchMedicationsList')
+                })
+                .catch(err => {
+                    console.log(err);
+                })
         },
         putDataToServer({state, rootState, dispatch}) {
             HTTP.post('/medication/store',

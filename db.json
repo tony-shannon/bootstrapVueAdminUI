@@ -9,7 +9,7 @@
       "patient_id": 0
     }
   ],
-  "Problems": [
+  "Diagnosis": [
     {
       "id": 1,
       "Name": "Swelling in Knee",
@@ -17,6 +17,380 @@
       "Severity": "Haematoma",
       "Comment": "6",
       "patient_id": 0
+    }
+  ],
+  "DiagnosisAllowed": [
+      {
+        "term": "candida yeast infection",
+        "rubric": "Candida Yeast Infection"
+      },
+      {
+        "term": "fungal infection",
+        "rubric": "Fungal Infection"
+      },
+      {
+        "term": "viral infection",
+        "rubric": "Viral Infection"
+      },
+      {
+        "term": "bacterial infection",
+        "rubric": "Bacterial Infection"
+      },
+      {
+        "term": "androgenic alopecia",
+        "rubric": "Androgenic Alopecia"
+      },
+      {
+        "term": "alopecia areata",
+        "rubric": "Alopecia areata"
+      },
+      {
+        "term": "food allergy- dr dx",
+        "rubric": "Food allergy- diagnosed by doctor"
+      },
+      {
+        "term": "stressful life event",
+        "rubric": "Stressful life event"
+      },
+      {
+        "term": "gluten-sensitivity but not diagnosed celiac disease",
+        "rubric": "Gluten-sensitivity but not diagnosed Celiac Disease"
+      },
+      {
+        "term": "atopy or autoimmune disease",
+        "rubric": "atopy or autoimmune disease"
+      },
+      {
+        "term": "eosinophilic oesophagitis, physician diagnosed",
+        "rubric": "Eosinophilic oesophagitis, physician diagnosed"
+      },
+      {
+        "term": "atopic eye disease, physician diagnosed",
+        "rubric": "Atopic eye disease, physician diagnosed"
+      },
+      {
+        "term": "allergic rhinoconjunctivitis, physician diagnosed",
+        "rubric": "Allergic rhinoconjunctivitis, physician diagnosed"
+      },
+      {
+        "term": "asthma, physician diagnosed",
+        "rubric": "Asthma, physician diagnosed"
+      },
+      {
+        "term": "family history of aa, atopy or autoimmune disease",
+        "rubric": "Family history of AA, atopy or autoimmune disease"
+      },
+      {
+        "term": "history of allergic comorbidities",
+        "rubric": "History of allergic comorbidities"
+      },
+      {
+        "term": "history of autoimmune disease",
+        "rubric": "History of autoimmune disease"
+      },
+      {
+        "term": "scoliosis",
+        "rubric": "Scoliosis"
+      },
+      {
+        "term": "Other mental health diagnosis",
+        "rubric": "Other mental health diagnosis "
+      },
+      {
+        "term": "Sleep disturbances",
+        "rubric": "Sleep disturbances "
+      },
+      {
+        "term": "Seizures or epilepsy",
+        "rubric": "Seizures or epilepsy "
+      },
+      {
+        "term": "Muscle tone or coordination issues",
+        "rubric": "Muscle tone or coordination issues "
+      },
+      {
+        "term": "Loose (hyperextensible) joints",
+        "rubric": "Loose (hyperextensible) joints "
+      },
+      {
+        "term": "Joint pain",
+        "rubric": "Joint pain "
+      },
+      {
+        "term": "Hydrocephalus (extra fluid or \"water on the brain\")",
+        "rubric": "Hydrocephalus (extra fluid or \"water on the brain\")"
+      },
+      {
+        "term": "Headaches or migraines",
+        "rubric": "Headaches or migraines"
+      },
+      {
+        "term": "Fatigue",
+        "rubric": "Fatigue "
+      },
+      {
+        "term": "Difficulties with social interactions",
+        "rubric": "Difficulties with social interactions "
+      },
+      {
+        "term": "Depression",
+        "rubric": "Depression "
+      },
+      {
+        "term": "Anxiety",
+        "rubric": "Anxiety "
+      },
+      {
+        "term": "Arthritis",
+        "rubric": "Arthritis "
+      },
+      {
+        "term": "Short stature",
+        "rubric": "Short stature "
+      },
+      {
+        "term": "Reflux or gastroesophageal reflux (GERD)",
+        "rubric": "Reflux or gastroesophageal reflux (GERD) "
+      },
+      {
+        "term": "Poor weight gain in childhood",
+        "rubric": "Poor weight gain in childhood"
+      },
+      {
+        "term": "Over (hyper) or under (hypo) active thyroid",
+        "rubric": "Over (hyper) or under (hypo) active thyroid "
+      },
+      {
+        "term": "Hormonal imbalance that affected pregnancy or birth control",
+        "rubric": "Hormonal imbalance that affected pregnancy or birth control "
+      },
+      {
+        "term": "Large head size",
+        "rubric": "Large head size "
+      },
+      {
+        "term": "Late onset of puberty (after the age of 17)",
+        "rubric": "Late onset of puberty (after the age of 17) "
+      },
+      {
+        "term": "Early onset of puberty (prior to the age of 8)",
+        "rubric": "Early onset of puberty (prior to the age of 8) "
+      },
+      {
+        "term": "Constipation",
+        "rubric": "Constipation "
+      },
+      {
+        "term": "Chewing/swallowing problems",
+        "rubric": "Chewing/swallowing problems "
+      },
+      {
+        "term": "Other cancer or malignancy",
+        "rubric": "Other cancer or malignancy"
+      },
+      {
+        "term": "Leukemia",
+        "rubric": "Leukemia "
+      },
+      {
+        "term": "Glomus tumors (painful tumors on the fingertips, hands or feet)",
+        "rubric": "Glomus tumors (painful tumors on the fingertips, hands or feet) "
+      },
+      {
+        "term": "Gastrointestinal stromal tumors, GIST (specific type of tumor along the GI tract)",
+        "rubric": "Gastrointestinal stromal tumors, GIST (specific type of tumor along the GI tract) "
+      },
+      {
+        "term": "Breast cancer",
+        "rubric": "Breast cancer"
+      },
+      {
+        "term": "Brain tumor",
+        "rubric": "Brain tumor "
+      },
+      {
+        "term": "Bone cysts",
+        "rubric": "Bone cysts "
+      },
+      {
+        "term": "Adrenal tumor (sometimes referred to as a pheochromocytoma)",
+        "rubric": "Adrenal tumor (sometimes referred to as a pheochromocytoma) "
+      },
+      {
+        "term": "Vascular or blood vessel issues, such as stroke",
+        "rubric": "Vascular or blood vessel issues, such as stroke"
+      },
+      {
+        "term": "Renal artery stenosis (narrowing of the kidney artery)",
+        "rubric": "Renal artery stenosis (narrowing of the kidney artery) "
+      },
+      {
+        "term": "Pulmonic stenosis",
+        "rubric": "Pulmonic stenosis "
+      },
+      {
+        "term": "High blood pressure",
+        "rubric": "High blood pressure"
+      },
+      {
+        "term": "Heart valve problems",
+        "rubric": "Heart defect at birth"
+      },
+      {
+        "term": "Heart murmur",
+        "rubric": "Heart murmur "
+      },
+      {
+        "term": "Heart defect at birth",
+        "rubric": "Heart defect at birth"
+      },
+      {
+        "term": "hypertension",
+        "rubric": "Hypertension"
+      },
+      {
+        "term": "diabetes",
+        "rubric": "Diabetes"
+      },
+      {
+        "term": "asthma",
+        "rubric": "Asthma"
+      },
+      {
+        "term": "myocardial infarction",
+        "rubric": "Heart Attack/ Myocardial Infarction"
+      }
+    ],
+  "MedicationsAllowed": [
+    {
+      "term": "varicella - chickenpox vaccine",
+      "rubric": "Varicella - ChickenPox Vaccine"
+    },
+    {
+      "term": "pneumococcal vaccine",
+      "rubric": "Pneumococcal Vaccine"
+    },
+    {
+      "term": "mmr vaccine",
+      "rubric": "MMR vaccine"
+    },
+    {
+      "term": "hpv vaccine",
+      "rubric": "HPV Vaccine"
+    },
+    {
+      "term": "hepatitis b vaccine",
+      "rubric": "Hepatitis B vaccine"
+    },
+    {
+      "term": "hepatitis a vaccine",
+      "rubric": "Hepatitis A vaccine"
+    },
+    {
+      "term": "flu vaccine",
+      "rubric": "Flu Vaccine"
+    },
+    {
+      "term": "crisaborole",
+      "rubric": "Crisaborole"
+    },
+    {
+      "term": "tar ointment",
+      "rubric": "Tar ointment"
+    },
+    {
+      "term": "calcineurin inhibitors",
+      "rubric": "Calcineurin inhibitors"
+    },
+    {
+      "term": "corticosteroid",
+      "rubric": "Corticosteroid"
+    },
+    {
+      "term": "tacrolimus 0.1%",
+      "rubric": "Tacrolimus 0.1%"
+    },
+    {
+      "term": "tacrolimus 0.03%",
+      "rubric": "Tacrolimus 0.03%"
+    },
+    {
+      "term": "pimecrolimus 1%",
+      "rubric": "Pimecrolimus 1%"
+    },
+    {
+      "term": "subcutaneous omalizumab",
+      "rubric": "Subcutaneous Omalizumab"
+    },
+    {
+      "term": "oral prednisolone",
+      "rubric": "Oral prednisolone"
+    },
+    {
+      "term": "subcuantaneous dupilumab",
+      "rubric": "Subcuantaneous Dupilumab"
+    },
+    {
+      "term": "oral mycophenolate mofetil",
+      "rubric": "Oral Mycophenolate mofetil"
+    },
+    {
+      "term": "oral methotrexate",
+      "rubric": "Oral Methotrexate"
+    },
+    {
+      "term": "oral azathioprine",
+      "rubric": "Oral Azathioprine"
+    },
+    {
+      "term": "oral cyclosporin",
+      "rubric": "Oral Cyclosporin"
+    },
+    {
+      "term": "ibuprofen_200mg_stat",
+      "rubric": "Ibuprofen 200mg stat"
+    },
+    {
+      "term": "paracetamol_1g_stat",
+      "rubric": "Paracetamol 1g stat"
+    }
+  ],
+  "AllergierReactionsAllowed": [
+    {
+      "term": "asthma",
+      "rubric": "Asthma"
+    },
+    {
+      "term": "skin_rash",
+      "rubric": "Skin Rash"
+    },
+    {
+      "term": "angioedema",
+      "rubric": "Angiodema"
+    },
+    {
+      "term": "confusion",
+      "rubric": "Confusion"
+    },
+    {
+      "term": "renal_injury",
+      "rubric": "Renal Injury"
+    },
+    {
+      "term": "liver_injury",
+      "rubric": "Liver Injury"
+    },
+    {
+      "term": "cardiac_arrhythmia",
+      "rubric": "Cardiac Arrhythmia"
+    },
+    {
+      "term": "gastro_upset",
+      "rubric": "GastroIntestinal Upset"
+    },
+    {
+      "term": "gi_bleed",
+      "rubric": "GastoIntestinal Bleed"
     }
   ],
   "Allergiers": [
