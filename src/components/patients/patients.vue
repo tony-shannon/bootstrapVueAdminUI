@@ -118,7 +118,7 @@
             </b-col>
         </b-row>
         <div class="d-sm-flex d-md-none">
-            <mobile-divider icon="display-fill" title="Alergier"/>
+            <mobile-divider icon="display-fill" title="Allergies"/>
             <mobile-table :fields="mobileAllergier" :items="allergiers"></mobile-table>
             <mobile-divider icon="exclamation-octagon" title="Medications"/>
 

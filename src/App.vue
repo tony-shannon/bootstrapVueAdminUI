@@ -48,6 +48,7 @@
                 </b-row>
                 <FooterEl/>
             </b-col>
+            <mobile-menu></mobile-menu>
         </b-row>
         <b-row class="not-logged-in" v-else>
 
@@ -68,9 +69,11 @@
     import {mapGetters, mapActions} from "vuex";
     import {PATIENT_IS_SELECTED_LINKS, PATIENT_NOT_SELECTED_LINKS} from "./mocking/links";
     import MobilePatient from "./components/patient_views/mobile-patient";
+    import MobileMenu from "./components/patient_views/mobile-menu";
 
     export default {
         components: {
+            MobileMenu,
             MobilePatient,
             HeaderEl,
             FooterEl,
