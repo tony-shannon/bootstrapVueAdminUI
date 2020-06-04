@@ -94,18 +94,8 @@ export default {
                     console.log(err);
                 })
         },
-        putDataToServer({}) {
-         /*   HTTP.post('/diagnosis/store',
-                {
-                    cookieRequest: rootState.auth.cookie,
-                    csfttoken: rootState.auth.crfstoken,
-                    dataToSave: JSON.stringify(state.diagnosisList),
-                }).then((res) => {
-                console.log(res);
-                dispatch('fetchDiagnosisList');
-            }).catch((res) => {
-                console.log(res)
-            });*/
+        putDataToServer() {
+
         }
 
     },

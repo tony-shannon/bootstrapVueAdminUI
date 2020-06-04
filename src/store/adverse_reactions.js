@@ -86,18 +86,8 @@ export default {
                     console.log(err);
                 })
         },
-        putDataToServer({}) {
-          /*  HTTP.post('/adverse_reactions/store',
-                {
-                    cookieRequest: rootState.auth.cookie,
-                    csfttoken: rootState.auth.crfstoken,
-                    dataToSave: JSON.stringify(state.adverse_reactionsList),
-                }).then((res) => {
-                console.log(res);
-                dispatch('fetchAdverse_reactionsList');
-            }).catch((res) => {
-                console.log(res)
-            });*/
+        putDataToServer() {
+
         }
 
     },

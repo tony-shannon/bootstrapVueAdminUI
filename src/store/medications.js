@@ -98,18 +98,8 @@ export default {
                     console.log(err);
                 })
         },
-        putDataToServer({state, rootState, dispatch}) {
-            HTTP.post('/medication/store',
-                {
-                    cookieRequest: rootState.auth.cookie,
-                    csfttoken: rootState.auth.crfstoken,
-                    dataToSave: JSON.stringify(state.medicationsList),
-                }).then((res) => {
-                console.log(res);
-                dispatch('fetchMedicationsList');
-            }).catch((res) => {
-                console.log(res)
-            });
+        putDataToServer() {
+
         }
 
     },
