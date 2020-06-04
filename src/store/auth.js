@@ -38,6 +38,10 @@ export default {
         canCreate: state => {
             if (state.role === 'patient') return false;
             return true;
+        },
+        canClose: state => {
+            if (state.role === 'patient') return false;
+            return true;
         }
     },
     actions: {

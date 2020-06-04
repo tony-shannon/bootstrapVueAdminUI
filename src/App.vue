@@ -4,7 +4,7 @@
             <b-col cols="12" sm="12">
 
                 <HeaderEl/>
-                <b-row class="no-margin-h border-b-gray border-r-gray" :class="{'is-patient-role': role === 'patient'}">
+                <b-row class="no-margin-h border-b-gray border-r-gray d-none d-md-block" :class="{'is-patient-role': role === 'patient'}">
                     <b-col cols="2" sm="false" md="2" class="left-menu-toggle  no-padding-l">
                         <font-awesome-icon icon="bars"/>
                     </b-col>
@@ -31,11 +31,11 @@
                     </b-col>
                 </b-row>
                 <b-row>
-                    <b-col cols="2" sm="2">
+                    <b-col cols="2" sm="2"  class="d-none d-md-block">
                         <LeftNav/>
                     </b-col>
-                    <b-col cols="10" class="m-t-15">
-                        <b-breadcrumb>
+                    <b-col cols="10" sm="12" class="m-t-15">
+                        <b-breadcrumb class="d-none d-md-block">
                             <b-breadcrumb-item href="#home">Home</b-breadcrumb-item>
                             <b-breadcrumb-item href="#foo">Foo</b-breadcrumb-item>
                             <b-breadcrumb-item href="#bar">Bar</b-breadcrumb-item>

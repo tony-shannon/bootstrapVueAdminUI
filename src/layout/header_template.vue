@@ -1,5 +1,5 @@
 <template>
-    <b-row>
+    <b-row class="d-none d-md-block">
         <b-col cols="12" sm="12">
             <div>
                 <b-navbar toggleable="lg" type="dark" variant="primary">
@@ -9,7 +9,7 @@
 
                     <b-collapse id="nav-collapse" is-nav>
                         <b-navbar-nav>
-                            <b-nav-item v-show="patient" href="#" @click="closePatientCard" >Close</b-nav-item>
+                            <b-nav-item v-show="patient && canClose" href="#" @click="closePatientCard" >Close</b-nav-item>
                         </b-navbar-nav>
 
                     <div class="bg-secondary text-light" align="center"/>
@@ -66,6 +66,7 @@
         computed:{
             ...mapGetters({
                 patient: 'patient/patient',
+                canClose: 'auth/canClose',
             }),
             search: {
                 get () {
@@ -107,9 +108,11 @@
                 setPatientId: 'setPatientId',
             }),
             closePatientCard(){
-                this.setActivePatient(null);
-                this.setPatientId(null);
-                this.setLinks(PATIENT_NOT_SELECTED_LINKS);
+                if(this.canClose) {
+                    this.setActivePatient(null);
+                    this.setPatientId(null);
+                    this.setLinks(PATIENT_NOT_SELECTED_LINKS);
+                }
             },
             clickLogout(){
 

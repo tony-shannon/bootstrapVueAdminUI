@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="d-none d-md-block">
         <b-list-group class="left-nav">
             <template v-if="isAuth">
 
