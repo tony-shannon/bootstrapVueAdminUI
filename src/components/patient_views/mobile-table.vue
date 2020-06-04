@@ -1,9 +1,8 @@
 <template>
     <div>
-        <b-table>
-            <b-table :items="items" thead-class="mobile-table-thead" :fields="fields" caption-top>
+        <b-table :items="items" thead-class="mobile-table-thead" :fields="fields" caption-top>
 
-            </b-table>
+        </b-table>
     </div>
 </template>
 
@@ -13,19 +12,20 @@
         props: {
             items: {
                 type: Array,
-                default: ()=>[],
+                default: () => [],
             },
             fields: {
                 type: Array,
-                default: ()=>[],
+                default: () => [],
 
             }
         }
     }
 </script>
 
-<style scoped>
-    .mobile-table-thead{
+<style >
+    .mobile-table-thead {
         background: #007bff;
+        color: white
     }
 </style>

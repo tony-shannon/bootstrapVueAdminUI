@@ -4,7 +4,7 @@
             <b-col cols="12" sm="12">
 
                 <HeaderEl/>
-                <b-row class="no-margin-h border-b-gray border-r-gray d-none d-md-block" >
+                <b-row class="no-margin-h border-b-gray border-r-gray d-none d-md-flex" >
                     <b-col cols="2" sm="false" md="2" class="left-menu-toggle  no-padding-l">
                         <font-awesome-icon icon="bars"/>
                     </b-col>
@@ -35,7 +35,7 @@
                         <LeftNav/>
                     </b-col>
                     <b-col cols="10" sm="12" md="10" class="m-t-15">
-                        <b-breadcrumb class="d-none d-md-block">
+                        <b-breadcrumb class="d-none d-md-inline-flex">
                             <b-breadcrumb-item href="#home">Home</b-breadcrumb-item>
                             <b-breadcrumb-item href="#foo">Foo</b-breadcrumb-item>
                             <b-breadcrumb-item href="#bar">Bar</b-breadcrumb-item>

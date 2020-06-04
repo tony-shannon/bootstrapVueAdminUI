@@ -1,5 +1,4 @@
-import {HTTP} from './axiosProxyBroker'
-import {result, map, filter} from 'lodash'
+import {HTTP} from './axios'
 
 const state = () => ({
     adverse_reactionsList: [],
