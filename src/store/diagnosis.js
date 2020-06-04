@@ -1,5 +1,5 @@
-import {HTTP} from './axiosProxyBroker'
-import {result, map, filter,find} from 'lodash'
+import {HTTP} from './axios'
+import {find} from 'lodash'
 
 const state = () => ({
     diagnosisList: [],

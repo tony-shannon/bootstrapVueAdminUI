@@ -58,11 +58,6 @@
 </template>
 
 
-<style>
-    body {
-        padding: 1rem;
-    }
-</style>
 
 
 <script>
@@ -83,7 +78,7 @@
         },
         computed: {
             ...mapGetters({
-                isLoggedIn: 'auth/token',
+                isLoggedIn: 'auth/isAuth',
                 patient: 'patient/patient',
 
             }),
@@ -198,16 +193,13 @@
         cursor: pointer;
     }
 
-    .not-logged-in-bg {
-    }
-
     .not-logged-in {
         min-height: 100vh;
     }
 
     .not-logged-in-container {
         width: 100%;
-        padding: 50px;
+        background: #007bff;
     }
 
 </style>

@@ -4,10 +4,10 @@ let config = {
     //URL2Go:'https://3000-cf8e70b7-b23a-472c-8c7d-540b33f87866.ws-eu01.gitpod.io',
     //graphUrl: 'https://eu1.prisma.sh/hit-experiment-4/med-crud1/dev',
    // graphUrl: 'https://4000-ecda3ed5-9072-4d3a-9efe-05f40e0b70ae.ws-eu01.gitpod.io',
-    //graphUrl: 'http://localhost:4000/',
+    graphUrl: 'http://localhost:4000/',
     ciUrl: 'http://localhost:5000/',
-    graphUrl: 'https://tony-staging.openappregistry.com/api',
-    serverType: 'graph' //'graph' or 'rest'
+    //graphUrl: 'https://tony-staging.openappregistry.com/api',
+    serverType: 'rest' //'graph' or 'rest'
 };
 
 

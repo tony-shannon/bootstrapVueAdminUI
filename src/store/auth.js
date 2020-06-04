@@ -1,7 +1,3 @@
-import {GRAPHQL} from "./graphql";
-import gql from "graphql-tag/lib/graphql-tag.umd";
-//import axios from "axios";
-
 const state = () => ({
     token: null,
     cookie: '',
@@ -26,7 +22,7 @@ export default {
         crfstoken: state => state.crfstoken,
 
         isAuth: state => {
-            return state.token
+            return state.token != null;
         },
         role: state => state.role,
     },
@@ -41,21 +37,14 @@ export default {
         },
 
 
-        login: ({dispatch, commit}, {login, password}) => {
-            commit('token', '11111111111');
-            dispatch('loginGraph', {login: login, password: password}).catch((err) => {
-                console.log(err);
-            });
+        login: ({commit}, {login, password}) => {
+            commit('token', login+password);
+
             return true;
 
 
         },
 
-        loginGraph: async ({commit}, {login, password}) => {
-
-            commit('token', '11111111111');
-
-        },
 
         loginRest: ({commit}, login, password) => {
             // JSON Server doen't supports custom buisneess logic.
