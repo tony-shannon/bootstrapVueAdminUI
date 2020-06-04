@@ -55,7 +55,8 @@
 
                     <b-button variant="primary"
                               class="float-right ml-3"
-                              @click="createMed">
+                              @click="createMed"
+                              v-if="canCreate">
                         Create
                     </b-button>
 
@@ -99,14 +100,14 @@
                         footer-border-variant="white">
 
                     <b-button
-                            v-if="activeItem"
+                            v-if="activeItem && canEdit"
                             variant="primary"
                             class="float-right ml-3"
                             @click="editMed">
                         Edit
                     </b-button>
                     <b-button
-                            v-if="activeItem"
+                            v-if="activeItem && canDelete"
                             variant="outline-danger"
                             class="float-right"
                             @click="deleteMed">
@@ -174,6 +175,9 @@
         computed: {
             ...mapGetters({
                'list': 'adverse_reactions/list',
+                'canEdit': 'auth/canEdit',
+                'canDelete': 'auth/canDelete',
+                'canCreate': 'auth/canCreate',
             }),
             activeItem: {
                 get () {
@@ -205,17 +209,27 @@
                 this.activeItem = item;
             },
             deleteMed(){
+                if(!this.canDelete){
+                    return;
+                }
                 this.deleteItem(this.activeItem);
 
             },
             createMed(){
+                if(!this.canCreate){
+                    return;
+                }
                 this.status = 'create';
                 this.activeItem = null;
                 this.$refs.adverse_reactionsTable.clearSelected();
 
             },
             editMed(){
+                if(!this.canEdit) {
+                    return;
+                }
                 this.status = 'edit';
+
             },
             createComplete(){
               //  this.putToServer();

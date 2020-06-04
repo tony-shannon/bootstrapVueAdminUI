@@ -55,7 +55,8 @@
 
                     <b-button variant="primary"
                               class="float-right ml-3"
-                              @click="createMed">
+                              @click="createMed"
+                              v-if="canCreate" >
                         Create
                     </b-button>
 
@@ -99,14 +100,14 @@
                         footer-border-variant="white">
 
                     <b-button
-                            v-if="activeItem"
+                            v-if="activeItem && canEdit"
                             variant="primary"
                             class="float-right ml-3"
                             @click="editMed">
                         Edit
                     </b-button>
                     <b-button
-                            v-if="activeItem"
+                            v-if="activeItem && canDelete"
                             variant="outline-danger"
                             class="float-right"
                             @click="deleteMed">
@@ -174,6 +175,9 @@
         computed: {
             ...mapGetters({
                'list': 'medications/list',
+                'canEdit': 'auth/canEdit',
+                'canDelete': 'auth/canDelete',
+                'canCreate': 'auth/canCreate',
             }),
             activeItem: {
                 get () {

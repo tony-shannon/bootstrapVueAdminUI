@@ -23,7 +23,19 @@
                 </b-col>
 
             </b-row>
-            <b-button @click="clickLogin">Login</b-button>
+            <b-row class="login-page__input">
+                <b-col sm="12">
+                <b-form-checkbox
+                        id="checkbox-1"
+                        name="checkbox-1"
+                        value="accepted"
+                        unchecked-value="not_accepted"
+                >
+                    Remember me
+                </b-form-checkbox>
+                </b-col>
+            </b-row>
+            <b-button pill block variant="primary" @click="clickLogin">Login</b-button>
 
             </b-card-body>
             <template v-slot:footer>

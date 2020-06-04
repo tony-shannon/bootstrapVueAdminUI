@@ -24,7 +24,20 @@ export default {
         isAuth: state => {
             return state.token != null;
         },
+
         role: state => state.role,
+        canEdit: state => {
+            if (state.role === 'patient') return false;
+            return true;
+        },
+        canDelete: state => {
+            if (state.role == 'patient') return false;
+            return true;
+        },
+        canCreate: state => {
+            if (state.role == 'patient') return false;
+            return true;
+        }
     },
     actions: {
         setToken: (state, token) => state.token = token,
