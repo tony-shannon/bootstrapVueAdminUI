@@ -169,6 +169,10 @@
                     },
 
                 ],
+                mobileMedications: [
+                    {key: "name",  label: 'Name'},
+                    {key: "form",  label: 'Form'},
+                ],
                 status: 'view',
             }
         },

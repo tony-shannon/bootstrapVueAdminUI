@@ -1,3 +1,6 @@
+import {HTTP} from "./axios";
+import {first} from "lodash";
+
 const state = () => ({
     token: null,
     cookie: '',
@@ -55,11 +58,21 @@ export default {
         },
 
 
-        login: ({commit}, {login, password}) => {
+        login: ({commit,rootState}, {login, password}) => {
             if (login === 'ts') {
                 commit('role', 'doctor');
             } else {
                 commit('role', 'patient');
+                HTTP.get('Patients')
+                    .then(resp => {
+                        commit('setPatients', resp.data)
+                        let patient = first(resp.data);
+                        rootState.patient.patientId = patient.id;
+                        rootState.patient.patient = patient;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
 
             }
             commit('token', login + password);

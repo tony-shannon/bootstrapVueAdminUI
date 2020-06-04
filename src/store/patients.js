@@ -3,7 +3,7 @@ import {GRAPHQL} from "./graphql";
 import {PATIENT_LIST} from "../mocking/patient_list"
 import gql from "graphql-tag";
 import axios from "axios";
-import {result, map} from 'lodash'
+import {result, map,first} from 'lodash'
 import moment from 'moment'
 import {CONFIG} from "./config";
 
@@ -81,11 +81,14 @@ export default {
                 }
             }
         },
-        async getPatients({commit}) {
+        async getPatients({commit,rootState}) {
             return new Promise((resolve, reject) => {
                 HTTP.get('Patients')
                     .then(resp => {
                         commit('setPatients', resp.data)
+                        let patient = first(resp.data);
+                        rootState.patient.patientId = patient.id;
+                        rootState.patient.patient = patient;
                         resolve(resp)
                     })
                     .catch(err => {
