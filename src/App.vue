@@ -1,7 +1,9 @@
 <template>
     <b-container fluid class="bv-example-row" :style="this.containerStyle">
         <b-row v-if="isLoggedIn">
-            <mobile-patient/>
+            <template v-if="isPatient">
+            <mobile-patient />
+            </template>
             <b-col cols="12" sm="12">
 
                 <HeaderEl/>
@@ -89,6 +91,9 @@
                 role: 'auth/role'
 
             }),
+            isPatient: function(){
+                return this.role === 'patient';
+            },
             containerStyle: function () {
                 let patient = this.patient;
                 if (!patient) {

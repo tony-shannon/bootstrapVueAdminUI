@@ -133,7 +133,7 @@
 </template>
 
 <script>
-    import {mapMutations,mapGetters} from 'vuex'
+    import {mapMutations,mapGetters,mapActions} from 'vuex'
 
     import {
         patientsState,
@@ -181,11 +181,15 @@
         },
         mounted: async function () {
 
-            this.$nextTick(function () {
+            this.$nextTick( () =>{
                 this.makeRequest({
                     type: CONFIG.serverType,
                     action: 'get'
                 });
+                this.fetchListAdverse();
+                this.fetchMedicationsList();
+                this.fetchDiagnosisList();
+
             })
         },
         computed: {
@@ -262,6 +266,13 @@
             ...mapMutations('patient', {
                 setActivePatient: 'setPatient',
                 setPatientId: 'setPatientId',
+
+            }),
+
+            ...mapActions({
+                'fetchListAdverse': 'adverse_reactions/fetchAdverse_reactionsList',
+                'fetchMedicationsList': 'medications/fetchMedicationsList',
+                'fetchDiagnosisList': 'diagnosis/fetchDiagnosisList',
 
             }),
             setActiveItem(item) {

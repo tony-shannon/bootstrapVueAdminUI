@@ -19,11 +19,12 @@ export default {
 
             let list =  map(state.adverse_reactionsList, e => ({
                 id: e.id,
-                name: e.EventName,
-                substance: e.Substance,
-                severity: e.Severity,
-                comment: e.CommentLine,
+                name: e.name,
+                substance: e.substance,
+                severity: e.severity,
+                comment: e.comment,
                 patient_id: e.patient_id,
+
             }));
 
             if(rootState.patient.patientId){

@@ -1,7 +1,7 @@
 <template>
     <div class="mobile-patient d-md-none">
         <b-navbar toggleable="lg" type="dark" variant="primary">
-            <b-navbar-brand href="#">{{patient.first_name}} {{patient.family_name}}</b-navbar-brand>
+            <b-navbar-brand href="#">{{appealing}} {{patient.first_name}} {{patient.family_name}}</b-navbar-brand>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -40,6 +40,16 @@
                 patient: 'patient/patient',
                 role: 'auth/role'
             }),
+            appealing() {
+                if (this.patient.gender == 'Male') {
+                    return 'Mr.';
+                } else {
+                    return 'Ms.';
+                }
+            },
+        },
+        methods:{
+
         }
     }
 </script>

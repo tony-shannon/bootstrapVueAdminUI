@@ -7,17 +7,19 @@
                         Mild
                     </span>
                 </span>
-                <span v-if="data && data.item.severity && data.item.severity.toUpperCase() && data.item.severity==='Severe'.toUpperCase()">
+                <span v-else-if="data && data.item.severity && data.item.severity.toUpperCase() && data.item.severity==='Severe'.toUpperCase()">
                     <span style="color: darkgrey">
                         Severe
                     </span>
                 </span>
-                <span v-if="data && data.item.severity && data.item.severity.toUpperCase() === 'Moderate'.toUpperCase()">
+                <span v-else-if="data && data.item.severity && data.item.severity.toUpperCase() === 'Moderate'.toUpperCase()">
                     <span style="color: orange">
                         Moderate
                     </span>
                 </span>
-
+                <span v-else>
+                    {{data.item.severity}}
+                </span>
             </template>
         </b-table>
     </div>

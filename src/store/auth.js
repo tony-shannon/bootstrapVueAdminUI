@@ -58,24 +58,28 @@ export default {
         },
 
 
-        login: ({commit,rootState}, {login, password}) => {
+        login: async ({commit,rootState}, {login, password}) =>  {
             if (login === 'ts') {
                 commit('role', 'doctor');
+                commit('token', login + password);
+
             } else {
-                commit('role', 'patient');
-                HTTP.get('Patients')
+               return HTTP.get('Patients')
                     .then(resp => {
+                        rootState.patients.patients = resp.data;
                         //commit('patients/setPatients', resp.data)
                         let patient = first(resp.data);
                         rootState.patient.patientId = patient.id;
                         rootState.patient.patient = patient;
+                        commit('role', 'patient');
+                        commit('token', login + password);
+
                     })
                     .catch(err => {
                         console.log(err);
                     })
 
             }
-            commit('token', login + password);
 
             return true;
 
