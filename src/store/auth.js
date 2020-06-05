@@ -60,8 +60,22 @@ export default {
 
         login: async ({commit,rootState}, {login, password}) =>  {
             if (login === 'ts') {
-                commit('role', 'doctor');
-                commit('token', login + password);
+
+                return HTTP.get('Patients')
+                    .then(resp => {
+                        rootState.patients.patients = resp.data;
+
+                        rootState.patient.patientId = 0;
+                        rootState.patient.patient = null;
+
+                        commit('role', 'doctor');
+                        commit('token', login + password);
+
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+
 
             } else {
                return HTTP.get('Patients')
@@ -80,8 +94,6 @@ export default {
                     })
 
             }
-
-            return true;
 
 
         },

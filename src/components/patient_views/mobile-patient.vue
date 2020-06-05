@@ -10,14 +10,22 @@
 
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
-
+                    <b-nav-item-dropdown right>
+                        <!-- Using 'button-content' slot -->
+                        <template v-slot:button-content>
+                            <em>User</em>
+                        </template>
+                        <b-dropdown-item href="#">Profile</b-dropdown-item>
+                        <b-dropdown-item @click="clickLogout" href="#">Sign Out</b-dropdown-item>
+                    </b-nav-item-dropdown>
                 </b-navbar-nav>
             </b-collapse>
+
         </b-navbar>
         <b-row class="d-flex justify-content-center pt-3">
             <div col="6" sm="6" class="align-self-center mobile-patient-mgr">
                 <div class="patient-image">
-                    <img class="rounded-circle" src="https://picsum.photos/seed/picsum/64/64"/>
+                    <img class="rounded-circle" style="width: 64px;" src="https://i.ibb.co/N60zXfR/man-in-black-suit-jacket-smiling-3831569.jpg"/>
                 </div>
             </div>
             <div col="6" sm="6">
