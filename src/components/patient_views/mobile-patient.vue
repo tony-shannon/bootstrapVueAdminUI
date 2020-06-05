@@ -39,7 +39,7 @@
 </template>
 
 <script>
-    import {mapGetters} from "vuex";
+    import {mapActions, mapGetters} from "vuex";
 
     export default {
         name: "mobile-patient",
@@ -57,7 +57,14 @@
             },
         },
         methods:{
+            ...mapActions('auth',{
+                logoutUser:"logout"
+            }),
+            clickLogout(){
 
+                this.logoutUser();
+                this.$router.push({ name: 'login' });
+            }
         }
     }
 </script>
